@@ -1,0 +1,112 @@
+﻿Release notes
+Version 2.1.0.28
+En del tilføjelser og rettelser frem til april 2020
+Version 2.1.0.28
+Optimering af SQL bag GetSalesOrderList
+Version 2.1.0.27
+Diverse smårettelser, så betalingsstatus på kreditnotaer også håndteres.
+Version 2.1.0.26
+SalesOrderListLoad håndterer flere dokumenttyper
+Version 2.1.0.25
+InvoiceNo længde også ændret i purchase
+pdfSales synkroniseret med udskrift fra applikationen.
+Version 2.1.0.24
+InvoiceNo kan nu være bigint. Og der er tilføjet felt så den kan modtages som string.
+Version 2.1.0.23
+Opdatering af pdf-generering så den svarer til Winfinans.net. Diverse smårettelser.
+Version 2.1.0.22
+LineDiscount til at indeholde rabat med eller uden moms alt efter resten af varelinien. Ændring til Inkassoservice.
+Version 2.1.0.21
+UBL udlæsning håndterer bundrabat.
+Version 2.1.0.20
+Tilføjelse af inkassohåndtag
+Version 2.1.0.19
+Rettelse af hentning ordrer
+Version 2.1.0.18
+Inkassohåndtag, creditcard fejl håndtag
+Version 2.1.0.17
+Ændring i indlæggelse af ordre: salesprice < 0 genberegner ikke værdier som er fremfundet som standardværdi.
+Version 2.1.0.16
+Handling of card information for addresses and payments
+Version 2.1.0.15
+Released
+Version 2.1.0.14
+Minor fixes concerning SQLInt and C# Long/Int
+Version 2.1.0.13
+Handle for retrieving finance items. Including class for handling criteria.
+Version 2.1.0.12
+Handle for retrieving next valid voucherno in named ledger
+Version 2.1.0.11
+Handle for retrieving inventory pictures
+Version 2.1.0.10
+Routine release. Minor improvements
+Version 2.1.0.9
+Added listing of unpaid invoices to method SalesOrderListLoad (Corrected)
+Version 2.1.0.8
+Added listing of unpaid invoices to method SalesOrderListLoad
+Version 2.1.0.7
+Backdoor to DBUser
+Version 2.1.0.6
+Method PurchaseOrderListLoad expanded to same fields as ditto SalesOrderListLoad
+Version 2.1.0.5
+Added method for lookup inventory item on ean. address lookup extended for search by ean.
+Version 2.1.0.4
+Converting null value when retrieving sale_payments. New method to create invoice from order. Methods for B2BBackbone. Errorcorrections in address search.
+Version 2.1.0.3
+Fix DueDate/PayDate mixup in Purc. Bankaccount info with addresses, Function for approving auditted addresses.
+Version 2.1.0.2
+GroupFi in returnvalues
+Version 2.1.0.1
+Class Address indeholder nu CountryISO3166_2 angivelse af landekode
+Version 2.1.0.0
+Første release efter omstilling uden UBL - udbygning af purchase siden, konsolidering af salg.
+Version 2.0.20.0
+Nullværditolerance i payments
+Version 2.0.19.0
+PaidDate udlæses ikke hvis den er tom
+Version 2.0.18.0
+Paymentmeans føres over i WF og tilbage.
+Version 2.0.17.0
+Betalinger. Validring gjort mere robust
+Version 2.0.16.0
+Diverse smårettelser. Betalinger.
+Version 2.0.15.0
+Betalinger. Default varegruppe ved ukendt varenummer
+Version 2.0.14.1
+Acccountingcost både på kontakt og ordre
+Version 2.0.14.0
+CVR nr på Customer legal entity
+Version 2.0.13.0
+LotID begge veje
+Version 2.0.12.1
+Allowancecharge detaljer ditto
+Version 2.0.12.0
+Alle faktorer på linieniveau medtages - uoverensstemmelse indbyrdes herimellem afstedkommer at faktura opmærkes som suspicious og kan ikke udlæses igen. Generer ny exception.
+Version 2.0.11.0
+Contactinfo, Endpoint, Deliveryaddress
+Version 2.0.10.0
+Intermediate release
+Version 2.0.9.1
+Increased null tolerance in pre-validation
+Version 2.0.9.0
+Pre-check CreateInvoice, stronger handling of contactperson + other fixes based on test results 12-11-2013
+Version 2.0.8.0
+Intermediate build. SaveInvoice return deliveryaddress, Invoicedate, Classificationcode, Paiddate
+Version 2.0.7.0
+Intermediate build. Returning full invoice after createinvoice. Data check on incoming invoice temporarily disabled.
+Version 2.0.6.0
+SellerNo og EndpointType, validation throwing faultexceptions started
+Version 2.0.5.0
+Håndtering af udenlandske VAT-numre i xpaths
+Version 2.0.4.0
+getCreditNote rettet. Fejlede pga forkert basepath
+Version 2.0.3.0
+CreateCreditnoteByInvoiceId() returnerer den dannede credit note.
+Diverse småting omkring CreateInvoice. SupplierAssignedAccountID gjort ikke påkrævet. AddressID fremfindes via AdAccount.
+Skift til FaultExceptions.
+Version 2.0.2.1
+Validator flyttet ud til separat service
+Version 2.0.2.0
+Validator indbygget
+Alle UBL håndtag har fået fjernet byref til dbuser parameter
+Understøttelse af selfbilled invoices - endnu ikke testet pga manglende validator
