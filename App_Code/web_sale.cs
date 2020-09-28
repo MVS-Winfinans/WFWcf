@@ -387,6 +387,7 @@ namespace wfws
                     item.Dim2 = myr["Dim2"].ToString();
                     item.Dim3 = myr["Dim3"].ToString();
                     item.Dim4 = myr["Dim4"].ToString();
+                    item.Substitutable = myr["Substitutable"] == DBNull.Value ? false : (Boolean)myr["Substitutable"];
                 }
                 conn.Close();
             }
@@ -500,7 +501,7 @@ namespace wfws
                 comm.Parameters.Add("@weight", SqlDbType.Money).Value = MyORder.Weight;
                 comm.Parameters.Add("@SuggestedRetail", SqlDbType.Money).Value = MyORder.SuggestedRetail;
                 comm.Parameters.Add("@P_Selection", SqlDbType.NVarChar, 255).Value = ((string.IsNullOrEmpty(MyORder.Selection) ? DBNull.Value : (object)MyORder.Selection));
-
+                comm.Parameters.Add("@Substitutable", SqlDbType.Bit).Value = MyORder.Substitutable;
                 conn.Open();
                 comm.ExecuteNonQuery();
                 conn.Close();

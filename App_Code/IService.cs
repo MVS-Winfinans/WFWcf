@@ -662,6 +662,8 @@ public class AddressCollectable
     [DataMember] public Decimal Volume;
     [DataMember] public Decimal SuggestedRetail;
     [DataMember] public string Selection;
+    [DataMember] public Boolean Substitutable;
+
 }
 
 [DataContract] public class OrderSales {
