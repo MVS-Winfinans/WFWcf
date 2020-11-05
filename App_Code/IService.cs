@@ -107,6 +107,8 @@ public interface IService
     [OperationContract] string SalesOrderLoadItem(ref DBUser DBUser,ref OrderLine LineItem);
     [OperationContract] string SalesOrderDeleteItem(ref DBUser DBUser, ref OrderSales wfOrderSales , string ItemID);
     [OperationContract] string SalesOrderChangeQtyPriceOnItem(ref DBUser DBUser,ref  OrderLine LineItem);
+    [OperationContract] string SalesOrderDeleteOrderLine(ref DBUser DBUser, ref OrderLine LineItem);
+
 
     [OperationContract] string SalesOrderAddPayment(ref DBUser DBUser, ref OrderSales WfOrder, OrderPayment PaymentItem);
     [OperationContract] OrderPayment[] SalesOrderLoadPayments(ref DBUser DBUser, ref OrderSales WfOrder, ref string errstr);
@@ -141,8 +143,10 @@ public interface IService
 
     // sales deliveries
     [OperationContract] SalesDeliveriesProducts[] SalesDeliverySchedule(ref DBUser DBUser, int BillTo);
+    [OperationContract] SalesDeliveriesProducts[] SalesDeliverySchedule_2(ref DBUser DBUser, int BillTo);
 
- 
+
+
 
 
 
@@ -234,7 +238,7 @@ public interface IService
     [OperationContract] Dimensions_ClientStatement[] DimensionLawyerStatement(ref DBUser DBUser, string Dim3, ref string retstr);
 
     //Datatransfers
-    [OperationContract] string DataTransferOut(ref DBUser DBUser, string UseDefinition);
+    [OperationContract] string[] DataTransferOut(ref DBUser DBUser, string UseDefinition);
     [OperationContract] int DataTransferIn(ref DBUser DBUser, string[] FileContent, string UseDefinition );
     [OperationContract] DataTransferDefinition[] DataTransferDefinitions(ref DBUser DBUser, TransferType Direction);
     [OperationContract] DataTransferDefinition DataTransferGetDefinition(ref DBUser DBUser, string ThisDef);
@@ -839,7 +843,8 @@ public class AddressCollectable
     [DataMember] public int SourceSaleID;
     [DataMember] public int SourceLineID;
     [DataMember] public string ReplacementProduct;
-    
+    [DataMember] public Boolean NotOnWeb;
+    [DataMember] public Boolean NotOnMyPage;
 }
 
 [DataContract] public class SalesDeliveryTime
@@ -1063,6 +1068,7 @@ public class AddressCollectable
     [DataMember] public string UNSPSC;
     [DataMember] public string Position;
     [DataMember] public Boolean NotOnWeb;
+    [DataMember] public Boolean NotOnMyPage;
 }
 
 [DataContract] public class SelectionParams
@@ -1558,7 +1564,6 @@ public class ProdAssembly
     [DataMember] public string HandlingSP;
     [DataMember] public string PathToFiles;
     [DataMember] public string PathFromWorkStation;
-
 }
 
 [DataContract] public class DataTransfer

@@ -1753,6 +1753,35 @@ public class Service : IService
         }
         return errstr;
     }
+    public string SalesOrderDeleteOrderLine(ref DBUser DBUser, ref OrderLine LineItem)
+    {
+        string errstr = "OK";
+        try
+        {
+            var wfconn = new wfws.ConnectLocal(DBUser);
+            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            if (DBUser.CompID > 0)
+            {
+                wfws.web wfweb = new wfws.web(ref DBUser);
+                if (wfweb.order_is_Open(LineItem.SaleID))
+                {
+                    wfweb.Order_Line_Delete(LineItem.SaleID, LineItem);
+                    wfweb.order_calculate(LineItem.SaleID);
+                }
+                else
+                {
+                    errstr = "Order is closed ";
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            errstr = e.Message;
+            throw new FaultException(string.Concat("wf_wcf: ", e.Message), new FaultCode("wfwcfFault"));
+        }
+        return errstr;
+    }
+
     public string SalesOrderDeleteItem(ref DBUser DBUser, ref OrderSales WfOrder, string ItemID)
     {
         string errstr = "OK";
@@ -2261,6 +2290,33 @@ public class Service : IService
         }
         return items.ToArray();
     }
+    public SalesDeliveriesProducts[] SalesDeliverySchedule_2(ref DBUser DBUser, int BillTo)
+    {
+        string errstr = "OK";
+        string connstr;
+        DBUser.Message = "start";
+        IList<SalesDeliveriesProducts> items = new List<SalesDeliveriesProducts>();
+        try
+        {
+            var wfconn = new wfws.ConnectLocal(DBUser);
+            connstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            if (DBUser.CompID > 0)
+            {
+                var wfdel = new Delivery(ref DBUser, connstr);
+                errstr = wfdel.ProductListLoad_2(BillTo, ref items);
+                DBUser.Message = errstr;
+            }
+        }
+        catch (NullReferenceException ex)
+        {
+            errstr = ex.Message;
+            throw new FaultException(String.Concat("wf_wcf: ", ex.Message), new FaultCode("wfwcfFault"));
+        }
+        return items.ToArray();
+    }
+
+
+
     public byte[] SalesOrderGetPDFArray(ref DBUser DBUser, int SaleID, SalesReports ReportID)
     {
         Byte[] pdfdoc = null;
@@ -3926,9 +3982,35 @@ public class Service : IService
         }
         return iCount;
     }
-    public string DataTransferOut(ref DBUser DBUser, String UseDefinition)
+    public string[] DataTransferOut(ref DBUser DBUser, String UseDefinition)
     {
-        return "Not implemented";
+        string RetVal = "";
+        string[] retStrings = { "err", "" };
+        try
+        {
+            var wfconn = new wfws.ConnectLocal(DBUser);
+            RetVal = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            if (DBUser.CompID > 0)
+            {
+                wfws.datatransfers dt = new wfws.datatransfers(ref DBUser);
+                dt.UseDefinition(UseDefinition);
+                dt.Username = "WCF";
+                int TransID = dt.DatatransferExecuteOut(DBUser.CompID, UseDefinition);
+
+                retStrings = dt.DatatransferGetLines(TransID);
+              
+            }
+            else
+            {
+                RetVal = "no company";
+            }
+        }
+        catch (Exception e)
+        {
+            RetVal = e.Message;
+            throw new FaultException(string.Concat("wf_wcf: ", e.Message), new FaultCode("wfwcfFault"));
+        }
+        return retStrings;
     }
     public int DataTransferIn(ref DBUser DBUser, string[] FileContent, string UseDefinition)
     {

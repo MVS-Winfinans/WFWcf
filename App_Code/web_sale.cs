@@ -541,6 +541,24 @@ namespace wfws
             }
             return retstr;
         }
+        public string Order_Line_Delete(int SaleID, OrderLine lineItem)
+        {
+            SqlConnection conn = new SqlConnection(conn_str);
+            string retstr = "OK";
+            if (lineItem.Liid > 0)
+            {
+                string mysql = "Delete from tr_sale_LineItems  WHERE CompID = @CompID AND SaleID = @SaleID AND LiID = @LiID";
+                SqlCommand comm = new SqlCommand(mysql, conn);
+                comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
+                comm.Parameters.Add("@SaleID", SqlDbType.Int).Value = SaleID;
+                comm.Parameters.Add("@LiID", SqlDbType.Int).Value = lineItem.Liid;
+                conn.Open();
+                comm.ExecuteNonQuery();
+                conn.Close();
+            }
+            return retstr;
+        }
+
         public void order_calculate(int SaleID)
         {
             SqlConnection conn = new SqlConnection(conn_str);

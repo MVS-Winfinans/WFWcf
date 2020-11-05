@@ -197,15 +197,37 @@ namespace wfws
                 comm.ExecuteNonQuery();
             }
             conn.Close();
-
-
             return LineCount;
         }
+
+        public string[] DatatransferGetLines(int TransID)
+        {
+            var fileLines = new List<string>();
+            string fileLine;
+            SqlConnection conn = new SqlConnection(conn_str);
+            if (TransID > 0)
+            {
+                string mysql = "select TextLine from pa_DataTransferLines Where TransID = @TransID order by LineID";
+                SqlCommand comm = new SqlCommand(mysql, conn);
+                comm.Parameters.Add("@TransID", SqlDbType.Int).Value = TransID;
+                conn.Open();
+                SqlDataReader myr = comm.ExecuteReader();
+                while (myr.Read())
+                {
+                    fileLine = myr["TextLine"].ToString();
+                    fileLines.Add(fileLine);
+                }
+                conn.Close();
+            }
+            string[] allLines = fileLines.ToArray();
+            return allLines;
+        }
+
 
         public int DatatransferNewTransfer()
         {
             SqlConnection conn = new SqlConnection(conn_str);
-            string mysql = "Insert into pa_DataTransferHeader (Userid, SystemID, Description, Created, BelongstoCompID) Values (@Userid, @SystemID, @Description, Getdate(), @CompID)         Set @TransID = @@Identity";
+            string mysql = "Insert into pa_DataTransferHeader (Userid, SystemID, Description, Created, BelongstoCompID) Values (@Userid, @SystemID, @Description, Getdate(), @CompID)  Set @TransID = @@Identity";
             SqlCommand comm = new SqlCommand(mysql, conn);
             comm.Parameters.Add("@UserID", SqlDbType.NVarChar,20).Value = Username;
             comm.Parameters.Add("@SystemID", SqlDbType.NVarChar, 20).Value = ActiveDefinition.TransferName;
@@ -235,5 +257,25 @@ namespace wfws
             conn.Close();
             return 1;
         }
+
+        public int DatatransferExecuteOut(int CompID,string expordID)
+        {
+            int TransID = 0;
+            SqlConnection conn = new SqlConnection(conn_str);
+            string mysql = ActiveDefinition.HandlingSP;
+            SqlCommand comm = new SqlCommand(mysql, conn);
+            comm.CommandType = CommandType.StoredProcedure;
+            comm.Parameters.Add("@P_CompID", SqlDbType.Int).Value = CompID;
+            comm.Parameters.Add("@P_Userid", SqlDbType.NVarChar,20).Value = "WCF";
+            comm.Parameters.Add("@P_Systemid", SqlDbType.NVarChar, 20).Value = expordID;
+            comm.Parameters.Add("@TransID", SqlDbType.Int).Direction = ParameterDirection.ReturnValue; ;
+            conn.Open();
+            comm.ExecuteNonQuery();
+            TransID = (int)comm.Parameters["@TransID"].Value;
+            conn.Close();
+
+            return TransID;
+        }
+
     }
 }

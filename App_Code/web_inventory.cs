@@ -218,7 +218,7 @@ namespace wfws
             string itemid = item.ItemID;
             if (itemid != String.Empty)
             {
-                string mysql = "Select ItemID, Description,EAN,Unit,note,Model,GroupFi,BrowserTitle,MetaData,URL,MetaText,IncludeItemID,SuppliersInvNo,UNSPSC,isnull(NotOnWeb,0) as NotOnWeb,Position, ";
+                string mysql = "Select ItemID, Description,EAN,Unit,note,Model,GroupFi,BrowserTitle,MetaData,URL,MetaText,IncludeItemID,SuppliersInvNo,UNSPSC,isnull(NotOnWeb,0) as NotOnWeb, isnull(NotOnMyPage,0) as NotOnMyPage,Position, ";
                 mysql = String.Concat(mysql, " isnull(SalesPrice,0) as SalesPrice,CostPriceFixed, isnull(volume,0) as volume, isnull(Weight,0) as Weight, dbo.tr_inventory_onstock(CompID ,ItemID, null , Class,  null,  null) as qty FROM tr_inventory ");
                 mysql = String.Concat(mysql, " WHERE CompID = @CompID AND ItemID = @ItemID ");
                 SqlCommand comm = new SqlCommand(mysql, conn);
@@ -249,6 +249,7 @@ namespace wfws
                     item.CostPriceFixed = ((myr["CostPriceFixed"] == DBNull.Value) ? 0 : (Decimal)myr["CostPriceFixed"]);
                     item.Position = myr["Position"].ToString();
                     item.NotOnWeb = (Boolean)myr["NotOnWeb"];
+                    item.NotOnMyPage = (Boolean)myr["NotOnMyPage"];
 
                     //item.DateCreate = (DateTime)((myr["DateCreate"] == DBNull.Value) ? DateTime.MinValue : myr["DateCreate"]);
                     //item.DateUpdate = (DateTime)((myr["DateUpdate"] == DBNull.Value) ? DateTime.MinValue : myr["DateUpdate"]);
@@ -290,7 +291,7 @@ namespace wfws
             {
                 string mysql = "update tb1 set Description = @Desc,EAN = @EAN,Unit = @Unit,note = @note,Model = @Model,GroupFi = @GroupFi, IncludeItemID = @IncludeItemID, ";
                 mysql = String.Concat(mysql, " SalesPrice = @SalesPrice, volume = @volume, Weight = @Weight, SuppliersInvNo = @SubstituteItem, UNSPSC = @UNSPSC, ");
-                mysql = String.Concat(mysql, " CostPriceFixed = @CostPriceFixed, Position = @Position, NotOnWeb = @NotOnWeb FROM tr_inventory tb1 ");
+                mysql = String.Concat(mysql, " CostPriceFixed = @CostPriceFixed, Position = @Position, NotOnWeb = @NotOnWeb, NotOnMyPage = @NotOnMyPage, DateUpdate = getdate() FROM tr_inventory tb1 ");
                 mysql = String.Concat(mysql, " WHERE tb1.CompID = @CompID AND tb1.ItemID = @ItemID ");
                 SqlCommand comm = new SqlCommand(mysql, conn);
                 comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
@@ -310,6 +311,8 @@ namespace wfws
                 comm.Parameters.Add("@CostPriceFixed", SqlDbType.Money).Value = item.CostPriceFixed;
                 comm.Parameters.Add("@Position", SqlDbType.NVarChar, 50).Value = (string.IsNullOrEmpty(item.Position) ? DBNull.Value : (object)item.Position);
                 comm.Parameters.Add("@NotOnWeb", SqlDbType.Bit).Value = item.NotOnWeb;
+                comm.Parameters.Add("@NotOnMyPage", SqlDbType.Bit).Value = item.NotOnMyPage;
+
                 conn.Open();
                 comm.ExecuteNonQuery();
                 conn.Close();

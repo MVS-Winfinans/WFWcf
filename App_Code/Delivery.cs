@@ -45,15 +45,16 @@ public class Delivery
         SqlConnection conn = new SqlConnection(conn_str);
         SalesDeliveriesProducts Item = new SalesDeliveriesProducts();
         //  SELECT top 10 * FROM ac_Companies_calendars_items where CompID = 1000 AND CalendarID = 20 AND Repeat_last is null
-        string mysql = " select tb1.saleID, tb2.Liid,tb2.SourceSaleID, tb2.SourceLineID, isnull(tb2.Orderno,tb1.Orderno) as Orderno , tb1.Class, So_AddressID, tb2.ItemID,tb2.Description, tb1.ShipDate,Calendar, blockReason, isnull(Sh_AddressID,so_addressID) as Sh_AddressID ,  ";
+        string mysql = " select tb1.saleID, tb2.Liid,tb2.SourceSaleID, tb2.SourceLineID, isnull(tb2.Orderno,tb1.Orderno) as Orderno , tb1.Class, So_AddressID, tb2.ItemID,tb2.Description, tb1.ShipDate,Calendar, blockReason, isnull(Sh_AddressID,so_addressID) as Sh_AddressID ,isnull(tb3.NotOnWeb,0) as NotOnWeb, isnull(tb3.NotOnMyPage,0) as NotOnMyPage,  ";
         mysql = string.Concat(mysql, " (select LongDesc from ac_Companies_calendars tb3 where  tb3.CompID = tb2.CompID AND tb3.CalendarID = tb1.Calendar) as LongDesc, ");
         mysql = string.Concat(mysql, " (SELECT case pattern when 1 then Qty When 2 then Qty When 3 then Qty when 4 then Qty * 2 When 5 Then Qty * 2 ELSE Qty END  from ac_Companies_calendars tb4 where  tb4.CompID = tb2.CompID AND tb4.CalendarID = tb1.Calendar) as Qty, ");
         mysql = string.Concat(mysql, " tb2.OrderQty as LineQty, tb2.ReplacementProduct ");
         mysql = string.Concat(mysql, " from tr_sale tb1 inner join tr_sale_LineItems tb2 on tb1.CompID = tb2.CompID AND tb1.SaleID = tb2.SaleID  ");
+        mysql = string.Concat(mysql, " inner join tr_inventory tb3 on tb3.CompID = tb2.CompID AND tb3.ItemID = tb2.ItemID ");
         mysql = string.Concat(mysql, "  Where tb1.CompID = @CompID AND tb1.Class in (200,300,400,900) AND So_AddressID = @AdrID AND tb2.ItemID is not null ");
         mysql = string.Concat(mysql, "  AND (tb1.Class <> 300 OR  exists (SELECT * FROM ac_Companies_calendars_items tb3 where tb3.CompID = tb1.CompID AND tb3.CalendarID = tb1.Calendar AND Item > getdate() )) ");
         mysql = string.Concat(mysql, "  And (tb1.Class = 300 OR DATEDIFF(Y,getdate(),tb1.ShipDate) > -14) ");
-        mysql = string.Concat(mysql, " AND not exists (SELECT * FROM tr_inventory tb4 where tb4.compID = tb2.CompID AND tb4.ItemID = tb2.ItemID AND isnull(tb4.notOnWeb,0) <> 0) "); 
+        mysql = string.Concat(mysql, " AND not exists (SELECT * FROM tr_inventory tb4 where tb4.compID = tb2.CompID AND tb4.ItemID = tb2.ItemID AND isnull(tb4.NotOnWeb,0) <> 0) "); 
 
         try
         {
@@ -83,7 +84,10 @@ public class Delivery
             Item.SourceSaleID = (myr["SourceSaleID"] == DBNull.Value ? 0 : (Int32)myr["SourceSaleID"]);
             Item.SourceLineID = (myr["SourceLineID"] == DBNull.Value ? 0 : (Int32)myr["SourceLineID"]);
             Item.ReplacementProduct = myr["ReplacementProduct"].ToString();
-            if (Item.Class == 300)
+            Item.NotOnWeb = (Boolean)myr["NotOnWeb"];
+            Item.NotOnMyPage = (Boolean)myr["NotOnMyPage"];
+
+                if (Item.Class == 300)
              {
                  Item.Deliveries = ProductListLoadTimes(Item.Calendar, Item.SaleID, ref retstr, Item.ShipTo, Item.ShipDesc,Item.ShipToPostalCode);
             
@@ -106,6 +110,80 @@ public class Delivery
             catch (Exception e) { retstr = e.Message; }
         return retstr;
     }
+
+    public string ProductListLoad_2(int BillTo, ref IList<SalesDeliveriesProducts> items)
+    {
+        string retstr = "OK";
+        string ShipTopostelCode = string.Empty;
+        SqlConnection conn = new SqlConnection(conn_str);
+        SalesDeliveriesProducts Item = new SalesDeliveriesProducts();
+        //  SELECT top 10 * FROM ac_Companies_calendars_items where CompID = 1000 AND CalendarID = 20 AND Repeat_last is null
+        string mysql = " select tb1.saleID, tb2.Liid,tb2.SourceSaleID, tb2.SourceLineID, isnull(tb2.Orderno,tb1.Orderno) as Orderno , tb1.Class, So_AddressID, tb2.ItemID,tb2.Description, tb1.ShipDate,Calendar, blockReason, isnull(Sh_AddressID,so_addressID) as Sh_AddressID ,isnull(tb3.NotOnWeb,0) as NotOnWeb, isnull(tb3.NotOnMyPage,0) as NotOnMyPage,   ";
+        mysql = string.Concat(mysql, " (select LongDesc from ac_Companies_calendars tb3 where  tb3.CompID = tb2.CompID AND tb3.CalendarID = tb1.Calendar) as LongDesc, ");
+        mysql = string.Concat(mysql, " (SELECT case pattern when 1 then Qty When 2 then Qty When 3 then Qty when 4 then Qty * 2 When 5 Then Qty * 2 ELSE Qty END  from ac_Companies_calendars tb4 where  tb4.CompID = tb2.CompID AND tb4.CalendarID = tb1.Calendar) as Qty, ");
+        mysql = string.Concat(mysql, " tb2.OrderQty as LineQty, tb2.ReplacementProduct ");
+        mysql = string.Concat(mysql, " from tr_sale tb1 inner join tr_sale_LineItems tb2 on tb1.CompID = tb2.CompID AND tb1.SaleID = tb2.SaleID  ");
+        mysql = string.Concat(mysql, " inner join tr_inventory tb3 on tb3.CompID = tb2.CompID AND tb3.ItemID = tb2.ItemID ");
+        mysql = string.Concat(mysql, "  Where tb1.CompID = @CompID AND tb1.Class in (200,300,400,900) AND So_AddressID = @AdrID AND tb2.ItemID is not null ");
+        mysql = string.Concat(mysql, "  AND (tb1.Class <> 300 OR  exists (SELECT * FROM ac_Companies_calendars_items tb3 where tb3.CompID = tb1.CompID AND tb3.CalendarID = tb1.Calendar AND Item > getdate() )) ");
+        mysql = string.Concat(mysql, "  And (tb1.Class = 300 OR DATEDIFF(Y,getdate(),tb1.ShipDate) > -14) ");
+        // mysql = string.Concat(mysql, " AND not exists (SELECT * FROM tr_inventory tb4 where tb4.compID = tb2.CompID AND tb4.ItemID = tb2.ItemID AND isnull(tb4.NotOnMyPage,0) <> 0) ");
+        try
+        {
+            SqlCommand comm = new SqlCommand(mysql, conn);
+            comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
+            comm.Parameters.Add("@AdrID", SqlDbType.Int).Value = BillTo;
+            conn.Open();
+            SqlDataReader myr = comm.ExecuteReader();
+            while (myr.Read())
+            {
+                Item.SaleID = (Int32)myr["saleID"];
+                Item.Liid = (Int32)myr["Liid"];
+                Item.OrderNo = (myr["OrderNo"] == DBNull.Value ? 0 : (Int64)myr["OrderNo"]);
+                Item.Frequence = (myr["Qty"] == DBNull.Value ? 0 : (Int32)myr["Qty"]);
+                Item.LineQty = (myr["LineQty"] == DBNull.Value ? 0 : (decimal)myr["LineQty"]);
+                Item.Class = (Int32)myr["Class"];
+                Item.ItemID = myr["ItemID"].ToString();
+                Item.ItemDescription = myr["Description"].ToString();
+                Item.Calendar = (myr["Calendar"] == DBNull.Value ? 0 : (Int32)myr["Calendar"]);
+                Item.LongDesc = myr["LongDesc"].ToString();
+                Item.BlockReason = (myr["BlockReason"] == DBNull.Value ? 0 : (Int32)myr["BlockReason"]);
+                Item.ShipTo = (myr["Sh_AddressID"] == DBNull.Value ? 0 : (Int32)myr["Sh_AddressID"]);
+                Item.ShipDesc = ShipAddressLoad(Item.ShipTo, ref ShipTopostelCode);
+                Item.ShipToPostalCode = ShipTopostelCode;
+                Item.DeliveryDay = (myr["ShipDate"] == DBNull.Value ? DateTime.Today : (DateTime)myr["ShipDate"]);
+                Item.DeliveryWeekDay = Convert.ToInt32(Item.DeliveryDay.DayOfWeek); //  wfws.wfsh.GetWeekDay(ShipDate);
+                Item.SourceSaleID = (myr["SourceSaleID"] == DBNull.Value ? 0 : (Int32)myr["SourceSaleID"]);
+                Item.SourceLineID = (myr["SourceLineID"] == DBNull.Value ? 0 : (Int32)myr["SourceLineID"]);
+                Item.ReplacementProduct = myr["ReplacementProduct"].ToString();
+                Item.NotOnWeb = (Boolean)myr["NotOnWeb"];
+                Item.NotOnMyPage = (Boolean)myr["NotOnMyPage"];
+                if (Item.Class == 300)
+                {
+                    Item.Deliveries = ProductListLoadTimes(Item.Calendar, Item.SaleID, ref retstr, Item.ShipTo, Item.ShipDesc, Item.ShipToPostalCode);
+
+                    if (Item.Deliveries.Length > 0)
+                    {
+                        Item.DeliveryDay = Item.Deliveries[0].DeliveryDay;
+                        Item.DeliveryWeekDay = Item.Deliveries[0].DeliveryWeekDay;
+                    }
+
+
+                }
+                else
+                {
+
+                    Item.Deliveries = ProductListAddTimeItem(Item.Calendar, Item.DeliveryDay, ref retstr, Item.ShipTo, Item.ShipDesc, Item.ShipToPostalCode);
+                }
+                items.Add(Item);
+                Item = new SalesDeliveriesProducts();
+            }
+            conn.Close();
+        }
+        catch (Exception e) { retstr = e.Message; }
+        return retstr;
+    }
+
 
 
     public SalesDeliveryTime[] ProductListLoadTimes(int CalendarID,int SaleID, ref string errstr, int ShipTo, string ShipDesc,string ShipToPostalCode )
