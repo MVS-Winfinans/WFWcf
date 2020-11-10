@@ -475,7 +475,7 @@ namespace wfws
                     Order_AddDim(MyORder.Dim1, MyORder.Dim2, MyORder.Dim3, MyORder.Dim4);
                 }
                 string mysql = "Update tr_sale_LineItems set AddInformation = @AddInf,Unit = isnull(@Unit, unit), Batch = @Batch, Dim1 = @Dim1, Dim2 = @Dim2, Dim3 = @Dim3, Dim4 = @Dim4, LineAmount = @LineAmount, LineVat = @LineVat, LineVatBase = @LineVatBase, AllowanceCharge = @AllowanceCharge, VatIncl = @VatIncl, VAT_perc = @VatPerc, UNSPSC=isnull(@UNSPSC,unspsc), AccountingCost=@AccountingCost, LinePrice=@LinePrice,  ";
-                mysql = string.Concat(mysql, " weight = @weight, volume = @Volume, SuggestedRetail = @SuggestedRetail, Selection = @P_Selection ");
+                mysql = string.Concat(mysql, " weight = @weight, volume = @Volume, SuggestedRetail = @SuggestedRetail, Selection = @P_Selection, Substitutable = @Substitutable ");
                 mysql = String.Concat(mysql, " WHERE CompID = @CompID AND SaleID = @SaleID AND LiID = @LiID ");
                 SqlCommand comm = new SqlCommand(mysql, conn);
                 comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
@@ -770,6 +770,7 @@ namespace wfws
                     item.Discount = (decimal)((myr["Discount"] == DBNull.Value) ? 0 : (decimal)myr["Discount"]);
                     item.DiscountProc = (decimal)((myr["DiscountProc"] == DBNull.Value) ? 0 : (decimal)myr["DiscountProc"]);
                     item.ActualDeliveryDate = (DateTime)((myr["ShipDate"] == DBNull.Value) ? DateTime.MinValue : (DateTime)myr["ShipDate"]);
+                    item.Substitutable = myr["Substitutable"] == DBNull.Value ? false : (Boolean)myr["Substitutable"];
                     items.Add(item);
                     item = new OrderLine();
                 }
