@@ -236,6 +236,7 @@ public interface IService
     [OperationContract] string DimensionTimeItemUpdate(ref DBUser DBUser, ref fi_dimensions_timeitems myItem);
     [OperationContract] int DimensionTimeItemToInvoiceAll(ref DBUser DBUser, DateTime EnterDate);
     [OperationContract] Dimensions_ClientStatement[] DimensionLawyerStatement(ref DBUser DBUser, string Dim3, ref string retstr);
+    [OperationContract] decimal DimensionTotalLoad(ref DBUser DBUser,int DimNo,string DimID,string Account);
 
     //Datatransfers
     [OperationContract] string[] DataTransferOut(ref DBUser DBUser, string UseDefinition);

@@ -616,10 +616,36 @@ namespace wfws
             return iCount;
         }
 
+        public decimal Dimension_Total(int DimNo, string DimID, string Account)
+        {
+            decimal DimensionTotal = 0;
+            string mysql_1 = "select  isnull(max(yearID), 0) from fi_Journals where CompID = @CompID";
+            string mysql_2 = "select isnull(sum(Amount),0) from fi_Years_totals_dim where CompID = @CompID AND YearID = @YearID AND Account = @Account ";
+            switch (DimNo)
+            {
+                case 1: mysql_2 = string.Concat(mysql_2, " and Dim1 = @DimID");break;
+                case 2: mysql_2 = string.Concat(mysql_2, " and Dim2 = @DimID"); break;
+                case 3: mysql_2 = string.Concat(mysql_2, " and Dim3 = @DimID"); break;
+                case 4: mysql_2 = string.Concat(mysql_2, " and Dim4 = @DimID"); break;
+                default: mysql_2 = string.Concat(mysql_2, " and Dim1 = @DimID"); break;
+            }
+            SqlConnection Conn = new SqlConnection(ConnectionString);
+            SqlCommand Comm = new SqlCommand(mysql_1, Conn);
+            Comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
+            Comm.Parameters.Add("@YearID", SqlDbType.Int).Value = 0;
+            Comm.Parameters.Add("@DimID", SqlDbType.NVarChar,20).Value = (string.IsNullOrEmpty(DimID) ? (object)DBNull.Value : DimID);
+            Comm.Parameters.Add("@Account", SqlDbType.NVarChar,20).Value = (string.IsNullOrEmpty(Account) ? (object)DBNull.Value : Account);
+            Conn.Open();
+            int YearID = (int)Comm.ExecuteScalar();
+            Comm.CommandText = mysql_2;
+            Comm.Parameters["@YearID"].Value = YearID;
+            DimensionTotal = (decimal)Comm.ExecuteScalar();
+            Conn.Close();
+            return DimensionTotal;
+        }
 
 
-
-        public bool IsValidAccountingCost(string TestAccountingCost)
+            public bool IsValidAccountingCost(string TestAccountingCost)
         {
             bool Answer = true;
             if (!string.IsNullOrEmpty(TestAccountingCost))

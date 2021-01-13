@@ -191,7 +191,7 @@ public class Service : IService
         }
         return companyinf;
     }
-    public string CompanySellerLookup(ref DBUser DBUser, ref  CompanySeller wfSeller, ref int seCount)
+    public string CompanySellerLookup(ref DBUser DBUser, ref CompanySeller wfSeller, ref int seCount)
     {
         string errstr = String.Concat("No seller: ", wfSeller.SellerID);
         string connstr;
@@ -361,7 +361,7 @@ public class Service : IService
                     newAddress.AddressID = AdrID;
                     wfweb.Address_Get(ref newAddress);
                     if (string.IsNullOrEmpty(wfAddress.DebtorGroup)) wfAddress.DebtorGroup = newAddress.DebtorGroup;
-                    if (wfAddress.SellerID==0) wfAddress.SellerID = newAddress.SellerID;
+                    if (wfAddress.SellerID == 0) wfAddress.SellerID = newAddress.SellerID;
                     wfAddress.TimeChanged = newAddress.TimeChanged;
                 }
                 DBUser.Message = string.Concat(DBUser.Message, "-", wfAddress.AddressID.ToString());
@@ -760,7 +760,7 @@ public class Service : IService
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
-                errstr = wfweb.Activities_Items_get_passthrough(ref items,UserTop, UserWhere, UserOrder);
+                errstr = wfweb.Activities_Items_get_passthrough(ref items, UserTop, UserWhere, UserOrder);
             }
         }
         catch (NullReferenceException ex)
@@ -1114,7 +1114,7 @@ public class Service : IService
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
-                answer = wfweb.Address_Document_Get(AddressID,DocID, ref ContentType, ref Description);
+                answer = wfweb.Address_Document_Get(AddressID, DocID, ref ContentType, ref Description);
             }
         }
         catch (NullReferenceException ex)
@@ -1155,7 +1155,7 @@ public class Service : IService
             errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
-//TODO
+                //TODO
             }
         }
         catch (NullReferenceException ex)
@@ -1401,7 +1401,7 @@ public class Service : IService
                                     lineItem.Liid = lineid;
                                     DBUser.Message = errstr;
                                     wfweb.Order_Item_Update(SaleID, lineItem);
-                                    if (lineItem.SalesPrice >= 0) wfweb.Order_Item_UpdatePrice(SaleID, lineItem);  //salesprice = -1 means price from inv.card is accepted otherwise recalculate to price from shop
+                                    wfweb.Order_Item_UpdatePrice(SaleID, lineItem);  //salesprice = -1 means price from inv.card is accepted otherwise recalculate to price from shop
                                 }
                             }
                             wfweb.order_calculate(SaleID);
@@ -1670,7 +1670,7 @@ public class Service : IService
                 wfws.web wfweb = new wfws.web(ref DBUser);
                 //if (wfweb.order_is_Open(WfOrder.SaleID))
                 //{
-                    errstr = wfweb.Order_add_payment(WfOrder.SaleID, PaymentItem);
+                errstr = wfweb.Order_add_payment(WfOrder.SaleID, PaymentItem);
                 //}
                 //else
                 //{
@@ -1921,7 +1921,7 @@ public class Service : IService
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
-                if (OrderType  == SalesOrderTypes.UnpaidInvoice || OrderType == SalesOrderTypes.UnpaidCreditNote)
+                if (OrderType == SalesOrderTypes.UnpaidInvoice || OrderType == SalesOrderTypes.UnpaidCreditNote)
                     errstr = wfweb.SalesOrder_Items_get_unpaid(ref WfOrder, ref items, OrderType);
                 else
                     errstr = wfweb.SalesOrder_Items_get(ref WfOrder, ref items, orderClass);
@@ -1950,7 +1950,7 @@ public class Service : IService
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
-               //errstr = wfweb.SalesOrder_LineItems_get(ref  OrderSales wfOrderSales, ref IList<OrderLine> items, int orderClass)
+                //errstr = wfweb.SalesOrder_LineItems_get(ref  OrderSales wfOrderSales, ref IList<OrderLine> items, int orderClass)
                 errstr = wfweb.SalesStatsItems_get(ref WfOrder, ref items, orderClass);
             }
         }
@@ -2160,7 +2160,7 @@ public class Service : IService
         }
         //OrderSalesItemChanged[] retval = items.ToArray();
         //return retval;
-        return items.ToArray(); 
+        return items.ToArray();
     }
     public int SalesOrderB2BBackboneItemConfirm(ref DBUser DBUser, int SaleID)
     {
@@ -2215,7 +2215,7 @@ public class Service : IService
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
                 NewSaleID = wfweb.SalesOrder_To_Invoice(WfOrder.SaleID, WfOrder.InvoiceDate);
-             }
+            }
             return NewSaleID;
         }
         catch (Exception e)
@@ -2224,7 +2224,7 @@ public class Service : IService
             throw new FaultException(string.Concat("wf_wcf: ", e.Message), new FaultCode("wfwcfFault"));
         }
     }
-    public string SalesOrderIDToUBL(ref DBUser DBUser, ref  SalesOrderUBL xmlUBL)
+    public string SalesOrderIDToUBL(ref DBUser DBUser, ref SalesOrderUBL xmlUBL)
     {
         CompanyInf companyinf = new CompanyInf();
         var Doc = new XmlDocument();
@@ -2253,7 +2253,7 @@ public class Service : IService
                 errstr = wfweb.Address_Get(ref BillToAddress);
                 errstr = wfweb.Address_Get(ref ShipToAddress);
                 UBLOrder myUBL = new UBLOrder();
-                errstr = myUBL.Create_ubl_invoice_from_order(ref  companyinf, ref wfseller, ref wfOrder, ref BillToAddress, ref ShipToAddress);
+                errstr = myUBL.Create_ubl_invoice_from_order(ref companyinf, ref wfseller, ref wfOrder, ref BillToAddress, ref ShipToAddress);
                 xmlUBL.XmlString = myUBL.Doc.OuterXml;
                 //int sellerid = wfcompany.Seller_Lookup(ref wfSeller,ref seCount);
                 //if (wfSeller.SellerID > 0) { errstr = wfcompany.Seller_Get(ref wfSeller);}
@@ -2738,7 +2738,7 @@ public class Service : IService
     public inventoryItem[] InventorylistLoadSelection(ref DBUser DBUser, string SelectionID, ref string retStr)
     {
         IList<inventoryItem> items = new List<inventoryItem>();
-//        IList<inventorySalesPrice> pitems = new List<inventorySalesPrice>();
+        //        IList<inventorySalesPrice> pitems = new List<inventorySalesPrice>();
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
@@ -2970,7 +2970,7 @@ public class Service : IService
         return retStr;
     }
 
-        public InventoryExtraLine[] InventoryExtraLinesLoad(ref DBUser DBUser, string ItemID, ref string retstr)
+    public InventoryExtraLine[] InventoryExtraLinesLoad(ref DBUser DBUser, string ItemID, ref string retstr)
     {
         retstr = "Err";
         IList<InventoryExtraLine> items = new List<InventoryExtraLine>();
@@ -3124,7 +3124,7 @@ public class Service : IService
     }
 
 
-    public string InventoryVendorClear(ref DBUser DBUser,string ItemID)
+    public string InventoryVendorClear(ref DBUser DBUser, string ItemID)
     {
         string retstr = "err";
         try
@@ -3172,7 +3172,7 @@ public class Service : IService
         }
         return items.ToArray();
     }
-    public MenuItem[] MenuLoadItemsTranslated(ref DBUser DBUser,String Language, string selection)
+    public MenuItem[] MenuLoadItemsTranslated(ref DBUser DBUser, String Language, string selection)
     {
         string retStr = "err";
         IList<MenuItem> items = new List<MenuItem>();
@@ -3183,7 +3183,7 @@ public class Service : IService
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
-                retStr = wfweb.Menu_Items_get_translated(ref items,Language, selection);
+                retStr = wfweb.Menu_Items_get_translated(ref items, Language, selection);
             }
         }
         catch (Exception e)
@@ -3222,8 +3222,8 @@ public class Service : IService
             //retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
             //if (DBUser.CompID > 0)
             //{
-                wfws.web wfweb = new wfws.web(ref DBUser);
-                retStr = wfweb.Menu_ShopItems_get(ref items, selection);
+            wfws.web wfweb = new wfws.web(ref DBUser);
+            retStr = wfweb.Menu_ShopItems_get(ref items, selection);
             //}
         }
         catch (Exception e)
@@ -3267,48 +3267,48 @@ public class Service : IService
             errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
-                    wfws.web wfweb = new wfws.web(ref DBUser);
-                    ProdID = wf_Ass.ProdID;
-                    if (ProdID < 0) ProdID = 0;
-                    if (ProdID == 0) wfweb.Prod_add(ref wf_Ass, ref ProdID);
-                    if (ProdID > 0)
+                wfws.web wfweb = new wfws.web(ref DBUser);
+                ProdID = wf_Ass.ProdID;
+                if (ProdID < 0) ProdID = 0;
+                if (ProdID == 0) wfweb.Prod_add(ref wf_Ass, ref ProdID);
+                if (ProdID > 0)
+                {
+                    wfweb.prod_update(ProdID, ref wf_Ass);
+                    wfweb.Prod_Items_Delete(ProdID);
+                    errstr = "OK";
+                    if (wf_Ass.ProdLines != null)
                     {
-                        wfweb.prod_update(ProdID, ref wf_Ass);
-                        wfweb.Prod_Items_Delete(ProdID);
-                        errstr = "OK";
-                        if (wf_Ass.ProdLines != null)
+                        foreach (ProdAssLine lineItem in wf_Ass.ProdLines)
                         {
-                            foreach (ProdAssLine lineItem in wf_Ass.ProdLines)
+                            if (lineItem.ItemID != String.Empty)
                             {
-                                if (lineItem.ItemID != String.Empty)
-                                {
-                                    errstr = wfweb.Prod_add_item(ProdID, lineItem, ref lineid);
-                                    lineItem.Liid = lineid;
-                                    DBUser.Message = errstr;
-                                    wfweb.prod_item_update(ProdID,lineItem);
-                                 }
-                            }
-                         }
-                        wfweb.Prod_operations_Delete(ProdID);
-                        if (wf_Ass.ProdOpeLines != null)
-                        {
-                            foreach (ProdOpeLine opeitem in wf_Ass.ProdOpeLines)
-                            {
-                                errstr = wfweb.prod_add_operation(ProdID, opeitem, ref lineid);
+                                errstr = wfweb.Prod_add_item(ProdID, lineItem, ref lineid);
+                                lineItem.Liid = lineid;
+                                DBUser.Message = errstr;
+                                wfweb.prod_item_update(ProdID, lineItem);
                             }
                         }
-                        wfweb.prod_calculate(ProdID);
                     }
-                    else
+                    wfweb.Prod_operations_Delete(ProdID);
+                    if (wf_Ass.ProdOpeLines != null)
                     {
-                        errstr = "err:  // ProdID = 0";
+                        foreach (ProdOpeLine opeitem in wf_Ass.ProdOpeLines)
+                        {
+                            errstr = wfweb.prod_add_operation(ProdID, opeitem, ref lineid);
+                        }
                     }
+                    wfweb.prod_calculate(ProdID);
                 }
                 else
                 {
-                    errstr = "err: Order number missing";
+                    errstr = "err:  // ProdID = 0";
                 }
-         }
+            }
+            else
+            {
+                errstr = "err: Order number missing";
+            }
+        }
         catch (NullReferenceException ex)
         {
             errstr = ex.Message;
@@ -3362,7 +3362,7 @@ public class Service : IService
                         errstr = "OK";
                         if (wf_Ass.ProdLines != null)
                         {
-                           foreach (ProdAssLine lineItem in wf_Ass.ProdLines)
+                            foreach (ProdAssLine lineItem in wf_Ass.ProdLines)
                             {
                                 if (lineItem.ItemID != String.Empty)
                                 {
@@ -3483,7 +3483,7 @@ public class Service : IService
         }
         return retStr;
     }
-    public string BasketSave(ref DBUser DBUser, ref  ShopBasket myBasket)
+    public string BasketSave(ref DBUser DBUser, ref ShopBasket myBasket)
     {
         string retStr = "err";
         try
@@ -3507,21 +3507,21 @@ public class Service : IService
     public string BasketIDByAddressID(ref DBUser DBUser, int addressID)
     {
         string retStr = "err";
-             try
+        try
         {
-         var wfconn = new wfws.ConnectLocal(DBUser);
+            var wfconn = new wfws.ConnectLocal(DBUser);
             retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 var myweb = new wfws.web(ref DBUser);
-                DBUser.BasketGuid = myweb.Address_get_basket_Guid(addressID,ref retStr);
-              }
+                DBUser.BasketGuid = myweb.Address_get_basket_Guid(addressID, ref retStr);
+            }
         }
-             catch (Exception e)
-             {
-                 retStr = e.Message;
-                 throw new FaultException(string.Concat("wf_wcf: ", e.Message), new FaultCode("wfwcfFault"));
-             }
+        catch (Exception e)
+        {
+            retStr = e.Message;
+            throw new FaultException(string.Concat("wf_wcf: ", e.Message), new FaultCode("wfwcfFault"));
+        }
         return retStr;
     }
     public string BasketAddAddresses(ref DBUser DBUser, ref ShopBasket myBasket)
@@ -3608,7 +3608,7 @@ public class Service : IService
         }
         return retStr;
     }
-    public string BasketUpdItem(ref DBUser DBUser, ref ShopBasket myBasket, ref  ShopBasketItem myBasketItem)
+    public string BasketUpdItem(ref DBUser DBUser, ref ShopBasket myBasket, ref ShopBasketItem myBasketItem)
     {
         string retStr = "err";
         try
@@ -3784,7 +3784,7 @@ public class Service : IService
         }
         catch (Exception e)
         {
-//            retStr = e.Message;
+            //            retStr = e.Message;
             throw new FaultException(string.Concat("wf_wcf: ", e.Message), new FaultCode("wfwcfFault"));
         }
         return Ledgers.ToArray();
@@ -3859,10 +3859,10 @@ public class Service : IService
         }
         return retStr;
     }
-   public string DimensionUpdate(ref DBUser DBUser, ref Dimension myDim)
-   {
-      string retStr = "err";
-          try
+    public string DimensionUpdate(ref DBUser DBUser, ref Dimension myDim)
+    {
+        string retStr = "err";
+        try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
             retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
@@ -3872,37 +3872,37 @@ public class Service : IService
                 retStr = wfacc.Dimension_Update(DBUser.CompID, ref myDim);
             }
         }
-          catch (Exception e)
-          {
-              retStr = e.Message;
-              throw new FaultException(string.Concat("wf_wcf: ", e.Message), new FaultCode("wfwcfFault"));
-          }
-      return retStr;
-   }
-   public string DimensionUpdateLawyer(ref DBUser DBUser, ref Dimension myDim)
-   {
-       string retStr = "err";
-       try
-       {
-           var wfconn = new wfws.ConnectLocal(DBUser);
-           retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
-           if (DBUser.CompID > 0)
-           {
-               var wfacc = new wfws.Accounts(ref DBUser);
-               retStr = wfacc.Dimension_UpdateLawyer(DBUser.CompID, ref myDim);
-           }
-       }
-       catch (Exception e)
-       {
-           retStr = e.Message;
-           throw new FaultException(string.Concat("wf_wcf: ", e.Message), new FaultCode("wfwcfFault"));
-       }
-       return retStr;
-   }
+        catch (Exception e)
+        {
+            retStr = e.Message;
+            throw new FaultException(string.Concat("wf_wcf: ", e.Message), new FaultCode("wfwcfFault"));
+        }
+        return retStr;
+    }
+    public string DimensionUpdateLawyer(ref DBUser DBUser, ref Dimension myDim)
+    {
+        string retStr = "err";
+        try
+        {
+            var wfconn = new wfws.ConnectLocal(DBUser);
+            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            if (DBUser.CompID > 0)
+            {
+                var wfacc = new wfws.Accounts(ref DBUser);
+                retStr = wfacc.Dimension_UpdateLawyer(DBUser.CompID, ref myDim);
+            }
+        }
+        catch (Exception e)
+        {
+            retStr = e.Message;
+            throw new FaultException(string.Concat("wf_wcf: ", e.Message), new FaultCode("wfwcfFault"));
+        }
+        return retStr;
+    }
     public string DimensionTimeItemAdd(ref DBUser DBUser, ref fi_dimensions_timeitems myItem)
     {
-     string retStr = "err";
-     try
+        string retStr = "err";
+        try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
             retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
@@ -3912,12 +3912,12 @@ public class Service : IService
                 int itemID = wfacc.Dimension_TimeItemsAdd(ref myItem);
             }
         }
-      catch (Exception e)
-      {
-       retStr = e.Message;
-       throw new FaultException(string.Concat("wf_wcf: ", e.Message), new FaultCode("wfwcfFault"));
-      }
-     return retStr;
+        catch (Exception e)
+        {
+            retStr = e.Message;
+            throw new FaultException(string.Concat("wf_wcf: ", e.Message), new FaultCode("wfwcfFault"));
+        }
+        return retStr;
     }
     public Dimensions_ClientStatement[] DimensionLawyerStatement(ref DBUser DBUser, string Dim3, ref string retstr)
     {
@@ -3978,10 +3978,36 @@ public class Service : IService
         }
         catch (Exception e)
         {
-           throw new FaultException(string.Concat("wf_wcf: ", e.Message), new FaultCode("wfwcfFault"));
+            throw new FaultException(string.Concat("wf_wcf: ", e.Message), new FaultCode("wfwcfFault"));
         }
         return iCount;
     }
+
+    public decimal DimensionTotalLoad(ref DBUser DBUser, int DimNo, string DimID, string Account)
+    {
+        decimal dimTotal = 0;
+        try
+        {
+            var wfconn = new wfws.ConnectLocal(DBUser);
+            string retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            if (DBUser.CompID > 0)
+            {
+                var wfacc = new wfws.Accounts(ref DBUser);
+                dimTotal = wfacc.Dimension_Total(DimNo,DimID,Account);
+            }
+        }
+        catch (Exception e)
+        {
+            throw new FaultException(string.Concat("wf_wcf: ", e.Message), new FaultCode("wfwcfFault"));
+        }
+
+        return dimTotal;
+    }
+
+
+
+
+
     public string[] DataTransferOut(ref DBUser DBUser, String UseDefinition)
     {
         string RetVal = "";
