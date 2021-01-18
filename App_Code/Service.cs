@@ -1155,7 +1155,9 @@ public class Service : IService
             errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
-                //TODO
+                wfws.web wfweb = new wfws.web(ref DBUser);
+                errstr = wfweb.Contact_add_new(ref NewContact);
+
             }
         }
         catch (NullReferenceException ex)
@@ -1165,6 +1167,34 @@ public class Service : IService
         }
         return errstr;
     }
+
+    public Contact[] ContactsLoad(ref DBUser DBUser,int AddressID)
+    {
+        string errstr = "Err";
+        List<Contact> items = new List<Contact>();
+        try
+        {
+            var wfconn = new wfws.ConnectLocal(DBUser);
+            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            if (DBUser.CompID > 0)
+            {
+                wfws.web wfweb = new wfws.web(ref DBUser);
+                wfweb.Contacts_load(AddressID,ref items);
+            }
+        }
+        catch (NullReferenceException ex)
+        {
+            errstr = ex.Message;
+            throw new FaultException(String.Concat("wf_wcf: ", ex.Message), new FaultCode("wfwcfFault"));
+        }
+        return items.ToArray();
+    }
+
+
+
+
+
+
     // Alerts
     public AddressAlert[] AddressAlertLoad(ref DBUser DBUser, int AddressID, int AlertsTop, ref string retstr)
     {
@@ -1585,6 +1615,36 @@ public class Service : IService
         }
         return errstr;
     }
+
+    public string SalesOrderDelete(ref DBUser DBUser, ref OrderSales WfOrder)
+    {
+        string errstr = "OK";
+        try
+        {
+            var wfconn = new wfws.ConnectLocal(DBUser);
+            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            if (DBUser.CompID > 0)
+            {
+                wfws.web wfweb = new wfws.web(ref DBUser);
+                if (wfweb.order_is_Open(WfOrder.SaleID))
+                {
+                    wfweb.order_delete(WfOrder.SaleID);
+                }
+                else
+                {
+                    errstr = "Order is closed";
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            errstr = e.Message;
+            throw new FaultException(String.Concat("wf_wcf: ", e.Message), new FaultCode("wfwcfFault"));
+        }
+        return errstr;
+    }
+
+
     public int SalesOrderGetSaleIDFromGuid(ref DBUser DBUser, Guid GuidInvoice)
     {
         int SaleID = 0;

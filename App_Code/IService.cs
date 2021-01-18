@@ -80,6 +80,12 @@ public interface IService
 
     // Contacts
     [OperationContract] string ContactNew(ref DBUser DBUser, ref Contact NewContact);
+    [OperationContract] Contact[] ContactsLoad(ref DBUser DBUser, int AddressID);
+
+
+
+
+
     // Alert
     [OperationContract] AddressAlert[] AddressAlertLoad(ref DBUser DBUser, int AddressID, int AlertsTop, ref string retstr);
     [OperationContract] string AddressAlertAdd(ref DBUser DBUser, ref AddressAlert wfAlert);
@@ -100,6 +106,8 @@ public interface IService
     [OperationContract] int SalesOrderToInvoice(ref DBUser DBUser, ref OrderSales WfOrder);
     [OperationContract] string SalesOrderClose(ref DBUser DBUser, ref OrderSales wfOrder);
     [OperationContract] string SalesOrderSave(ref DBUser DBUser, ref OrderSales WfOrder);
+    [OperationContract] string SalesOrderDelete(ref DBUser DBUser, ref OrderSales WfOrder);
+
     [OperationContract] string SalesOrderLookup(ref DBUser DBUser, ref OrderSales wfOrder, SalesOrderTypes OrderType);
     [OperationContract] int SalesOrderGetSaleIDFromGuid(ref DBUser DBUser,Guid GuidInvoice);
     [OperationContract] OrderLine[] SalesOrderLoadItems(ref DBUser DBUser, ref OrderSales wfOrder,ref string retstr);
@@ -144,11 +152,6 @@ public interface IService
     // sales deliveries
     [OperationContract] SalesDeliveriesProducts[] SalesDeliverySchedule(ref DBUser DBUser, int BillTo);
     [OperationContract] SalesDeliveriesProducts[] SalesDeliverySchedule_2(ref DBUser DBUser, int BillTo);
-
-
-
-
-
 
     // purchase
     [OperationContract] string PurchaseOrderLoad(ref DBUser DBUser,ref OrderPurchase wfOrderPurc);
@@ -457,7 +460,6 @@ public class CompanySalesman
     [DataMember] public string CreditorNo;
     [DataMember] public string IBAN;
     [DataMember] public string BIC;
-
     [DataMember] public string Ticket;
     [DataMember] public DateTime TicketEnterDate;
     [DataMember] public string CardNoMask;
@@ -668,7 +670,6 @@ public class AddressCollectable
     [DataMember] public Decimal SuggestedRetail;
     [DataMember] public string Selection;
     [DataMember] public Boolean Substitutable;
-
 }
 
 [DataContract] public class OrderSales {

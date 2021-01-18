@@ -639,7 +639,7 @@ namespace wfws
             {
                 SqlConnection conn = new SqlConnection(conn_str);
                 //top 1000 fjernet aht futurelink/lauritz. SAS
-                string mysql = "SELECT Addressid, ad_account, CompanyName, Address, Address2,LastName, HouseNumber, City, PostalCode, InternRef FROM ad_Addresses ";
+                string mysql = "SELECT tb1.Addressid, ad_account, CompanyName, Address, Address2,LastName, HouseNumber, City, PostalCode, InternRef FROM ad_Addresses tb1 ";
                 mysql = String.Concat(mysql, " Where CompID = @CompID ");
                 if (wfadr.AddrType != AddressType.Undefined) mysql = string.Concat(mysql, " AND AddrType = @AddrType ");
                 if (!string.IsNullOrEmpty(wfadr.email)) mysql = string.Concat(mysql, " AND email = @email ");
@@ -655,6 +655,11 @@ namespace wfws
                 if (!string.IsNullOrEmpty(wfadr.CountryID)) mysql = string.Concat(mysql, " AND CountryID = @CountryID ");
                 if (!string.IsNullOrEmpty(wfadr.Phone)) mysql = string.Concat(mysql, " AND Phone = @Phone ");
                 if (!string.IsNullOrEmpty(wfadr.internRef)) mysql = string.Concat(mysql, " AND InternRef = @InternRef ");
+                if (!string.IsNullOrEmpty(wfadr.VATNumber)) mysql = string.Concat(mysql, " AND VATNumber = @VATNumber ");
+
+                if (!string.IsNullOrEmpty(wfadr.Notes)) {
+                    mysql = string.Concat(mysql, " AND (Notes like '%' + @notes + '%' OR exists (select * from ad_addresses_ExtraLines tb2 where tb2.CompID = tb1.CompID AND tb2.AddressID = tb1.AddressID AND Value like '%' + @notes + '%')) ");
+                }
                 SqlCommand comm = new SqlCommand(mysql, conn);
                 comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
                 comm.Parameters.Add("@Account", SqlDbType.NVarChar, 20).Value = ((string.IsNullOrEmpty(wfadr.Account)) ? DBNull.Value : (object)wfadr.Account);
@@ -672,6 +677,9 @@ namespace wfws
                 comm.Parameters.Add("@CountryID", SqlDbType.NVarChar, 100).Value = ((string.IsNullOrEmpty(wfadr.CountryID)) ? DBNull.Value : (object)wfadr.CountryID);
                 comm.Parameters.Add("@AddrType", SqlDbType.Int).Value = (int)wfadr.AddrType;
                 comm.Parameters.Add("@InternRef", SqlDbType.NVarChar, 20).Value = ((string.IsNullOrEmpty(wfadr.internRef)) ? DBNull.Value : (object)wfadr.internRef);
+                comm.Parameters.Add("@Notes", SqlDbType.NVarChar, 50).Value = ((string.IsNullOrEmpty(wfadr.Notes)) ? DBNull.Value : (object)wfadr.Notes);
+                comm.Parameters.Add("@VATNumber", SqlDbType.NVarChar, 20).Value = ((string.IsNullOrEmpty(wfadr.VATNumber)) ? DBNull.Value : (object)wfadr.VATNumber);
+                
                 conn.Open();
                 SqlDataReader myr = comm.ExecuteReader();
                 while (myr.Read())
@@ -1349,7 +1357,7 @@ namespace wfws
                 comm.Parameters.Add("@AccountingCost", SqlDbType.NVarChar, 255).Value = (string.IsNullOrEmpty(mycontact.AccountingCost) ? DBNull.Value : (object)mycontact.AccountingCost);
                 comm.Parameters.Add("@EAN", SqlDbType.NVarChar, 50).Value = (string.IsNullOrEmpty(mycontact.EndpointID) ? DBNull.Value : (object)mycontact.EndpointID);
                 comm.Parameters.Add("@EndPointScheme", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(mycontact.EndpointScheme) ? DBNull.Value : (object)mycontact.EndpointScheme);
-                comm.Parameters.Add("@UBLDefault", SqlDbType.Bit).Value = mycontact.UBLDefault;
+                //comm.Parameters.Add("@UBLDefault", SqlDbType.Bit).Value = mycontact.UBLDefault;
                 //unavailable parameters
                 comm.Parameters.Add("@LocalPhone", SqlDbType.NVarChar).Value = DBNull.Value;
                 comm.Parameters.Add("@HomePhone", SqlDbType.NVarChar).Value = DBNull.Value;
@@ -1379,6 +1387,37 @@ namespace wfws
             catch (Exception e) { retstr = e.Message; }
             return retstr;
         }
+        public int Contacts_load(int AddressID,ref List<Contact> items)
+        {
+            var item = new Contact();
+            string mysql = "select tb1.ContID, tb1.initials,tb2.ContactName, tb1.category,tb1.job,tb1.LocalPhone,tb1.Job,tb1.email,AccountingCost,tb1.EndpointScheme,tb1.EAN,isnull(UBLDefault,0) as UBLDefault FROM  ad_Contacts_adr tb1 inner join ad_Contacts tb2 on tb2.CompID = tb1.CompID AND tb2.ContID = tb1.ContID ";
+            mysql = string.Concat(mysql, "where tb1.CompID = @CompID AND tb1.AddressID = @AddressID");
+            SqlConnection conn = new SqlConnection(conn_str);
+            SqlCommand comm = new SqlCommand(mysql, conn);
+            comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
+            comm.Parameters.Add("@AddressID", SqlDbType.Int).Value = AddressID;
+            conn.Open();
+            SqlDataReader myr = comm.ExecuteReader();
+            while (myr.Read())
+            {
+                item.AddressID = AddressID;
+                item.AddressID = (int)myr["ContID"];
+                item.ContactName = myr["ContactName"].ToString();
+                item.Type = myr["category"].ToString();
+                item.Initials = myr["initials"].ToString();
+                item.Job = myr["job"].ToString();
+                item.MobilPhone = myr["LocalPhone"].ToString();
+                item.email = myr["email"].ToString();
+                //item.UBLDefault =  (int)myr["UBLDefault"] == 0 ? false : true;
+                item.EndpointScheme = myr["EndpointScheme"].ToString();
+                item.EndpointID = myr["EAN"].ToString();
+                item.AccountingCost = myr["AccountingCost"].ToString();
+                items.Add(item);
+                item = new Contact();
+            }
+            conn.Close();
+            return 0;
+         }
         // Address alerts 
         public string Address_Alerts_load(int AddressID, ref IList<AddressAlert> items)
         {

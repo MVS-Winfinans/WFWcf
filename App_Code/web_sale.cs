@@ -431,10 +431,25 @@ namespace wfws
             catch (Exception e) { retstr = e.Message; }
             return retstr;
         }
+        public string get_default_meansOfPayment()
+        {
+            string MeansOfPayments;
+            SqlConnection conn = new SqlConnection(conn_str);
+            string mysql = "Select max(meansOfPayment) FROM tr_sale_meansOfPayment WHERE CompID = @CompID ";
+            SqlCommand Comm = new SqlCommand(mysql, conn);
+            Comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
+            conn.Open();
+            MeansOfPayments = Comm.ExecuteScalar().ToString();
+            conn.Close();
+            return MeansOfPayments;
+        }
         public string Order_add_payment(int SaleID, OrderPayment mypa)
         {
             SqlConnection conn = new SqlConnection(conn_str);
             string retstr = "OK";
+            if (string.IsNullOrEmpty(mypa.meansOfPayment))  mypa.meansOfPayment = get_default_meansOfPayment();
+
+
             DateTime minSqlDate = new DateTime(1753, 1, 1);
             string mysql = " INSERT tr_sale_payment (CompID, SaleID, meansOfPayment, amount, Currency, amountConverted, PaymentRef, OrderID, ToCapture, CardNo, TicketID, Merchant, CurrencyDibs, PaidDate, CardExpDate, CardNoMask) ";
             mysql = String.Concat(mysql, " values (@CompID, @SaleID, @meansOfPayment, @amount, @Currency, @amountConverted, @PaymentRef, @OrderID, @ToCapture, @CardNo, @TicketID, @Merchant, @CurrencyDibs, @PaidDate, @CardExpDate, @CardNoMask) ");
@@ -483,7 +498,7 @@ namespace wfws
                 comm.Parameters.Add("@LiID", SqlDbType.Int).Value = MyORder.Liid;
                 comm.Parameters.Add("@Unit", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(MyORder.Unit) ? DBNull.Value : (object)MyORder.Unit);
                 comm.Parameters.Add("@Batch", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(MyORder.Batch) ? DBNull.Value : (object)MyORder.Batch);
-                comm.Parameters.Add("@AddInf", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(MyORder.AddInformation) ? DBNull.Value : (object)MyORder.AddInformation);
+                comm.Parameters.Add("@AddInf", SqlDbType.NVarChar, 255).Value = (string.IsNullOrEmpty(MyORder.AddInformation) ? DBNull.Value : (object)MyORder.AddInformation);
                 comm.Parameters.Add("@Dim1", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(MyORder.Dim1) ? DBNull.Value : (object)MyORder.Dim1);
                 comm.Parameters.Add("@Dim2", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(MyORder.Dim2) ? DBNull.Value : (object)MyORder.Dim2);
                 comm.Parameters.Add("@Dim3", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(MyORder.Dim3) ? DBNull.Value : (object)MyORder.Dim3);
@@ -514,7 +529,7 @@ namespace wfws
             string retstr = "OK";
             if (lineItem.Liid > 0)
             {
-                string mysql = "Update tr_sale_LineItems set OrderQty = @P_qty, SalesPrice = @P_Price, DiscountProc = @DiscountProc ";
+                string mysql = "Update tr_sale_LineItems set OrderQty = @P_qty, ShipQty = @P_qty, SalesPrice = @P_Price, DiscountProc = @DiscountProc ";
                 mysql = String.Concat(mysql, " WHERE CompID = @CompID AND SaleID = @SaleID AND LiID = @LiID");
                 SqlCommand comm = new SqlCommand(mysql, conn);
                 comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
@@ -601,6 +616,7 @@ namespace wfws
         }
         public void order_Close(int SaleID)
         {
+            if (SaleID > 0) {
             SqlConnection conn = new SqlConnection(conn_str);
             SqlCommand comm = new SqlCommand("dbo.wf_tr_sale_CloseInvoice", conn);
             comm.CommandType = CommandType.StoredProcedure;
@@ -610,7 +626,32 @@ namespace wfws
             conn.Open();
             comm.ExecuteNonQuery();
             conn.Close();
+            }
         }
+
+        public void order_delete(int SaleID)
+        {
+            if (SaleID > 0)
+            {
+                string mysql = "DELETE From tr_Sale_lot Where CompID = @CompID And SaleID = @SaleID";
+                SqlConnection conn = new SqlConnection(conn_str);
+                SqlCommand comm = new SqlCommand(mysql, conn);
+                comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
+                comm.Parameters.Add("@SaleID", SqlDbType.Int).Value = SaleID;
+                conn.Open();
+                comm.ExecuteNonQuery();
+                comm.CommandText = "DELETE From tr_Sale_lot Where CompID = @CompID And SaleID = @SaleID";
+                comm.ExecuteNonQuery();
+                comm.CommandText = "DELETE FROM tr_Sale_LineItems Where CompID = @CompID And SaleID = @SaleID";
+                comm.ExecuteNonQuery();
+                comm.CommandText = "DELETE FROM tr_Sale_payment Where CompID = @CompID And SaleID = @SaleID";
+                comm.ExecuteNonQuery();
+                comm.CommandText = "DELETE FROM tr_sale Where CompID = @CompID And SaleID = @SaleID And Class = 200";
+                comm.ExecuteNonQuery();
+                conn.Close();
+            }
+       }
+
         public void order_save_ubl(int SaleID, string xmldoc)
         {
             if (!string.IsNullOrEmpty(xmldoc))
