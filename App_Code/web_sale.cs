@@ -360,7 +360,10 @@ namespace wfws
             SqlConnection conn = new SqlConnection(conn_str);
             try
             {
-                string mysql = "Select * FROM tr_sale_LineItems WHERE CompID = @CompID AND SaleID = @SaleID AND LiiD = @LiID ";
+                string mysql = "Select saleID,LiiD,ItemID,Unit,Description,SalesPrice,OrderAmount,DiscountProc,OrderQty,QtyPackages ,AddInformation,Style,EAN,ConsumerUnitEAN, ";
+                mysql = string.Concat(mysql, "Dim1, Dim2, Dim3,Dim4 ,Substitutable, ");
+                mysql = string.Concat(mysql, "  (select isnull(SelectionID,'') + ';'  from tr_inventory_selections_Items tbse where tbse.CompID = tb1.CompID AND tbse.ItemID = tb1.ItemID  order by SelectionID FOR XML PATH(''))   as  Selections ");
+                mysql = string.Concat(mysql, " FROM tr_sale_LineItems tb1 WHERE tb1.CompID = @CompID AND tb1.SaleID = @SaleID AND tb1.LiiD = @LiID ");
                 SqlCommand comm = new SqlCommand(mysql, conn);
                 comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
                 comm.Parameters.Add("@SaleID", SqlDbType.Int).Value = SaleID;
@@ -388,6 +391,7 @@ namespace wfws
                     item.Dim3 = myr["Dim3"].ToString();
                     item.Dim4 = myr["Dim4"].ToString();
                     item.Substitutable = myr["Substitutable"] == DBNull.Value ? false : (Boolean)myr["Substitutable"];
+                    item.Selection = myr["selections"].ToString();
                 }
                 conn.Close();
             }
@@ -771,7 +775,10 @@ namespace wfws
             OrderLine item = new OrderLine();
             try
             {
-                string mysql = "Select * FROM tr_sale_LineItems WHERE CompID = @CompID AND SaleID = @SaleID "; //håndtering af forpakning interesserer ikke oio
+                string mysql = "Select LiiD,ItemID,Description,EAN,ConsumerUnitEAN,SalesPrice,OrderAmount,DiscountProc,OrderQty,QtyPackages ,AddInformation,VatIncl,Style,GroupFi,Discount,DiscountProc,vat_perc, ";
+                mysql = string.Concat(mysql, "Unit,Dim1, Dim2, Dim3,Dim4 ,AllowanceCharge,LineAmount,LineVat,LineVatBase,ShipDate,Substitutable,LineDiscount,UNSPSC,AccountingCost,Batch,LinePrice, ");
+                mysql = string.Concat(mysql, "  (select isnull(SelectionID,'') + ';'  from tr_inventory_selections_Items tbse where tbse.CompID = tb1.CompID AND tbse.ItemID = tb1.ItemID  order by SelectionID FOR XML PATH(''))   as  Selections ");
+                mysql = string.Concat(mysql, " FROM tr_sale_LineItems tb1 WHERE CompID = @CompID AND SaleID = @SaleID "); //håndtering af forpakning interesserer ikke oio
                 SqlCommand comm = new SqlCommand(mysql, conn);
                 comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
                 comm.Parameters.Add("@SaleID", SqlDbType.Int).Value = SaleID;
@@ -812,6 +819,7 @@ namespace wfws
                     item.DiscountProc = (decimal)((myr["DiscountProc"] == DBNull.Value) ? 0 : (decimal)myr["DiscountProc"]);
                     item.ActualDeliveryDate = (DateTime)((myr["ShipDate"] == DBNull.Value) ? DateTime.MinValue : (DateTime)myr["ShipDate"]);
                     item.Substitutable = myr["Substitutable"] == DBNull.Value ? false : (Boolean)myr["Substitutable"];
+                    item.Selection = myr["Selections"].ToString();
                     items.Add(item);
                     item = new OrderLine();
                 }
@@ -969,7 +977,11 @@ namespace wfws
             {
                 DebCr = 0;
             }
-
+            //if (wfOrderSales.seller.HasValue) wfOrderSales.seller = 0;
+            int SellerID = 0;
+            if (wfOrderSales.seller > 0) SellerID = wfOrderSales.seller;
+            if (wfOrderSales.seller < 0) SellerID = wfOrderSales.seller * -1;
+     
             SqlConnection conn = new SqlConnection(conn_str);
             OrderSalesItem item = new OrderSalesItem();
             string mysql = " set concat_null_yields_null OFF SELECT top 10000 SaleID, invoiceNo,OrderNo,SettleID, invdate, orderdate,CreInvFactor,isnull(T_Total,0) as T_Total,  isnull(T_VAT,0) as T_VAT, isnull(T_IncVat,0) as T_IncVat,InvDate,ShipDate,PayDate , ";
@@ -981,6 +993,9 @@ namespace wfws
             if (orderClass == 0) mysql = String.Concat(mysql, " AND Class in (200,400,900) ");
             if (DebCr!=0) mysql = String.Concat(mysql, " AND CreInvFactor = ", DebCr.ToString());
             if (wfOrderSales.BillTo != 0) mysql = String.Concat(mysql, " AND so_AddressID = @BillTo");
+            if (wfOrderSales.seller > 0) mysql = String.Concat(mysql, " AND SellerID = @SellerID");
+            if (wfOrderSales.seller < 0) mysql = String.Concat(mysql, " AND SellerID <> @SellerID");
+
             if (!string.IsNullOrEmpty(wfOrderSales.Dim1)) mysql = String.Concat(mysql, " AND Dim1 = @Dim1 ");
             if (!string.IsNullOrEmpty(wfOrderSales.Dim2)) mysql = String.Concat(mysql, " AND Dim2 = @Dim2 ");
             if (!string.IsNullOrEmpty(wfOrderSales.Dim3)) mysql = String.Concat(mysql, " AND Dim3 = @Dim3 ");
@@ -996,6 +1011,8 @@ namespace wfws
             comm.Parameters.Add("@Dim4", SqlDbType.NVarChar, 20).Value = ((string.IsNullOrEmpty(wfOrderSales.Dim4) ? DBNull.Value : (object)wfOrderSales.Dim4));
             comm.Parameters.Add("@PayDate", SqlDbType.DateTime).Value = (wfOrderSales.PayDate == DateTime.MinValue) ? System.Data.SqlTypes.SqlDateTime.MinValue : wfOrderSales.PayDate;
             comm.Parameters.Add("@BillTo", SqlDbType.Int).Value = ((wfOrderSales.BillTo == 0) ? DBNull.Value : (object)wfOrderSales.BillTo);
+            comm.Parameters.Add("@SellerID", SqlDbType.Int).Value = ((SellerID == 0) ? DBNull.Value : (object)SellerID);
+
             conn.Open();
             SqlDataReader myr = comm.ExecuteReader();
             while (myr.Read())

@@ -48,14 +48,14 @@ public class Delivery
         string mysql = " select tb1.saleID, tb2.Liid,tb2.SourceSaleID, tb2.SourceLineID, isnull(tb2.Orderno,tb1.Orderno) as Orderno , tb1.Class, So_AddressID, tb2.ItemID,tb2.Description, tb1.ShipDate,Calendar, blockReason, isnull(Sh_AddressID,so_addressID) as Sh_AddressID ,isnull(tb3.NotOnWeb,0) as NotOnWeb, isnull(tb3.NotOnMyPage,0) as NotOnMyPage,  ";
         mysql = string.Concat(mysql, " (select LongDesc from ac_Companies_calendars tb3 where  tb3.CompID = tb2.CompID AND tb3.CalendarID = tb1.Calendar) as LongDesc, ");
         mysql = string.Concat(mysql, " (SELECT case pattern when 1 then Qty When 2 then Qty When 3 then Qty when 4 then Qty * 2 When 5 Then Qty * 2 ELSE Qty END  from ac_Companies_calendars tb4 where  tb4.CompID = tb2.CompID AND tb4.CalendarID = tb1.Calendar) as Qty, ");
-        mysql = string.Concat(mysql, " tb2.OrderQty as LineQty, tb2.ReplacementProduct ");
+        mysql = string.Concat(mysql, " tb2.OrderQty as LineQty, tb2.ReplacementProduct, ");
+        mysql = string.Concat(mysql, " (select isnull(SelectionID,'') + ';'  from tr_inventory_selections_Items tbse where tbse.CompID = tb2.CompID AND tbse.ItemID = tb2.ItemID  order by SelectionID FOR XML PATH(''))   as  Selections ");
         mysql = string.Concat(mysql, " from tr_sale tb1 inner join tr_sale_LineItems tb2 on tb1.CompID = tb2.CompID AND tb1.SaleID = tb2.SaleID  ");
         mysql = string.Concat(mysql, " inner join tr_inventory tb3 on tb3.CompID = tb2.CompID AND tb3.ItemID = tb2.ItemID ");
         mysql = string.Concat(mysql, "  Where tb1.CompID = @CompID AND tb1.Class in (200,300,400,900) AND So_AddressID = @AdrID AND tb2.ItemID is not null ");
         mysql = string.Concat(mysql, "  AND (tb1.Class <> 300 OR  exists (SELECT * FROM ac_Companies_calendars_items tb3 where tb3.CompID = tb1.CompID AND tb3.CalendarID = tb1.Calendar AND Item > getdate() )) ");
         mysql = string.Concat(mysql, "  And (tb1.Class = 300 OR DATEDIFF(Y,getdate(),tb1.ShipDate) > -14) ");
         mysql = string.Concat(mysql, " AND not exists (SELECT * FROM tr_inventory tb4 where tb4.compID = tb2.CompID AND tb4.ItemID = tb2.ItemID AND isnull(tb4.NotOnWeb,0) <> 0) "); 
-
         try
         {
         SqlCommand comm = new SqlCommand(mysql, conn);
@@ -84,6 +84,7 @@ public class Delivery
             Item.SourceSaleID = (myr["SourceSaleID"] == DBNull.Value ? 0 : (Int32)myr["SourceSaleID"]);
             Item.SourceLineID = (myr["SourceLineID"] == DBNull.Value ? 0 : (Int32)myr["SourceLineID"]);
             Item.ReplacementProduct = myr["ReplacementProduct"].ToString();
+            Item.Selections = myr["Selections"].ToString();
             Item.NotOnWeb = (Boolean)myr["NotOnWeb"];
             Item.NotOnMyPage = (Boolean)myr["NotOnMyPage"];
 
@@ -121,7 +122,8 @@ public class Delivery
         string mysql = " select tb1.saleID, tb2.Liid,tb2.SourceSaleID, tb2.SourceLineID, isnull(tb2.Orderno,tb1.Orderno) as Orderno , tb1.Class, So_AddressID, tb2.ItemID,tb2.Description, tb1.ShipDate,Calendar, blockReason, isnull(Sh_AddressID,so_addressID) as Sh_AddressID ,isnull(tb3.NotOnWeb,0) as NotOnWeb, isnull(tb3.NotOnMyPage,0) as NotOnMyPage,   ";
         mysql = string.Concat(mysql, " (select LongDesc from ac_Companies_calendars tb3 where  tb3.CompID = tb2.CompID AND tb3.CalendarID = tb1.Calendar) as LongDesc, ");
         mysql = string.Concat(mysql, " (SELECT case pattern when 1 then Qty When 2 then Qty When 3 then Qty when 4 then Qty * 2 When 5 Then Qty * 2 ELSE Qty END  from ac_Companies_calendars tb4 where  tb4.CompID = tb2.CompID AND tb4.CalendarID = tb1.Calendar) as Qty, ");
-        mysql = string.Concat(mysql, " tb2.OrderQty as LineQty, tb2.ReplacementProduct ");
+        mysql = string.Concat(mysql, " tb2.OrderQty as LineQty, tb2.ReplacementProduct, ");
+        mysql = string.Concat(mysql, " (select isnull(SelectionID,'') + ';'  from tr_inventory_selections_Items tbse where tbse.CompID = tb2.CompID AND tbse.ItemID = tb2.ItemID  order by SelectionID FOR XML PATH(''))   as  Selections ");
         mysql = string.Concat(mysql, " from tr_sale tb1 inner join tr_sale_LineItems tb2 on tb1.CompID = tb2.CompID AND tb1.SaleID = tb2.SaleID  ");
         mysql = string.Concat(mysql, " inner join tr_inventory tb3 on tb3.CompID = tb2.CompID AND tb3.ItemID = tb2.ItemID ");
         mysql = string.Concat(mysql, "  Where tb1.CompID = @CompID AND tb1.Class in (200,300,400,900) AND So_AddressID = @AdrID AND tb2.ItemID is not null ");
@@ -156,6 +158,7 @@ public class Delivery
                 Item.SourceSaleID = (myr["SourceSaleID"] == DBNull.Value ? 0 : (Int32)myr["SourceSaleID"]);
                 Item.SourceLineID = (myr["SourceLineID"] == DBNull.Value ? 0 : (Int32)myr["SourceLineID"]);
                 Item.ReplacementProduct = myr["ReplacementProduct"].ToString();
+                Item.Selections = myr["Selections"].ToString();
                 Item.NotOnWeb = (Boolean)myr["NotOnWeb"];
                 Item.NotOnMyPage = (Boolean)myr["NotOnMyPage"];
                 if (Item.Class == 300)

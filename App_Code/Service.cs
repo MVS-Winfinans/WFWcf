@@ -354,7 +354,7 @@ public class Service : IService
                 wfws.web wfweb = new wfws.web(ref DBUser);
                 if (wfAddress.AdrGuid == Guid.Empty) wfAddress.AdrGuid = Guid.NewGuid();
                 DBUser.Message = AdrID.ToString();
-                if (wfAddress.AddressID == 0)
+                if (wfAddress.AddressID <= 0)
                 {
                     wfweb.Address_add(wfAddress.AdrGuid, String.Empty, ref AdrID);
                     wfAddress.AddressID = AdrID;
@@ -1094,6 +1094,30 @@ public class Service : IService
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
                 answer = wfweb.Address_Documents_Load(AddressID);
+            }
+        }
+        catch (NullReferenceException ex)
+        {
+            errstr = ex.Message;
+            throw new FaultException(String.Concat("wf_wcf: ", ex.Message), new FaultCode("wfwcfFault"));
+        }
+        return answer;
+    }
+
+   
+
+    public AddressDocument[] AddressDocumentsGet(ref DBUser DBUser, int AddressID)
+    {
+        string errstr = "Err";
+        AddressDocument[] answer = null;
+        try
+        {
+            var wfconn = new wfws.ConnectLocal(DBUser);
+            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            if (DBUser.CompID > 0)
+            {
+                wfws.web wfweb = new wfws.web(ref DBUser);
+                answer = wfweb.Address_Documents_Get(AddressID);
             }
         }
         catch (NullReferenceException ex)

@@ -56,6 +56,11 @@ public interface IService
     [OperationContract] AddressCollectable[] AddressCollectablesGet(ref DBUser DBUser);
     [OperationContract] string AddressCollectablesUpdateStatus(ref DBUser DBUser, int AddressID, int NewStatus);
     [OperationContract] int[] AddressDocumentListGet(ref DBUser DBUser, int AddressID);
+
+    [OperationContract] AddressDocument[] AddressDocumentsGet(ref DBUser DBUser, int AddressID);
+
+
+
     [OperationContract] byte[] AddressGetArchivedDocument(ref DBUser DBUser, int AddressID, int DocID, ref string ContentType, ref string Description);
     [OperationContract] string AddressBlur(ref DBUser DBUser, int AddressID);
     // Activities
@@ -72,7 +77,7 @@ public interface IService
     [OperationContract] string AddressPropertyAdd(ref DBUser DBUser, int Propertyid,ref Address wfAddress);
     [OperationContract] string AddressPropertyDelete(ref DBUser DBUser,int FromID,int ToDi, ref Address wfAddress);
     [OperationContract] string AddressPropertyPresent(ref DBUser DBUser, int Propertyid, ref Address wfAddress,ref Boolean present);
-    [OperationContract] AddressProperty[] AddressPropertiesLoadAll(ref DBUser DBUser, int FromID, int ToDi, ref string retstr);
+    [OperationContract] AddressProperty[] AddressPropertiesLoadAll(ref DBUser DBUser, int FromID, int ToID, ref string retstr);
     [OperationContract] int[] AddressPropertyListGet(ref DBUser DBUser, int propertyID);
 
 
@@ -136,8 +141,6 @@ public interface IService
     [OperationContract] OrderSalesItemChanged[] SalesOrderB2BBackboneItems(ref DBUser DBUser);
     [OperationContract] int SalesOrderB2BBackboneItemConfirm(ref DBUser DBUser, int SaleID);
     [OperationContract] void SalesOrder_MarkPaidSales(ref DBUser DBUser);
-
-
 
 
     // Sales reports
@@ -630,6 +633,19 @@ public class AddressCollectable
     [DataMember] public int Status;
 }
 
+public class AddressDocument
+{
+    [DataMember] public int AddressID;
+    [DataMember] public int DocID;
+    [DataMember] public string Description;
+    [DataMember] public string FileName;
+    [DataMember] public string ContentType;
+    [DataMember] public DateTime CreateDate;
+}
+
+
+
+
 // sales DDDDD HEJ
 
 [DataContract] public class OrderLine {
@@ -847,6 +863,7 @@ public class AddressCollectable
     [DataMember] public string ReplacementProduct;
     [DataMember] public Boolean NotOnWeb;
     [DataMember] public Boolean NotOnMyPage;
+    [DataMember] public string Selections;
 }
 
 [DataContract] public class SalesDeliveryTime

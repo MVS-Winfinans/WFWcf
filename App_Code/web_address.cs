@@ -239,6 +239,35 @@ namespace wfws
             conn.Close();
             return tempItemsList.ToArray();
         }
+        public AddressDocument[] Address_Documents_Get(int AddressID)
+        {
+            IList<AddressDocument> items = new List<AddressDocument>();
+            AddressDocument item = new AddressDocument();
+            SqlConnection conn = new SqlConnection(conn_str);
+            string mysql = "SELECT DocID, Description, CreateDate, [ContentType], [FileName] FROM ad_Addresses_Documents WHERE (CompID = @CompID) AND AddressID = @AddressID";
+            SqlCommand comm = new SqlCommand(mysql, conn);
+            comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
+            comm.Parameters.Add("@AddressID", SqlDbType.Int).Value = AddressID;
+            conn.Open();
+            SqlDataReader myr = comm.ExecuteReader();
+            while (myr.Read())
+            {
+                item.DocID = (int)myr["DocID"];
+                item.AddressID = AddressID;
+                item.Description = myr["Description"].ToString();
+                item.CreateDate = (DateTime)myr["CreateDate"];
+                item.ContentType = myr["ContentType"].ToString();
+                item.FileName = myr["FileName"].ToString();
+                items.Add(item);
+                item = new AddressDocument();
+            }
+            conn.Close();
+            return items.ToArray();
+        }
+
+
+
+
         public byte[] Address_Document_Get(int AddressID, int DocumentID, ref string ContentType, ref string Description)
         {
             byte[] Retval= null;
@@ -656,7 +685,7 @@ namespace wfws
                 if (!string.IsNullOrEmpty(wfadr.Phone)) mysql = string.Concat(mysql, " AND Phone = @Phone ");
                 if (!string.IsNullOrEmpty(wfadr.internRef)) mysql = string.Concat(mysql, " AND InternRef = @InternRef ");
                 if (!string.IsNullOrEmpty(wfadr.VATNumber)) mysql = string.Concat(mysql, " AND VATNumber = @VATNumber ");
-
+                if (!string.IsNullOrEmpty(wfadr.category)) mysql = string.Concat(mysql, " AND category = @category ");
                 if (!string.IsNullOrEmpty(wfadr.Notes)) {
                     mysql = string.Concat(mysql, " AND (Notes like '%' + @notes + '%' OR exists (select * from ad_addresses_ExtraLines tb2 where tb2.CompID = tb1.CompID AND tb2.AddressID = tb1.AddressID AND Value like '%' + @notes + '%')) ");
                 }
@@ -679,7 +708,8 @@ namespace wfws
                 comm.Parameters.Add("@InternRef", SqlDbType.NVarChar, 20).Value = ((string.IsNullOrEmpty(wfadr.internRef)) ? DBNull.Value : (object)wfadr.internRef);
                 comm.Parameters.Add("@Notes", SqlDbType.NVarChar, 50).Value = ((string.IsNullOrEmpty(wfadr.Notes)) ? DBNull.Value : (object)wfadr.Notes);
                 comm.Parameters.Add("@VATNumber", SqlDbType.NVarChar, 20).Value = ((string.IsNullOrEmpty(wfadr.VATNumber)) ? DBNull.Value : (object)wfadr.VATNumber);
-                
+                comm.Parameters.Add("@category", SqlDbType.NVarChar, 20).Value = ((string.IsNullOrEmpty(wfadr.category)) ? DBNull.Value : (object)wfadr.category);
+
                 conn.Open();
                 SqlDataReader myr = comm.ExecuteReader();
                 while (myr.Read())
