@@ -1668,6 +1668,36 @@ public class Service : IService
         return errstr;
     }
 
+    public string SalesOrderRecalc(ref DBUser DBUser, ref OrderSales WfOrder)
+    {
+        string errstr = "OK";
+        try
+        {
+            var wfconn = new wfws.ConnectLocal(DBUser);
+            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            if (DBUser.CompID > 0)
+            {
+                wfws.web wfweb = new wfws.web(ref DBUser);
+                if (wfweb.order_is_Open(WfOrder.SaleID))
+                {
+                    wfweb.order_Recalc(WfOrder.SaleID);
+                    wfweb.order_calculate(WfOrder.SaleID);
+                }
+                else
+                {
+                    errstr = "Order is closed";
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            errstr = e.Message;
+            throw new FaultException(String.Concat("wf_wcf: ", e.Message), new FaultCode("wfwcfFault"));
+        }
+        return errstr;
+    }
+
+
 
     public int SalesOrderGetSaleIDFromGuid(ref DBUser DBUser, Guid GuidInvoice)
     {

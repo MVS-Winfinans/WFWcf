@@ -95,6 +95,7 @@ namespace wfws
                     MyOrder.DeliveryNoteNo = (Int64)(myr["DeliveryNoteNo"] == DBNull.Value ? 0 : Convert.ToInt64(myr["DeliveryNoteNo"]));
                     MyOrder.QuotationNo = (Int64)(myr["QuotationNo"] == DBNull.Value ? 0 : Convert.ToInt64(myr["QuotationNo"]));
                     MyOrder.TermsOfDelivery = (Int32)((myr["TermsOfDelivery"] == DBNull.Value) ? 0 : (Int32)myr["TermsOfDelivery"]);
+                    MyOrder.InvoiceReady = (bool)(myr["InvoiceReady"] == DBNull.Value ? false : (bool)myr["InvoiceReady"]);
                  }
                 conn.Close();
                 Contact_Sale_convert(ref MyOrder);
@@ -656,6 +657,29 @@ namespace wfws
             }
        }
 
+        public void order_Recalc(int SaleID)
+        {
+            if (SaleID > 0)
+            {
+                SqlConnection conn = new SqlConnection(conn_str);
+                SqlCommand comm = new SqlCommand("dbo.wf_tr_Sale_NewPrices", conn);
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.Add("@P_CompID", SqlDbType.Int).Value = compID;
+                comm.Parameters.Add("@P_SaleID", SqlDbType.Int).Value = SaleID;
+                //comm.Parameters.Add("@P_WfCus", SqlDbType.NVarChar, 20).Value = 'C';
+                conn.Open();
+                comm.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
+
+ 
+
+
+
+
+
+
         public void order_save_ubl(int SaleID, string xmldoc)
         {
             if (!string.IsNullOrEmpty(xmldoc))
@@ -891,7 +915,7 @@ namespace wfws
             //if (DateTime.Compare(MyOrder.ShipDate, OldDate) <= 0) MyOrder.ShipDate = MyOrder.InvoiceDate;
             //Dim MyData As DataSet = new DataSet
             string mysql = " Update tr_sale set orderno = @OrderNo, Calendar = @Calendar, orderdate = @OrderDate,RecurringStart = @StartDate ,RecurringExpire = @EndDate,InvDate = @InvDate,ShipDate = @ShipDate, Salesman = @Salesmann,sellerID = isnull(@sellerID,sellerID), Category = @Category, EAN = @EAN, requisition = @requisition, UserID = isnull(@IntRef,UserID), ExtRef = @ExtRef,  Dim1 =  @Dim1, Dim2 = @Dim2, Dim3 = @Dim3, Dim4 = @Dim4,  ";
-            mysql = String.Concat(mysql, " text_1 = @text1, text_2 = @text2, text_3 = @text3, CreInvFactor = @invcre, trace = @trace, blockReason = @blockReason, so_addressID = @BillTo, sh_addressID = @ShipTo, TermsOfPayment = @TermsOfPayment, PayDate = @PayDate, ContactPerson = @ContactPerson, ContID = @ContID, AccountingCost = @AccountingCost ");
+            mysql = String.Concat(mysql, " text_1 = @text1, text_2 = @text2, text_3 = @text3, CreInvFactor = @invcre, trace = @trace, blockReason = @blockReason, so_addressID = @BillTo, sh_addressID = @ShipTo, TermsOfPayment = @TermsOfPayment, PayDate = @PayDate, ContactPerson = @ContactPerson, ContID = @ContID, AccountingCost = @AccountingCost, InvoiceReady = @InvoiceReady ");
             if (BlindUpdate == false) mysql = string.Concat(mysql, ", timeChanged = getdate() ");
             mysql = String.Concat(mysql, " WHERE CompID = @CompID AND SaleID = @SaleID ");
             SqlCommand comm = new SqlCommand(mysql, conn);
@@ -930,6 +954,7 @@ namespace wfws
             //comm.Parameters.Add("@PrePaidDate", SqlDbType.DateTime).Value = ((MyOrder.PaidDate < minSqlDate) ? DBNull.Value : (object)MyOrder.PaidDate);    PrePaidDate = @PrePaidDate, 
             comm.Parameters.Add("@ContID", SqlDbType.Int).Value = MyOrder.ContID;
             comm.Parameters.Add("@AccountingCost", SqlDbType.NVarChar, 250).Value = (string.IsNullOrEmpty(MyOrder.AccountingCost) ? DBNull.Value : (object)MyOrder.AccountingCost);
+            comm.Parameters.Add("@InvoiceReady",SqlDbType.Bit).Value = MyOrder.InvoiceReady;
             conn.Open();
             comm.ExecuteNonQuery();
             conn.Close();

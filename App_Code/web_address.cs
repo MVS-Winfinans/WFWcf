@@ -611,7 +611,7 @@ namespace wfws
             try
             {
                 SqlConnection conn = new SqlConnection(conn_str);
-                string mysql = " SELECT tb1.Addressid, tb1.ad_account, tb1.CompanyName, tb1.Address,tb1.Address2, tb1.LastName, tb1.HouseNumber,tb1.City,tb1.PostalCode FROM ad_Addresses tb1 inner join ad_addresses_AddrProp tb2 on tb1.CompID = tb2.CompID AND tb1.AddressID = tb2.AddressID ";
+                string mysql = " SELECT tb1.Addressid, tb1.ad_account, tb1.CompanyName, tb1.Address,tb1.Address2, tb1.LastName, tb1.HouseNumber,tb1.City,tb1.PostalCode,Phone,Email,CompanyWeb FROM ad_Addresses tb1 inner join ad_addresses_AddrProp tb2 on tb1.CompID = tb2.CompID AND tb1.AddressID = tb2.AddressID ";
                 mysql = string.Concat(mysql, " Where tb2.CompID = @CompID AND tb2.propertyid = @PropertyID ");
                 SqlCommand comm = new SqlCommand(mysql, conn);
                 comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
@@ -628,6 +628,9 @@ namespace wfws
                     item.HouseNumber = myr["HouseNumber"].ToString();
                     item.PostalCode = myr["PostalCode"].ToString();
                     item.City = myr["City"].ToString();
+                    item.Phone = myr["Phone"].ToString();
+                    item.Email = myr["Email"].ToString();
+                    item.CompanyWeb = myr["CompanyWeb"].ToString();
                     items.Add(item);
                     item = new AddressItem();
                 }
@@ -668,7 +671,7 @@ namespace wfws
             {
                 SqlConnection conn = new SqlConnection(conn_str);
                 //top 1000 fjernet aht futurelink/lauritz. SAS
-                string mysql = "SELECT tb1.Addressid, ad_account, CompanyName, Address, Address2,LastName, HouseNumber, City, PostalCode, InternRef FROM ad_Addresses tb1 ";
+                string mysql = "SELECT tb1.Addressid, ad_account, CompanyName, Address, Address2,LastName, HouseNumber, City, PostalCode, InternRef,Phone,Email,CompanyWeb FROM ad_Addresses tb1 ";
                 mysql = String.Concat(mysql, " Where CompID = @CompID ");
                 if (wfadr.AddrType != AddressType.Undefined) mysql = string.Concat(mysql, " AND AddrType = @AddrType ");
                 if (!string.IsNullOrEmpty(wfadr.email)) mysql = string.Concat(mysql, " AND email = @email ");
@@ -722,6 +725,10 @@ namespace wfws
                     item.HouseNumber = myr["HouseNumber"].ToString();
                     item.PostalCode = myr["PostalCode"].ToString();
                     item.City = myr["City"].ToString();
+                    item.Phone = myr["Phone"].ToString();
+                    item.Email = myr["Email"].ToString();
+                    item.CompanyWeb = myr["CompanyWeb"].ToString();
+
                     items.Add(item);
                     item = new AddressItem();
                 }

@@ -112,6 +112,7 @@ public interface IService
     [OperationContract] string SalesOrderClose(ref DBUser DBUser, ref OrderSales wfOrder);
     [OperationContract] string SalesOrderSave(ref DBUser DBUser, ref OrderSales WfOrder);
     [OperationContract] string SalesOrderDelete(ref DBUser DBUser, ref OrderSales WfOrder);
+    [OperationContract] string SalesOrderRecalc(ref DBUser DBUser, ref OrderSales wfOrder);
 
     [OperationContract] string SalesOrderLookup(ref DBUser DBUser, ref OrderSales wfOrder, SalesOrderTypes OrderType);
     [OperationContract] int SalesOrderGetSaleIDFromGuid(ref DBUser DBUser,Guid GuidInvoice);
@@ -481,6 +482,9 @@ public class CompanySalesman
     [DataMember] public string HouseNumber;
     [DataMember] public string PostalCode;
     [DataMember] public string City;
+    [DataMember] public string Email;
+    [DataMember] public string Phone;
+    [DataMember] public string CompanyWeb;
 }
 
 [DataContract]
@@ -754,6 +758,7 @@ public class AddressDocument
     [DataMember] public long DeliveryNoteNo;
     [DataMember] public long QuotationNo;
     [DataMember] public int TermsOfDelivery;
+    [DataMember] public bool InvoiceReady;
 }
 
 [DataContract] public class OrderSalesItem {

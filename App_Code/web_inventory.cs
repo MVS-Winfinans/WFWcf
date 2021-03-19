@@ -946,7 +946,7 @@ namespace wfws
                 SqlConnection conn = new SqlConnection(conn_str);
                 string mysql1 = "Select isnull(max(AddressID),0) From ad_addresses where CompID = @CompID AND ad_account = @Vendor ";
                 string mysql2 = "if not exists (select * from tr_inventory_vendors where CompID = @CompID AND ItemID = @ItemID AND Vendor = @AdrID) ";
-                mysql2 = string.Concat(mysql1, " insert tr_inventory_vendors (CompID,ItemID,Vendor,DateUpdate) values (@CompID,@ItemID,@AdrID,@DateUpdate) ");
+                mysql2 = string.Concat(mysql2, " insert tr_inventory_vendors (CompID,ItemID,Vendor,DateUpdate) values (@CompID,@ItemID,@AdrID,@DateUpdate) ");
                 SqlCommand comm = new SqlCommand(mysql1, conn);
                 comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
                 comm.Parameters.Add("@ItemID", SqlDbType.NVarChar, 20).Value = Item.ItemID;

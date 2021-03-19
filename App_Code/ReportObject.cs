@@ -46,9 +46,9 @@ public class ReportObject
         public int paperHeight;
         public string companyFileName;
 
-        private string head_1;
-        private string head_2;
-        private int PaperSize;
+        //private string head_1;
+        //private string head_2;
+        //private int PaperSize;
         private string SellerName;
         private string ReportFooter;
         private string ReportHeader;
@@ -65,13 +65,6 @@ public class ReportObject
         if (v_Language == string.Empty) Language = "UK"; else Language = v_Language;
     }
 
-
-        public void SellerReportload(int RepType, int RepID, ref CompanyInf mycompany) {
-            get_first_stationery();
-            load_StationeryInf(ref mycompany);
-            get_company_inf();
-            set_paper_size(PaperSize);
-        }
 
 
     public reportItem[] Report_object_properties_Seller_Load(int SellerID, int RepID )
@@ -251,55 +244,6 @@ public class ReportObject
     
 
 
-       private Boolean  load_StationeryInf(ref CompanyInf mycompany)
-        {
-            string fontstring = "12";
-            SqlConnection conn = new SqlConnection(conn_str);
-            string mysql = String.Concat("Select SellerName,ReportHeader, ReportFooter, FontName, isnull(FontSize,9) As FontSize, isnull(ShowGrid,0) As ShowGrid FROM ac_companies_Stationery WHERE CompID = @CompID And StatID = @StatID");
-            var comm = new SqlCommand(mysql, conn);
-            comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
-            comm.Parameters.Add("@StatID", SqlDbType.Int).Value = StatID;
-            conn.Open();
-            ReportFooter = " - ";
-            ReportHeader = " - ";
-            SqlDataReader myr = comm.ExecuteReader();
-            if (myr.Read())
-            {
-                SellerName = myr["SellerName"].ToString();
-                //SellerName = SellerName.Replace(Convert.ToChar(13).ToString() , "<br>");
-                ReportHeader = myr["ReportHeader"].ToString();
-                //ReportHeader = ReportHeader.Replace(Convert.ToChar(13).ToString(), "<br>");
-                ReportFooter = myr["ReportFooter"].ToString();
-              
-
-
-
-                fontFamily = myr["FontName"].ToString();
-                head_1 = myr["SellerName"].ToString();
-                if (head_1 == "<br>") head_1 = String.Empty;
-                head_1 = replace_inf(head_1, ref mycompany);
-                head_2 = myr["ReportHeader"].ToString();
-                head_2 = replace_inf(head_2, ref mycompany);
-                ReportFooter = myr["ReportFooter"].ToString();
-                ReportFooter = ReportFooter.Replace("#d", "{Today}");
-                ReportFooter = ReportFooter.Replace("#t", "{Now}");
-                // if (ReportFooter == String.Empty) ReportFooter = winfinance.wf_sys.Get_text_by_id(1959, Language)
-                ReportFooter = replace_inf(ReportFooter, ref mycompany);
-                fontstring = myr["FontSize"].ToString();
-                ShowGrid = (Boolean)myr["ShowGrid"];
-
-
-
-            }
-            conn.Close();
-            int.TryParse(fontstring,out FontSizeBody);
-            if (FontSizeBody < 4 || FontSizeBody > 24) FontSizeBody = 9;
-            get_company();
-            return ShowGrid;
-        }
-
-
-
         private string replace_inf(string instring, ref CompanyInf mycompany)
         {
             string Thestring = instring;
@@ -365,8 +309,7 @@ public class ReportObject
                 // ' emailFrom = myreader("emailSender").ToString()
             }
             conn.Close();
-            if (head_1 == string.Empty || head_1 == "<br>") head_1 = compname;
-            if (head_2 == string.Empty || head_2 == "<br>") head_2 = Address;
+      
 
             string fileComp = compname;
             if (fileComp == String.Empty) fileComp = "Company";
@@ -386,24 +329,7 @@ public class ReportObject
 
 
 
-        public string get_stationery_head_1() {
-            string theString;
-            theString = head_1;
-            int Pos = head_1.IndexOf(">");
-            if (Pos == 0) theString = theString.Replace(Convert.ToChar(13).ToString(), "<br>");
-            //theString = replace_inf(theString);
-            //If utils.StripTags(theString) = "" Then theString = "-"
-            return theString;
-        }
-        public string get_stationery_head_2() {
-            string theString;
-            theString = head_2;
-            int Pos = head_2.IndexOf(">");
-            if (Pos == 0) theString = theString.Replace(Convert.ToChar(13).ToString(), "<br>");
-            // theString = replace_inf(theString)
-            // If utils.StripTags(theString) = "" Then theString = "-"
-            return theString;
-        }
+   
 
 
         private void set_paper_size(int PaperSize)
