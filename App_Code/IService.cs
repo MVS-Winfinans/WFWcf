@@ -42,8 +42,12 @@ public interface IService
     [OperationContract] int AddressLogin(ref DBUser DBUser, string UserName, string HashKey);
     [OperationContract] string AddressNewHashKey(ref DBUser DBUser, int AdrID, string HashKey);
     [OperationContract] AddressesShipBillItem[] AddressShipBillLoad(ref DBUser DBUser, ref Address wfAddress);
+    [OperationContract] AddressesShipBillItem[] AddressBillToLoad(ref DBUser DBUser, ref Address wfAddress);
     [OperationContract] string AddressShipBillAdd(ref DBUser DBUser, ref Address wfAddress,ref AddressesShipBillItem ShipBillItem);
     [OperationContract] string AddressShipBillDelete(ref DBUser DBUser, ref Address wfAddress, ref AddressesShipBillItem ShipBillItem);
+    [OperationContract] string AddressShipBillAddAsBillTo(ref DBUser DBUser, ref Address wfAddress, ref AddressesShipBillItem ShipBillItem);
+    [OperationContract] string AddressShipBillDeleteAsBillTo(ref DBUser DBUser, ref Address wfAddress, ref AddressesShipBillItem ShipBillItem);
+
     [OperationContract] AddressItem[] AddressListGet(ref DBUser DBUser,string propertyID,ref string retstr);
     [OperationContract] AddressItem[] AddressLookupList(ref DBUser DBUser, ref Address wfAddress,ref string retstr);
     [OperationContract] int[] AddressListChanged(ref DBUser DBUser, ref int AddressID, ref DateTime TimeChanged);
@@ -80,16 +84,9 @@ public interface IService
     [OperationContract] AddressProperty[] AddressPropertiesLoadAll(ref DBUser DBUser, int FromID, int ToID, ref string retstr);
     [OperationContract] int[] AddressPropertyListGet(ref DBUser DBUser, int propertyID);
 
-
-
-
     // Contacts
     [OperationContract] string ContactNew(ref DBUser DBUser, ref Contact NewContact);
     [OperationContract] Contact[] ContactsLoad(ref DBUser DBUser, int AddressID);
-
-
-
-
 
     // Alert
     [OperationContract] AddressAlert[] AddressAlertLoad(ref DBUser DBUser, int AddressID, int AlertsTop, ref string retstr);
@@ -511,6 +508,7 @@ public enum AddressNameType
     [DataMember] public string Type;
     [DataMember] public string ContactName;
     [DataMember] public string MobilPhone;
+    [DataMember] public string LocalPhone;
     [DataMember] public string Job;
     [DataMember] public string email;
     [DataMember] public string Initials;

@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="WFReports" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://katja.winfinans.dk/WFReports.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://katja.winfinans.dk/WFReports.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IWFReports_HelloWorld_InputMessage">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_HelloWorld_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_AccBalance_InputMessage">
+    <wsdl:part name="parameters" element="tns:AccBalance" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_AccBalance_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AccBalanceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_AccStatement_InputMessage">
+    <wsdl:part name="parameters" element="tns:AccStatement" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_AccStatement_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AccStatementResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_AccBalanceCost_InputMessage">
+    <wsdl:part name="parameters" element="tns:AccBalanceCost" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_AccBalanceCost_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AccBalanceCostResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_AddList_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddList" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_AddList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_AddBalance_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddBalance" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_AddBalance_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddBalanceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_AddStatement_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddStatement" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_AddStatement_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddStatementResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_AddStatementOne_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddStatementOne" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_AddStatementOne_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddStatementOneResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_AddSalesOne_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddSalesOne" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_AddSalesOne_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddSalesOneResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_SaOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaOrder" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_SaOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_SaOrder3in1_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaOrder3in1" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_SaOrder3in1_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaOrder3in1Response" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_PuOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:PuOrder" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_PuOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PuOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_InvLists_InputMessage">
+    <wsdl:part name="parameters" element="tns:InvLists" />
+  </wsdl:message>
+  <wsdl:message name="IWFReports_InvLists_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InvListsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IWFReports">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWFReports/HelloWorld" message="tns:IWFReports_HelloWorld_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWFReports/HelloWorldResponse" message="tns:IWFReports_HelloWorld_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AccBalance">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWFReports/AccBalance" message="tns:IWFReports_AccBalance_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWFReports/AccBalanceResponse" message="tns:IWFReports_AccBalance_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AccStatement">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWFReports/AccStatement" message="tns:IWFReports_AccStatement_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWFReports/AccStatementResponse" message="tns:IWFReports_AccStatement_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AccBalanceCost">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWFReports/AccBalanceCost" message="tns:IWFReports_AccBalanceCost_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWFReports/AccBalanceCostResponse" message="tns:IWFReports_AccBalanceCost_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWFReports/AddList" message="tns:IWFReports_AddList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWFReports/AddListResponse" message="tns:IWFReports_AddList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddBalance">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWFReports/AddBalance" message="tns:IWFReports_AddBalance_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWFReports/AddBalanceResponse" message="tns:IWFReports_AddBalance_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddStatement">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWFReports/AddStatement" message="tns:IWFReports_AddStatement_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWFReports/AddStatementResponse" message="tns:IWFReports_AddStatement_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddStatementOne">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWFReports/AddStatementOne" message="tns:IWFReports_AddStatementOne_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWFReports/AddStatementOneResponse" message="tns:IWFReports_AddStatementOne_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddSalesOne">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWFReports/AddSalesOne" message="tns:IWFReports_AddSalesOne_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWFReports/AddSalesOneResponse" message="tns:IWFReports_AddSalesOne_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWFReports/SaOrder" message="tns:IWFReports_SaOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWFReports/SaOrderResponse" message="tns:IWFReports_SaOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaOrder3in1">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWFReports/SaOrder3in1" message="tns:IWFReports_SaOrder3in1_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWFReports/SaOrder3in1Response" message="tns:IWFReports_SaOrder3in1_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PuOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWFReports/PuOrder" message="tns:IWFReports_PuOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWFReports/PuOrderResponse" message="tns:IWFReports_PuOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InvLists">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWFReports/InvLists" message="tns:IWFReports_InvLists_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWFReports/InvListsResponse" message="tns:IWFReports_InvLists_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IWFReports" type="tns:IWFReports">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="http://tempuri.org/IWFReports/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AccBalance">
+      <soap:operation soapAction="http://tempuri.org/IWFReports/AccBalance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AccStatement">
+      <soap:operation soapAction="http://tempuri.org/IWFReports/AccStatement" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AccBalanceCost">
+      <soap:operation soapAction="http://tempuri.org/IWFReports/AccBalanceCost" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddList">
+      <soap:operation soapAction="http://tempuri.org/IWFReports/AddList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddBalance">
+      <soap:operation soapAction="http://tempuri.org/IWFReports/AddBalance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddStatement">
+      <soap:operation soapAction="http://tempuri.org/IWFReports/AddStatement" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddStatementOne">
+      <soap:operation soapAction="http://tempuri.org/IWFReports/AddStatementOne" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSalesOne">
+      <soap:operation soapAction="http://tempuri.org/IWFReports/AddSalesOne" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaOrder">
+      <soap:operation soapAction="http://tempuri.org/IWFReports/SaOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaOrder3in1">
+      <soap:operation soapAction="http://tempuri.org/IWFReports/SaOrder3in1" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PuOrder">
+      <soap:operation soapAction="http://tempuri.org/IWFReports/PuOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InvLists">
+      <soap:operation soapAction="http://tempuri.org/IWFReports/InvLists" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WFReports">
+    <wsdl:port name="BasicHttpBinding_IWFReports" binding="tns:BasicHttpBinding_IWFReports">
+      <soap:address location="http://katja.winfinans.dk/WFReports.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

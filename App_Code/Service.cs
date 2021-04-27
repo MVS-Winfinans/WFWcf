@@ -589,6 +589,31 @@ public class Service : IService
         }
         return items.ToArray();
     }
+
+    public AddressesShipBillItem[] AddressBillToLoad(ref DBUser DBUser, ref Address wfAddress)
+    {
+        IList<AddressesShipBillItem> items = new List<AddressesShipBillItem>();
+        string errstr = "Err";
+        try
+        {
+            var wfconn = new wfws.ConnectLocal(DBUser);
+            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            if (DBUser.CompID > 0)
+            {
+                wfws.web wfweb = new wfws.web(ref DBUser);
+                errstr = wfweb.Addresses_BillTo_Load(wfAddress.AddressID, ref items);
+            }
+        }
+        catch (NullReferenceException ex)
+        {
+            errstr = ex.Message;
+            throw new FaultException(String.Concat("wf_wcf: ", ex.Message), new FaultCode("wfwcfFault"));
+        }
+        return items.ToArray();
+    }
+
+
+
     public string AddressShipBillAdd(ref DBUser DBUser, ref Address wfAddress, ref AddressesShipBillItem ShipBillItem)
     {
         string errstr = "Err";
@@ -629,6 +654,53 @@ public class Service : IService
         }
         return errstr;
     }
+
+
+    public string AddressShipBillAddAsBillTo(ref DBUser DBUser, ref Address wfAddress, ref AddressesShipBillItem ShipBillItem)
+    {
+        string errstr = "Err";
+        try
+        {
+            var wfconn = new wfws.ConnectLocal(DBUser);
+            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            if (DBUser.CompID > 0)
+            {
+                wfws.web wfweb = new wfws.web(ref DBUser);
+                errstr = wfweb.Addresses_ShipBillTo_add_BillTo(wfAddress.AddressID, ref ShipBillItem);
+            }
+        }
+        catch (NullReferenceException ex)
+        {
+            errstr = ex.Message;
+            throw new FaultException(String.Concat("wf_wcf: ", ex.Message), new FaultCode("wfwcfFault"));
+        }
+        return errstr;
+    }
+    public string AddressShipBillDeleteAsBillTo(ref DBUser DBUser, ref Address wfAddress, ref AddressesShipBillItem ShipBillItem)
+    {
+        string errstr = "Err";
+        try
+        {
+            var wfconn = new wfws.ConnectLocal(DBUser);
+            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            if (DBUser.CompID > 0)
+            {
+                wfws.web wfweb = new wfws.web(ref DBUser);
+                errstr = wfweb.Addresses_ShipBillTo_Delete_BillTo(wfAddress.AddressID, ref ShipBillItem);
+            }
+        }
+        catch (NullReferenceException ex)
+        {
+            errstr = ex.Message;
+            throw new FaultException(String.Concat("wf_wcf: ", ex.Message), new FaultCode("wfwcfFault"));
+        }
+        return errstr;
+    }
+
+
+
+
+
     public int[] AddressListChanged(ref DBUser DBUser, ref int AddressID, ref DateTime TimeChanged)
     {
         IList<int> items = new List<int>();
@@ -2449,19 +2521,9 @@ public class Service : IService
                 if (SaleID > 0)
                 {
                     DBUser.ConnectionString = connstr;
-                    Guid App_Key = wfconn.Get_App_Key();
-                    var MyRepSvc = new WFReports.WFReportClient();
-                    pdfdoc = MyRepSvc.SaOrder(App_Key, SaleID, (int)ReportID);
-                    //var mysale = new wfws.pdfSale(ref DBUser);
-                    //var mycomp = new wfws.Company(ref DBUser);
-                    //if (DBUser.PublicConnection == false) DBUser.ConnectionString = "Not public";
-                    //var companyinf = new CompanyInf();
-                    //mycomp.Company_Load(ref DBUser, ref companyinf);
-                    //var myorder = new OrderSales();
-                    //wfweb.order_load(SaleID, ref myorder);
-                    //DBUser.Message = SaleID.ToString();
-                    //errstr = mysale.GetPDFArray(SaleID, ReportID, ref companyinf, ref myorder, ref errstr);
-                    //pdfdoc = mysale.get_superdoc();
+                    var MyRepSvc = new wf_rep.WFReportsClient();
+                    pdfdoc = MyRepSvc.SaOrder(DBUser.DBKey, DBUser.CompID, SaleID, (int)ReportID);
+                  
                     DBUser.Message = errstr;
                 }
                 else
@@ -2495,7 +2557,7 @@ public class Service : IService
                 if (SaleID > 0)
                 {
                     var mysale = new wfws.pdfSale(ref DBUser);  //Dette objekt anvendes kun til at finde info omkring mailing
-                    var MyRepSvc = new WFReports.WFReportClient();  //Dette objekt anvendes kun til at danne faktura
+                    var MyRepSvc = new wf_rep.WFReportsClient();  //Dette objekt anvendes kun til at danne faktura
                     var mycomp = new wfws.Company(ref DBUser);
                     var companyinf = new CompanyInf();
                     mycomp.Company_Load(ref DBUser, ref companyinf);
@@ -2512,9 +2574,7 @@ public class Service : IService
                         if (!string.IsNullOrEmpty(wfmail.mailTo))
                         {
                             DBUser.Message = string.Concat(wfmail.mailSubject, " ----  ", wfmail.mailbody);
-                            //wfmail.TheData = mysale.get_superdoc();  Gammel faktura rapport
-                            Guid App_Key = wfconn.Get_App_Key();
-                            wfmail.TheData = MyRepSvc.SaOrder(App_Key, SaleID, (int)ReportID); //Ny fakturarapport
+                            wfmail.TheData = MyRepSvc.SaOrder(DBUser.DBKey,DBUser.CompID, SaleID, (int)ReportID); //Ny fakturarapport
                             errstr = wfmail.SendMail();
                             DBUser.Message = string.Concat(companyinf.saMailClient, errstr, "  ", wfmail.MailFrom, " ", wfmail.mailTo, " ", wfmail.HostName);
                         }

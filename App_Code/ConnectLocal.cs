@@ -27,46 +27,7 @@ namespace wfws
             connStr = DBUser.ConnectionString;
             //ConnID = DBUser.ConnID;
         }
-        // get the connection from wf_conn_user_local. ConnID is uset to store user access. This is the connection used by the API
-        //public string ConnectionGetByGuid(ref DBUser DBUser)
-        //{
-        //    //SUBSTITUTED BY NEW PROCEDURE WHICH RETURNS CONNECTIONSTRING IN HEAD RATHER THAN IN DBUSER
-        //    string errstr = "OK";
-        //    try
-        //    {
-        //        if (DBUser.DBKey != Guid.Empty)
-        //        {
-        //            DBUser.DBKey = ResolveServiceProviderGuid(DBUser.DBKey, DBUser.CompanyKey);
-        //            // SqlConnection wfConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
-        //            // 'SqlCommand myCommand = new SqlCommand("wf_apl_GetConnectString_02", wfConnection);
-        //            SqlConnection wfConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString_user"].ConnectionString);
-        //            SqlCommand myCommand = new SqlCommand("ws_apl_GetConnectString_1", wfConnection);
-        //            myCommand.CommandType = CommandType.StoredProcedure;
-        //            myCommand.Parameters.Add("@ApiGuid", SqlDbType.UniqueIdentifier).Value = DBUser.DBKey;
-        //            myCommand.Parameters.Add("@ConnStr", SqlDbType.NVarChar, 200).Direction = ParameterDirection.Output;
-        //            myCommand.Parameters.Add("@dbID", SqlDbType.UniqueIdentifier).Direction = ParameterDirection.Output;
-        //            myCommand.Parameters.Add("@ShopID", SqlDbType.NVarChar, 20).Direction = ParameterDirection.Output;
-        //            myCommand.Parameters.Add("@PublicConnection", SqlDbType.Bit).Direction = ParameterDirection.Output;
-        //            wfConnection.Open();
-        //            myCommand.ExecuteNonQuery();
-        //            connStr = myCommand.Parameters["@ConnStr"].Value.ToString();
-        //            //DBUser.CompID = Convert.ToInt32(myCommand.Parameters["@Compid"].Value);   Det kan den ikke vide
-        //            //DBUser.ConnID = Convert.ToInt32(myCommand.Parameters["@ConnID"].Value);   Dette bruges ikke mere
-        //            DBUser.ShopID = myCommand.Parameters["@ShopID"].Value.ToString();
-        //            DBUser.PublicConnection = (Boolean)myCommand.Parameters["@PublicConnection"].Value;
-        //            DBUser.ConnectionString = connStr;
-        //            wfConnection.Close();
-        //            var wf_comp = new wfws.Company(ref DBUser);
-        //            wf_comp.get_company_by_Guid(ref DBUser);
-        //        }
-        //    }
-        //    catch (NullReferenceException ex)
-        //    {
-        //        errstr = ex.Message;
-        //    }
-        //    return errstr;
-        //}
-        // get the connection from wf_conn_user_local. ConnID is uset to store user access. This is the connection used by the API
+     
         public string ConnectionGetByGuid_02(ref DBUser DBUser)
         {
             try
@@ -277,22 +238,7 @@ namespace wfws
             }
             return errstr;
         }
-        public Guid Get_App_Key()
-        {
-            Guid AppGuid = Guid.Empty;
-            SqlConnection Conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString_user"].ConnectionString);
-            SqlCommand comm = new SqlCommand("wf_apl_user_key_add", Conn);
-            comm.CommandType = CommandType.StoredProcedure;
-            comm.Parameters.Add("@UserID", SqlDbType.UniqueIdentifier).Value = UserGuid;
-            comm.Parameters.Add("@CompID", SqlDbType.Int).Value = CompID;
-            comm.Parameters.Add("@dbID", SqlDbType.UniqueIdentifier).Value = ConnGuid;
-            comm.Parameters.Add("@ConnKey", SqlDbType.UniqueIdentifier).Direction = ParameterDirection.Output;
-            Conn.Open();
-            comm.ExecuteNonQuery();
-            AppGuid = (Guid)comm.Parameters["@ConnKey"].Value;
-            Conn.Close();
-            return AppGuid;
-        }
+ 
         public Boolean Is_wf_user(string Username, string Password)
         {
             Boolean returnval = false;

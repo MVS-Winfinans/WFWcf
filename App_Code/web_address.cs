@@ -991,6 +991,31 @@ namespace wfws
             conn.Close();
             return "OK";
         }
+
+        public string Addresses_BillTo_Load(int AdrID, ref IList<AddressesShipBillItem> items)
+        {
+            SqlConnection conn = new SqlConnection(conn_str);
+            AddressesShipBillItem item = new AddressesShipBillItem();
+            string mysql = "SELECT IDBillTo,isnull(UseAsDefault,0) as UseAsDefault from ad_Addresses_ShipBill  Where CompID = @CompID AND  IDShipTo =  @AdrID ";
+            SqlCommand comm = new SqlCommand(mysql, conn);
+            comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
+            comm.Parameters.Add("@AdrID", SqlDbType.Int).Value = AdrID;
+            conn.Open();
+            SqlDataReader myr = comm.ExecuteReader();
+            while (myr.Read())
+            {
+                item.AddressID = (Int32)myr["IDBillTo"];
+                item.UseAsDefault = (Boolean)myr["UseAsDefault"];
+                item.ShipBillType = 2;
+                items.Add(item);
+                item = new AddressesShipBillItem();
+            }
+            conn.Close();
+            return "OK";
+        }
+
+
+
         public string Addresses_ShipBillTo_add(int AdrID, ref AddressesShipBillItem ShipBillItem)
         {
             SqlConnection conn = new SqlConnection(conn_str);
@@ -1021,6 +1046,40 @@ namespace wfws
             conn.Close();
             return "OK";
         }
+
+
+        public string Addresses_ShipBillTo_add_BillTo(int AdrID, ref AddressesShipBillItem ShipBillItem)
+        {
+            SqlConnection conn = new SqlConnection(conn_str);
+            AddressesShipBillItem item = new AddressesShipBillItem();
+            string mysql = "if not exists (Select * from ad_Addresses_ShipBill Where CompID = @CompID AND IDShipTo = @ShipTo AND  IDBillTo = @BillTo) ";
+            mysql = string.Concat(mysql, " Insert ad_Addresses_ShipBill (CompID,IDShipTo,IDBillTo, UseAsDefault) values (@CompID,@ShipTo,@BillTo,@UseAsDefault) ");
+            SqlCommand comm = new SqlCommand(mysql, conn);
+            comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
+            comm.Parameters.Add("@ShipTo", SqlDbType.Int).Value = AdrID;
+            comm.Parameters.Add("@BillTo", SqlDbType.Int).Value = ShipBillItem.AddressID;
+            comm.Parameters.Add("@UseAsDefault", SqlDbType.Bit).Value = ShipBillItem.UseAsDefault;
+            conn.Open();
+            comm.ExecuteNonQuery();
+            conn.Close();
+            return "OK";
+        }
+        public string Addresses_ShipBillTo_Delete_BillTo(int AdrID, ref AddressesShipBillItem ShipBillItem)
+        {
+            SqlConnection conn = new SqlConnection(conn_str);
+            AddressesShipBillItem item = new AddressesShipBillItem();
+            string mysql = "delete from ad_Addresses_ShipBill Where CompID = @CompID AND IDShipTo = @ShipTo AND  IDBillTo = @BillTo ";
+            SqlCommand comm = new SqlCommand(mysql, conn);
+            comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
+            comm.Parameters.Add("@ShipTo", SqlDbType.Int).Value = AdrID;
+            comm.Parameters.Add("@BillTo", SqlDbType.Int).Value = ShipBillItem.AddressID;
+            conn.Open();
+            comm.ExecuteNonQuery();
+            conn.Close();
+            return "OK";
+        }
+
+
         public string Address_properties_add(int AdrID, int propertyID)
         {
             string retstr = "err";
@@ -1376,7 +1435,7 @@ namespace wfws
         }
         public string Contact_add_new(ref Contact mycontact)
         {
-            string retstr = "err";
+            string retstr = "OK";
             try
             {
                 SqlConnection conn = new SqlConnection(conn_str);
@@ -1388,16 +1447,17 @@ namespace wfws
                 comm.Parameters.Add("@Category", SqlDbType.NVarChar, 50).Value = (string.IsNullOrEmpty(mycontact.Type) ? DBNull.Value : (object)mycontact.Type);
                 comm.Parameters.Add("@ContactName", SqlDbType.NVarChar, 100).Value = (string.IsNullOrEmpty(mycontact.ContactName) ? DBNull.Value : (object)mycontact.ContactName);
                 comm.Parameters.Add("@Job", SqlDbType.NVarChar, 50).Value = (string.IsNullOrEmpty(mycontact.Job) ? DBNull.Value : (object)mycontact.Job);
+                comm.Parameters.Add("@LocalPhone", SqlDbType.NVarChar,50).Value = (string.IsNullOrEmpty(mycontact.LocalPhone) ? DBNull.Value : (object)mycontact.LocalPhone); 
+                comm.Parameters.Add("@HomePhone", SqlDbType.NVarChar,50).Value = DBNull.Value;
                 comm.Parameters.Add("@MobilPhone", SqlDbType.NVarChar, 50).Value = (string.IsNullOrEmpty(mycontact.MobilPhone) ? DBNull.Value : (object)mycontact.MobilPhone);
                 comm.Parameters.Add("@CompanyEmail", SqlDbType.NVarChar, 255).Value = (string.IsNullOrEmpty(mycontact.email) ? DBNull.Value : (object)mycontact.email);
                 comm.Parameters.Add("@Initials", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(mycontact.Initials) ? DBNull.Value : (object)mycontact.Initials);
                 comm.Parameters.Add("@AccountingCost", SqlDbType.NVarChar, 255).Value = (string.IsNullOrEmpty(mycontact.AccountingCost) ? DBNull.Value : (object)mycontact.AccountingCost);
                 comm.Parameters.Add("@EAN", SqlDbType.NVarChar, 50).Value = (string.IsNullOrEmpty(mycontact.EndpointID) ? DBNull.Value : (object)mycontact.EndpointID);
                 comm.Parameters.Add("@EndPointScheme", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(mycontact.EndpointScheme) ? DBNull.Value : (object)mycontact.EndpointScheme);
-                //comm.Parameters.Add("@UBLDefault", SqlDbType.Bit).Value = mycontact.UBLDefault;
+                comm.Parameters.Add("@UBLDefault", SqlDbType.Bit).Value = mycontact.UBLDefault;
                 //unavailable parameters
-                comm.Parameters.Add("@LocalPhone", SqlDbType.NVarChar).Value = DBNull.Value;
-                comm.Parameters.Add("@HomePhone", SqlDbType.NVarChar).Value = DBNull.Value;
+            
                 comm.Parameters.Add("@HomeFax", SqlDbType.NVarChar).Value = DBNull.Value;
                 comm.Parameters.Add("@Address", SqlDbType.NVarChar).Value = DBNull.Value;
                 comm.Parameters.Add("@CountryID", SqlDbType.NVarChar).Value = DBNull.Value;
@@ -1410,8 +1470,17 @@ namespace wfws
                 comm.Parameters.Add("@UserName", SqlDbType.NVarChar).Value = DBNull.Value;
                 comm.Parameters.Add("@Password", SqlDbType.NVarChar).Value = DBNull.Value;
                 comm.Parameters.Add("@ReceiveInvoice", SqlDbType.Bit).Value = DBNull.Value;
+                comm.Parameters.Add("@ReceiveOrder", SqlDbType.Bit).Value = DBNull.Value;
+                comm.Parameters.Add("@ReceiveQuotation", SqlDbType.Bit).Value = DBNull.Value;
                 comm.Parameters.Add("@ReceiveReminder", SqlDbType.Bit).Value = DBNull.Value;
                 comm.Parameters.Add("@ReceiveInformation", SqlDbType.Bit).Value = DBNull.Value;
+                comm.Parameters.Add("@ReceiveInquiry", SqlDbType.Bit).Value = DBNull.Value;
+                comm.Parameters.Add("@ReceivePuOrder", SqlDbType.Bit).Value = DBNull.Value;
+                comm.Parameters.Add("@ReceivePuInvoice", SqlDbType.Bit).Value = DBNull.Value;
+                comm.Parameters.Add("@GlobalInitials", SqlDbType.NVarChar, 50).Value = DBNull.Value;
+
+
+
                 var returnParameter = comm.Parameters.Add("@ContID", SqlDbType.Int);
                 returnParameter.Direction = ParameterDirection.ReturnValue;
                 //comm.Parameters.Add("@ContID", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
@@ -1427,7 +1496,7 @@ namespace wfws
         public int Contacts_load(int AddressID,ref List<Contact> items)
         {
             var item = new Contact();
-            string mysql = "select tb1.ContID, tb1.initials,tb2.ContactName, tb1.category,tb1.job,tb1.LocalPhone,tb1.Job,tb1.email,AccountingCost,tb1.EndpointScheme,tb1.EAN,isnull(UBLDefault,0) as UBLDefault FROM  ad_Contacts_adr tb1 inner join ad_Contacts tb2 on tb2.CompID = tb1.CompID AND tb2.ContID = tb1.ContID ";
+            string mysql = "select tb1.ContID, tb1.initials,tb2.ContactName, tb1.category,tb1.job,tb1.LocalPhone,tb2.MobilPhone,tb1.Job,tb1.email,AccountingCost,tb1.EndpointScheme,tb1.EAN,isnull(UBLDefault,0) as UBLDefault FROM  ad_Contacts_adr tb1 inner join ad_Contacts tb2 on tb2.CompID = tb1.CompID AND tb2.ContID = tb1.ContID ";
             mysql = string.Concat(mysql, "where tb1.CompID = @CompID AND tb1.AddressID = @AddressID");
             SqlConnection conn = new SqlConnection(conn_str);
             SqlCommand comm = new SqlCommand(mysql, conn);
@@ -1438,12 +1507,13 @@ namespace wfws
             while (myr.Read())
             {
                 item.AddressID = AddressID;
-                item.AddressID = (int)myr["ContID"];
+                item.ContID = (int)myr["ContID"];
                 item.ContactName = myr["ContactName"].ToString();
                 item.Type = myr["category"].ToString();
                 item.Initials = myr["initials"].ToString();
                 item.Job = myr["job"].ToString();
-                item.MobilPhone = myr["LocalPhone"].ToString();
+                item.LocalPhone = myr["LocalPhone"].ToString();
+                item.MobilPhone = myr["MobilPhone"].ToString();
                 item.email = myr["email"].ToString();
                 //item.UBLDefault =  (int)myr["UBLDefault"] == 0 ? false : true;
                 item.EndpointScheme = myr["EndpointScheme"].ToString();
