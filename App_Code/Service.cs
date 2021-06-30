@@ -107,7 +107,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -126,7 +126,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -144,7 +144,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 errstr = wfconn.UserEsists(ref DBUser, username, email);
@@ -245,7 +245,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -348,7 +348,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -390,7 +390,7 @@ public class Service : IService
         {
             wfAddress.AddressID = 0;
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -426,7 +426,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -462,7 +462,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -486,7 +486,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -512,7 +512,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -533,7 +533,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -553,7 +553,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -575,7 +575,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -597,7 +597,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -620,7 +620,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -640,7 +640,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -662,7 +662,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -682,7 +682,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -709,7 +709,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -755,7 +755,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -779,11 +779,11 @@ public class Service : IService
     public CreditCardErrors[] AddressGetCreditCardErrors(ref DBUser DBUser, int AddressID, int Status, DateTime FromDate)
     {
         IList<CreditCardErrors> items = new List<CreditCardErrors>();
-        string errstr;
+        string errstr = "OK";
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -805,7 +805,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -828,7 +828,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -850,7 +850,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -870,7 +870,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -890,7 +890,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -910,7 +910,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -932,7 +932,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -954,7 +954,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -975,7 +975,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -995,7 +995,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1015,7 +1015,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 int adrID = wfAddress.AddressID;
@@ -1037,7 +1037,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1058,7 +1058,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1078,7 +1078,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1098,7 +1098,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1119,7 +1119,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1139,7 +1139,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1161,7 +1161,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1185,7 +1185,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1206,7 +1206,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1226,7 +1226,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1248,7 +1248,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1271,7 +1271,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1299,7 +1299,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1319,7 +1319,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1339,7 +1339,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1359,7 +1359,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1381,7 +1381,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1401,7 +1401,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1441,7 +1441,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1480,7 +1480,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 if (WfOrder.OrderNo >= 0)
@@ -1569,7 +1569,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1629,7 +1629,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1656,7 +1656,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1679,7 +1679,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1718,7 +1718,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1746,7 +1746,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1774,11 +1774,11 @@ public class Service : IService
     public int SalesOrderGetSaleIDFromGuid(ref DBUser DBUser, Guid GuidInvoice)
     {
         int SaleID = 0;
-        String errstr;
+        String errstr = "OK";
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1795,10 +1795,11 @@ public class Service : IService
     public OrderLine[] SalesOrderLoadItems(ref DBUser DBUser, ref OrderSales WfOrder, ref string errstr)
     {
         IList<OrderLine> items = new List<OrderLine>();
+        errstr = "OK";
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1819,7 +1820,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1850,7 +1851,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1873,11 +1874,12 @@ public class Service : IService
     }
     public OrderPayment[] SalesOrderLoadPayments(ref DBUser DBUser, ref OrderSales WfOrder, ref string errstr)
     {
+        errstr = "OK";
         IList<OrderPayment> items = new List<OrderPayment>();
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1897,7 +1899,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1917,7 +1919,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1945,7 +1947,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -1974,7 +1976,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2002,7 +2004,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2031,7 +2033,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2052,7 +2054,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2073,7 +2075,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2103,7 +2105,7 @@ public class Service : IService
             if (OrderType == SalesOrderTypes.CreditNoteClosed) orderClass = -900;
             if (OrderType == SalesOrderTypes.InvoiceCreditNoteClosed) orderClass = 1;
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2132,7 +2134,7 @@ public class Service : IService
             if (OrderType == SalesOrderTypes.InvoiceClosed) orderClass = 900;
             if (OrderType == SalesOrderTypes.InvoiceAndOrders) orderClass = 0;
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2154,7 +2156,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2175,7 +2177,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2199,7 +2201,7 @@ public class Service : IService
         {
             DBUser.Message = "OK_1";
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 DBUser.Message = "OK_3";
@@ -2231,7 +2233,7 @@ public class Service : IService
             if (OrderType == SalesOrderTypes.InvoiceClosed) orderClass = 900;
             DBUser.Message = "OK_2";
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 DBUser.Message = "OK_3";
@@ -2254,7 +2256,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 DBUser.Message = "OK_3";
@@ -2279,7 +2281,7 @@ public class Service : IService
         {
             DBUser.Message = "OK_1";
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 DBUser.Message = "OK_3";
@@ -2304,7 +2306,7 @@ public class Service : IService
         {
             DBUser.Message = "OK_1";
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 DBUser.Message = "OK_3";
@@ -2330,7 +2332,7 @@ public class Service : IService
         {
             DBUser.Message = "OK_1";
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 DBUser.Message = "OK_3";
@@ -2357,7 +2359,7 @@ public class Service : IService
         {
             DBUser.Message = "OK_1";
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 DBUser.Message = "OK_3";
@@ -2396,7 +2398,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2613,7 +2615,7 @@ public class Service : IService
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
             //errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2634,7 +2636,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2656,7 +2658,7 @@ public class Service : IService
             int O_PurcID = 0;
             int s_Class = 0;
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2685,7 +2687,7 @@ public class Service : IService
             if (OrderType == PurchaseOrderTypes.Invoice) orderClass = 2000;
             if (OrderType == PurchaseOrderTypes.InvoiceClosed) orderClass = 9000;
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2705,7 +2707,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2732,7 +2734,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2753,7 +2755,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2790,7 +2792,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2811,7 +2813,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2832,7 +2834,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2853,7 +2855,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2874,7 +2876,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2895,7 +2897,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2916,7 +2918,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2943,7 +2945,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 IList<inventorySalesPrice> items = new List<inventorySalesPrice>();
@@ -2972,7 +2974,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -2993,7 +2995,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -3014,7 +3016,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -3056,7 +3058,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -3108,7 +3110,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -3129,7 +3131,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -3151,7 +3153,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -3172,7 +3174,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -3194,7 +3196,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -3215,7 +3217,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -3237,7 +3239,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -3261,7 +3263,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -3282,7 +3284,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -3304,7 +3306,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -3332,7 +3334,7 @@ public class Service : IService
             //var wfconn = new wfws.ConnectLocal(DBUser);
             //retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -3353,7 +3355,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -3415,7 +3417,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -3438,7 +3440,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -3496,7 +3498,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -3523,7 +3525,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            errstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
@@ -3581,7 +3583,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 var wfshop = new wfws.shop(ref DBUser);
@@ -3601,7 +3603,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 var wfshop = new wfws.shop(ref DBUser);
@@ -3622,7 +3624,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 var wfshop = new wfws.shop(ref DBUser);
@@ -3643,7 +3645,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 var mybasket = new wfws.Basket(ref DBUser);
@@ -3663,7 +3665,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 var wfbasket = new wfws.Basket(ref DBUser);
@@ -3684,7 +3686,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 var myweb = new wfws.web(ref DBUser);
@@ -3704,7 +3706,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 var wfbasket = new wfws.Basket(ref DBUser);
@@ -3725,7 +3727,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 var wfbasket = new wfws.Basket(ref DBUser);
@@ -3746,7 +3748,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 var wfbasket = new wfws.Basket(ref DBUser);
@@ -3768,7 +3770,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 var wfbasket = new wfws.Basket(ref DBUser);
@@ -3788,7 +3790,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 var wfbasket = new wfws.Basket(ref DBUser);
@@ -3811,7 +3813,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             var wfComp = new wfws.Company(ref DBUser);
             retStr = wfComp.get_company_by_Guid(ref DBUser);
             if (DBUser.CompID > 0)
@@ -3834,7 +3836,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             var wfComp = new wfws.Company(ref DBUser);
             retStr = wfComp.get_company_by_Guid(ref DBUser);
             if (DBUser.CompID > 0)
@@ -3857,7 +3859,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             var wfComp = new wfws.Company(ref DBUser);
             retStr = wfComp.get_company_by_Guid(ref DBUser);
             if (DBUser.CompID > 0)
@@ -3880,7 +3882,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             var wfComp = new wfws.Company(ref DBUser);
             retStr = wfComp.get_company_by_Guid(ref DBUser);
             if (DBUser.CompID > 0)
@@ -3902,7 +3904,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             var wfComp = new wfws.Company(ref DBUser);
             retStr = wfComp.get_company_by_Guid(ref DBUser);
             if (DBUser.CompID > 0)
@@ -3918,6 +3920,34 @@ public class Service : IService
         }
         return retStr;
     }
+
+    public int AccVoucherNewPict(ref DBUser DBUser, byte[] VoucherPict)
+    {
+        string retStr = "OK";
+        int PictID = 0;
+        try
+        {
+            var wfconn = new wfws.ConnectLocal(DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
+            var wfComp = new wfws.Company(ref DBUser);
+            retStr = wfComp.get_company_by_Guid(ref DBUser);
+            if (DBUser.CompID > 0)
+            {
+                var wfacc = new wfws.Accounts(ref DBUser);
+                //retStr = wfacc.voucher_savepic(VoucherPict);
+                PictID = wfacc.voucher_add_pict(VoucherPict);
+            }
+        }
+        catch (Exception e)
+        {
+            retStr = e.Message;
+            throw new FaultException(string.Concat("wf_wcf: ", e.Message), new FaultCode("wfwcfFault"));
+        }
+        return PictID;
+    }
+
+ 
+
     public int AccNextVoucherNo(ref DBUser DBUser, string LedgerName, DateTime EnterDate)
     {
         int NewVoucherNo = -1;
@@ -3925,7 +3955,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             var wfComp = new wfws.Company(ref DBUser);
             retStr = wfComp.get_company_by_Guid(ref DBUser);
             if (DBUser.CompID > 0)
@@ -3993,7 +4023,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             var wfComp = new wfws.Company(ref DBUser);
             if (DBUser.CompID > 0)
             {
@@ -4015,7 +4045,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 var wfacc = new wfws.Accounts(ref DBUser);
@@ -4039,7 +4069,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 var wfacc = new wfws.Accounts(ref DBUser);
@@ -4059,7 +4089,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 var wfacc = new wfws.Accounts(ref DBUser);
@@ -4079,7 +4109,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 var wfacc = new wfws.Accounts(ref DBUser);
@@ -4100,7 +4130,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retstr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             var wfComp = new wfws.Company(ref DBUser);
             if (DBUser.CompID > 0)
             {
@@ -4122,7 +4152,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 var wfacc = new wfws.Accounts(ref DBUser);
@@ -4143,7 +4173,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 var wfacc = new wfws.Accounts(ref DBUser);
@@ -4163,7 +4193,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            string retStr = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 var wfacc = new wfws.Accounts(ref DBUser);
@@ -4189,7 +4219,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            RetVal = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.datatransfers dt = new wfws.datatransfers(ref DBUser);
@@ -4218,7 +4248,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            RetVal = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.datatransfers dt = new wfws.datatransfers(ref DBUser);
@@ -4247,7 +4277,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            RetVal = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.datatransfers wfweb = new wfws.datatransfers(ref DBUser);
@@ -4284,7 +4314,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            RetVal = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0)
             {
                 wfws.datatransfers wfweb = new wfws.datatransfers(ref DBUser);
@@ -4309,7 +4339,7 @@ public class Service : IService
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            RetVal = wfconn.ConnectionGetByGuid_02(ref DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
             if (DBUser.CompID > 0) {
                 wfws.datatransfers wfweb = new wfws.datatransfers(ref DBUser);
                 wfweb.SetTransferID(TransferID);

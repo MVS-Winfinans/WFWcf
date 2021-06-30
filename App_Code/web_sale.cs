@@ -338,7 +338,7 @@ namespace wfws
                 comm.Parameters.Add("@P_ItemID", SqlDbType.NVarChar, 20).Value = ((string.IsNullOrEmpty(lineItem.ItemID) ? DBNull.Value : (object)lineItem.ItemID));
                 comm.Parameters.Add("@P_EAN", SqlDbType.NVarChar, 20).Value = ((string.IsNullOrEmpty(lineItem.EAN) ? DBNull.Value : (object)lineItem.EAN));
                 comm.Parameters.Add("@P_Price", SqlDbType.Money).Value = lineItem.SalesPrice;
-                comm.Parameters.Add("@P_qty", SqlDbType.Int).Value = lineItem.Qty;
+                comm.Parameters.Add("@P_qty", SqlDbType.Money).Value = lineItem.Qty;
                 comm.Parameters.Add("@P_GroupFi", SqlDbType.NVarChar, 20).Value = ((string.IsNullOrEmpty(lineItem.GroupFi) ? DBNull.Value : (object)lineItem.GroupFi));
                 comm.Parameters.Add("@P_Volume", SqlDbType.Money).Value = lineItem.Volume;
                 comm.Parameters.Add("@P_Weight", SqlDbType.Money).Value = lineItem.Weight;

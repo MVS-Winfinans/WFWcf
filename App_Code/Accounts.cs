@@ -192,7 +192,7 @@ namespace wfws
                 Comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
                 Comm.Parameters.Add("@ContentType", SqlDbType.NVarChar, 255).Value = VoucherPict.ContentType;
                 Comm.Parameters.Add("@Document", SqlDbType.Binary).Value = VoucherPict.Picture;
-                Comm.Parameters.Add("@FileName", SqlDbType.NVarChar, 100).Value = VoucherPict.FileName;
+                Comm.Parameters.Add("@FileName", SqlDbType.NVarChar, 200).Value = VoucherPict.FileName;
                 Comm.Parameters.Add("@enterdate", SqlDbType.DateTime).Value = VoucherPict.EnterDate;
                 Comm.Parameters.Add("@voucher", SqlDbType.BigInt).Value = VoucherPict.Voucher;
                 Comm.Parameters.Add("@Description", SqlDbType.NVarChar, 200).Value = VoucherPict.Description;
@@ -204,6 +204,33 @@ namespace wfws
             catch (Exception e) { errStr = e.Message; }
             return errStr;
         }
+
+
+        public int voucher_add_pict(Byte[] myPicture)
+        {
+            string errStr = "OK";
+            int pictID = 0;
+            try
+            {
+                
+                SqlConnection conn = new SqlConnection(ConnectionString);
+                string mysql = "insert fi_vouchers_pict (compID, ScanDate,Picture,FileName,ContentType, enterdate, voucher, SourceDesc, MailSubject ) ";
+                mysql = String.Concat(mysql, " values(@compID, getdate(), @Document) select @@identity ");
+                SqlCommand Comm = new SqlCommand(mysql, conn);
+                Comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
+                Comm.Parameters.Add("@Document", SqlDbType.Binary).Value = myPicture;
+                conn.Open();
+                pictID = (int)Comm.ExecuteScalar();
+                conn.Close();
+            }
+            catch (Exception e) { errStr = e.Message; }
+            return pictID;
+        }
+
+
+
+
+
         public int VoucherNo_GetNext(string LedgerName, DateTime Enterdate)
         {
             //

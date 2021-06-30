@@ -229,6 +229,8 @@ public interface IService
     [OperationContract] Ledger[] AccGetLedgerList(ref DBUser DBUser);
     [OperationContract] VoucherOut[] AccVouchersGet(ref DBUser DBUser, VoucherCriteria Criteria );
     [OperationContract] string AccVoucherAddPict(ref DBUser DBUser, VoucherPictures VoucherPict);
+    [OperationContract] int AccVoucherNewPict(ref DBUser DBUser,byte[] VoucherPict);
+
 
 
     // Dimensions

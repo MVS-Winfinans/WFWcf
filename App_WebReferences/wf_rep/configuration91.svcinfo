@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="ew4HaBj6ckwgkDVtniZvgy7TU7HWmrh5KWuiOCZQasA=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="y4hOaB63Wkr2jbhF5+mDYw0ZS1cntD0ncHKxulnxIaI=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_IWFReports">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_IWFReports" contract="wf_rep.IWFReports" bindingType="basicHttpBinding" address="http://katja.winfinans.dk/WFReports.svc" bindingConfiguration="BasicHttpBinding_IWFReports">
+    <endpoint name="BasicHttpBinding_IWFReports" contract="wf_rep.IWFReports" bindingType="basicHttpBinding" address="http://report01.winfinans.dk/WFReports.svc" bindingConfiguration="BasicHttpBinding_IWFReports">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://katja.winfinans.dk/WFReports.svc</serializedValue>
+          <serializedValue>http://report01.winfinans.dk/WFReports.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
