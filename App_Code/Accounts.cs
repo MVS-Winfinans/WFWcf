@@ -227,10 +227,6 @@ namespace wfws
             return pictID;
         }
 
-
-
-
-
         public int VoucherNo_GetNext(string LedgerName, DateTime Enterdate)
         {
             //

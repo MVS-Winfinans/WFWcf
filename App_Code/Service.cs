@@ -4169,7 +4169,6 @@ public class Service : IService
     public int DimensionTimeItemToInvoiceAll(ref DBUser DBUser, DateTime EnterDate)
     {
         int iCount = 0;
-        string retStr = "OK";
         try
         {
             var wfconn = new wfws.ConnectLocal(DBUser);

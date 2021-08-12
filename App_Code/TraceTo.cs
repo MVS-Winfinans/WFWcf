@@ -13,6 +13,7 @@ public class TraceTo
 {
     public TraceTo(DBUser DBUser, Exception ex)  //Overload for putting trace in Ooops queue
     {
+        string errstr;
         if (ex != null ) {
             try {
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString_update"].ConnectionString);
@@ -28,8 +29,9 @@ public class TraceTo
                 myComm.ExecuteNonQuery();
                 conn.Close();
             }
-            catch (Exception ex2)
-            {//'Ups'
+            catch (Exception e)
+            {
+                errstr = ex.Message;
             }
         }
     }

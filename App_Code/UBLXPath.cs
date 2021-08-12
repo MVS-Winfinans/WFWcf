@@ -76,6 +76,7 @@ namespace wfxml
        
         private int GetUserPathSet(ref string[] answer, DBUser DBUser, DocType doctype, DocSet Set)
         {
+            string errstr;
             int pos = 0;
             SqlConnection conn = new SqlConnection(connstr);
             string mysql = "SELECT ubl_XPaths_lines.line FROM ubl_XPaths INNER JOIN ubl_XPaths_lines ON ubl_XPaths.ID = ubl_XPaths_lines.XPathID WHERE (ubl_XPaths.CompID = @CompID) AND (ubl_XPaths.XPathType = @Type) AND (ubl_XPaths.XPathSet = @Set) ORDER BY ubl_XPaths_lines.pos";
@@ -93,8 +94,8 @@ namespace wfxml
                     pos++;
                 }
             }
-            catch (Exception e)
-            { };      //any fails yields fetching of defaults
+            catch (Exception ex)
+            { errstr = ex.Message; };      //any fails yields fetching of defaults
             conn.Close();
             return pos;
         }

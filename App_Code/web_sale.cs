@@ -542,7 +542,7 @@ namespace wfws
                 comm.Parameters.Add("@LiID", SqlDbType.Int).Value = lineItem.Liid;
                 comm.Parameters.Add("@P_Price", SqlDbType.Money).Value = lineItem.SalesPrice;
                 comm.Parameters.Add("@DiscountProc", SqlDbType.Int).Value = lineItem.DiscountProc;
-                comm.Parameters.Add("@P_qty", SqlDbType.Int).Value = lineItem.Qty;
+                comm.Parameters.Add("@P_qty", SqlDbType.Money).Value = lineItem.Qty;
                 conn.Open();
                 comm.ExecuteNonQuery();
                 mysql = " UPDATE tr_sale_LineItems set OrderAmount = ROUND(orderqty * QtyPackages * SalesPrice ,2), OrderAmountCu = ROUND(orderqty * QtyPackages * SalesPrice ,2) ";

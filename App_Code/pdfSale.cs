@@ -64,19 +64,10 @@ namespace wfws
         public pdfSale(ref DBUser DBUser)
         {
             var wfconn = new wfws.ConnectLocal(DBUser);
-            //wfconn.ConnectionGetByGuid(ref DBUser);
             conn_str = wfconn.ConnectionGetByGuid_02(ref DBUser);
             compID = DBUser.CompID;
-            //  so_addressID = 0;
-            // sh_addressID = 0;
-            // sa_class = 0;
-            // TheUser = 0;
             SellerID = 0;
             language = "dan";
-            //UseSuperDoc = false;
-            //SuperDoc.SetInfo(0, "License", ConfigurationManager.AppSettings["ABCpdfLicence"]);
-            //SuperDoc.Clear();
-            //SuperDoc.HtmlOptions.Engine = EngineType.MSHtml;
         }
 
 
