@@ -471,7 +471,7 @@ namespace wfws
                 Comm.Parameters.Add("@OrderID", SqlDbType.Int).Value = mypa.OrderID;
                 Comm.Parameters.Add("@ToCapture", SqlDbType.Int).Value = mypa.ToCapture;
                 Comm.Parameters.Add("@CardNo", SqlDbType.NVarChar, 200).Value = (string.IsNullOrEmpty(mypa.CardNo) ? DBNull.Value : (object)mypa.CardNo);
-                Comm.Parameters.Add("@TicketID", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(mypa.TicketID) ? DBNull.Value : (object)mypa.TicketID);
+                Comm.Parameters.Add("@TicketID", SqlDbType.NVarChar, 50).Value = (string.IsNullOrEmpty(mypa.TicketID) ? DBNull.Value : (object)mypa.TicketID);
                 Comm.Parameters.Add("@Merchant", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(mypa.Merchant) ? DBNull.Value : (object)mypa.Merchant);
                 Comm.Parameters.Add("@CurrencyDibs", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(mypa.CurrencyDibs) ? DBNull.Value : (object)mypa.CurrencyDibs);
                 Comm.Parameters.Add("@PaidDate", SqlDbType.DateTime).Value = ((mypa.PaidDate < minSqlDate) ? DBNull.Value : (object)mypa.PaidDate); //(string.IsNullOrEmpty(mypa.CurrencyDibs) ? DBNull.Value : (object)mypa.CurrencyDibs);
