@@ -295,7 +295,7 @@ namespace wfws
             string retstr = wfsh.Left("bbbbb", 4);
             string mysql = "Update ad_addresses set CompanyName = @CompName,Department = @Department, Address = @Address, Address2 = @Address2,LastName = @LastName, ad_Account = isnull(@Account,ad_Account), AddrType = isnull(@AddrType,4), ";
             mysql = string.Concat(mysql, " HouseNumber = @HouseNumber, InHouseMail = @InHouseMail, PostalCode = @PostalCode, City = @City, phone = @Phone, ");
-            mysql = string.Concat(mysql, " VATNumber = @VATNumber, ean = @ean, Region = @Region, CountryID = @CountryID,EmailInvoice = @email,  email = @email, Fax = @Fax, ContactPersonmail = @ContactPerson, Category = @Category, ");
+            mysql = string.Concat(mysql, " VATNumber = @VATNumber, ean = @ean, Region = @Region, CountryID = @CountryID,EmailInvoice = @emailInvoice,  Email = @email, Fax = @Fax, ContactPersonmail = @ContactPerson, Category = @Category, ");
             mysql = string.Concat(mysql, " SellerID = @SellerID , Language = @Language, DebtorGroup = @DebtorGroup, TermsOfPaymentDeb = @TermsOfPaymentDeb, CompanyWeb = @CompanyWeb,Notes = @Notes, ImportID = @ImportID,  CreditStop = @CreditStop, internRef = @internRef,  ");
             mysql = string.Concat(mysql, " BankingRegNo = @BankingRegNo, BankingAccount=@BankingAccount, Ticket = @Ticket, TicketEnterDate = @TicketEnterDate, CardExpDate = @CardExpDate, CardNoMask = @CardNoMask, CardType = @CardType ");
             mysql = string.Concat(mysql, " , BIC = @Bic, Iban = @Iban, CreditorNo = @CreditorNo");
@@ -319,6 +319,7 @@ namespace wfws
             comm.Parameters.Add("@Phone", SqlDbType.NVarChar, 20).Value = ((string.IsNullOrEmpty(MyAdr.Phone)) ? DBNull.Value : (object)wfsh.Left(MyAdr.Phone, 20));
             comm.Parameters.Add("@Fax", SqlDbType.NVarChar, 20).Value = ((string.IsNullOrEmpty(MyAdr.Fax)) ? DBNull.Value : (object)wfsh.Left(MyAdr.Fax, 20));
             comm.Parameters.Add("@email", SqlDbType.NVarChar, 255).Value = ((string.IsNullOrEmpty(MyAdr.email)) ? DBNull.Value : (object)wfsh.Left(MyAdr.email, 255));
+            comm.Parameters.Add("@emailInvoice", SqlDbType.NVarChar, 255).Value = ((string.IsNullOrEmpty(MyAdr.emailInvoice)) ? DBNull.Value : (object)wfsh.Left(MyAdr.emailInvoice, 255));
             comm.Parameters.Add("@CompanyWeb", SqlDbType.NVarChar, 200).Value = ((string.IsNullOrEmpty(MyAdr.CompanyWeb)) ? DBNull.Value : (object)wfsh.Left(MyAdr.CompanyWeb, 200));
             comm.Parameters.Add("@VATNumber", SqlDbType.NVarChar, 20).Value = ((string.IsNullOrEmpty(MyAdr.VATNumber)) ? DBNull.Value : (object)wfsh.Left(MyAdr.VATNumber, 20));
             comm.Parameters.Add("@ean", SqlDbType.NVarChar, 20).Value = ((string.IsNullOrEmpty(MyAdr.ean)) ? DBNull.Value : (object)wfsh.Left(MyAdr.ean, 20));
@@ -543,6 +544,7 @@ namespace wfws
                 string mysql = " SELECT max(AddressID) as AdrID, count(*) as wf_Count  FROM ad_addresses Where CompID = @CompID  ";
                 if (!string.IsNullOrEmpty(wfadr.ImportID)) mysql = string.Concat(mysql, " AND ImportID = @ImportID ");
                 if (!string.IsNullOrEmpty(wfadr.email)) mysql = string.Concat(mysql, " AND email = @email ");
+                if (!string.IsNullOrEmpty(wfadr.emailInvoice)) mysql = string.Concat(mysql, " AND email = @emailInvoice ");
                 if (!string.IsNullOrEmpty(wfadr.CompanyName)) mysql = string.Concat(mysql, " AND CompanyName like @Name + '%' ");
                 if (!string.IsNullOrEmpty(wfadr.Department)) mysql = string.Concat(mysql, " AND Department like @Department + '%' ");
                 if (!string.IsNullOrEmpty(wfadr.Account)) mysql = string.Concat(mysql, " AND ad_account = @Account ");
@@ -562,6 +564,7 @@ namespace wfws
                 comm.Parameters.Add("@Account", SqlDbType.NVarChar, 20).Value = ((string.IsNullOrEmpty(wfadr.Account)) ? DBNull.Value : (object)wfadr.Account);
                 comm.Parameters.Add("@ImportID", SqlDbType.NVarChar, 50).Value = ((string.IsNullOrEmpty(wfadr.ImportID)) ? DBNull.Value : (object)wfsh.Left(wfadr.ImportID, 50));
                 comm.Parameters.Add("@email", SqlDbType.NVarChar, 100).Value = ((string.IsNullOrEmpty(wfadr.email)) ? DBNull.Value : (object)wfadr.email);
+                comm.Parameters.Add("@emailInvoice", SqlDbType.NVarChar, 100).Value = ((string.IsNullOrEmpty(wfadr.emailInvoice)) ? DBNull.Value : (object)wfadr.emailInvoice);
                 comm.Parameters.Add("@phone", SqlDbType.NVarChar, 100).Value = ((string.IsNullOrEmpty(wfadr.Phone)) ? DBNull.Value : (object)wfadr.Phone);
                 comm.Parameters.Add("@ean", SqlDbType.NVarChar, 100).Value = ((string.IsNullOrEmpty(wfadr.ean)) ? DBNull.Value : (object)wfadr.ean);
                 comm.Parameters.Add("@Name", SqlDbType.NVarChar, 100).Value = ((string.IsNullOrEmpty(wfadr.CompanyName)) ? DBNull.Value : (object)wfadr.CompanyName);

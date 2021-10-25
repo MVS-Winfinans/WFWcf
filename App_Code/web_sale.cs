@@ -915,7 +915,7 @@ namespace wfws
             //if (DateTime.Compare(MyOrder.ShipDate, OldDate) <= 0) MyOrder.ShipDate = MyOrder.InvoiceDate;
             //Dim MyData As DataSet = new DataSet
             string mysql = " Update tr_sale set orderno = @OrderNo, Calendar = @Calendar, orderdate = @OrderDate,RecurringStart = @StartDate ,RecurringExpire = @EndDate,InvDate = @InvDate,ShipDate = @ShipDate, Salesman = @Salesmann,sellerID = isnull(@sellerID,sellerID), Category = @Category, EAN = @EAN, requisition = @requisition, UserID = isnull(@IntRef,UserID), ExtRef = @ExtRef,  Dim1 =  @Dim1, Dim2 = @Dim2, Dim3 = @Dim3, Dim4 = @Dim4,  ";
-            mysql = String.Concat(mysql, " text_1 = @text1, text_2 = @text2, text_3 = @text3, CreInvFactor = @invcre, trace = @trace, blockReason = @blockReason, so_addressID = @BillTo, sh_addressID = @ShipTo, TermsOfPayment = @TermsOfPayment, PayDate = @PayDate, ContactPerson = @ContactPerson, ContID = @ContID, AccountingCost = @AccountingCost, InvoiceReady = @InvoiceReady ");
+            mysql = String.Concat(mysql, " Currency=@Currency, Language = @Language, text_1 = @text1, text_2 = @text2, text_3 = @text3, CreInvFactor = @invcre, trace = @trace, blockReason = @blockReason, so_addressID = @BillTo, sh_addressID = @ShipTo, TermsOfPayment = @TermsOfPayment, PayDate = @PayDate, ContactPerson = @ContactPerson, ContID = @ContID, AccountingCost = @AccountingCost, InvoiceReady = @InvoiceReady ");
             if (BlindUpdate == false) mysql = string.Concat(mysql, ", timeChanged = getdate() ");
             mysql = String.Concat(mysql, " WHERE CompID = @CompID AND SaleID = @SaleID ");
             SqlCommand comm = new SqlCommand(mysql, conn);
@@ -936,6 +936,8 @@ namespace wfws
             comm.Parameters.Add("@TermsOfPayment", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(MyOrder.TermsOfPayment) ? DBNull.Value : (object)MyOrder.TermsOfPayment);
             comm.Parameters.Add("@sellerID", SqlDbType.Int).Value = MyOrder.seller;
             comm.Parameters.Add("@Category", SqlDbType.Int).Value = MyOrder.Category;
+            comm.Parameters.Add("@Currency", SqlDbType.NVarChar,20).Value = (string.IsNullOrEmpty(MyOrder.Currency) ? DBNull.Value : (object)MyOrder.Currency);
+            comm.Parameters.Add("@Language", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(MyOrder.Language) ? DBNull.Value : (object)MyOrder.Language);
             comm.Parameters.Add("@EAN", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(MyOrder.EAN) ? DBNull.Value : (object)MyOrder.EAN);
             comm.Parameters.Add("@requisition", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(MyOrder.requisition) ? DBNull.Value : (object)MyOrder.requisition);
             comm.Parameters.Add("@trace", SqlDbType.NVarChar, 512).Value = (string.IsNullOrEmpty(MyOrder.Trace) ? DBNull.Value : (object)MyOrder.Trace);
@@ -1193,6 +1195,70 @@ namespace wfws
             conn.Close();
             return retstr;
         }
+
+        public string SalesAddressStatsItems_get(ref SalesStatFilter StatFilter, ref IList<SalesStatSum> items, int orderClass)
+        {
+     
+            string retstr = "err";
+            int AdrID = 0;
+            DateTime FromDate = wfsh.ToSqlDateTime(StatFilter.FromDate);
+            DateTime ToDate = wfsh.ToSqlDateTime(StatFilter.ToDate);
+
+            SqlConnection conn = new SqlConnection(conn_str);
+            SalesStatSum item = new SalesStatSum();
+            string mysql = " ";
+            mysql = String.Concat(mysql, " select tbi.ItemID, tbi.Description,tbi.Unit, tbs.Qty,tbs.Amount from tr_inventory tbi inner join   ");
+            mysql = String.Concat(mysql, " (SELECT tb1.CompID,tb2.ItemID, sum(tb1.CreInvFactor * isnull(tb2.OrderQty,0)) as Qty ,  sum(tb1.CreInvFactor * isnull(tb2.OrderAmount,0)) as Amount  ");
+            mysql = String.Concat(mysql, " FROM tr_sale tb1 inner join tr_sale_lineitems tb2 on tb2.CompID = tb1.CompID AND tb2.SaleID = tb1.SaleID  WHERE tb1.CompID = @CompID  ");
+
+            if (orderClass > 0) mysql = String.Concat(mysql, " AND tb1.Class = @Class ");
+            if (orderClass == 0) mysql = String.Concat(mysql, " AND tb1.Class in (200,400,900) ");
+            if (!string.IsNullOrEmpty(StatFilter.FromItemID)) mysql = String.Concat(mysql, " AND ItemID >= @FromItemID ");
+            if (!string.IsNullOrEmpty(StatFilter.ToItemID)) mysql = String.Concat(mysql, " AND ItemID <= @ToItemID ");
+            if (StatFilter.AddressID != 0)
+            {
+                mysql = String.Concat(mysql, " AND so_AddressID = @AdrID");
+                AdrID = StatFilter.AddressID;
+            }
+
+            mysql = String.Concat(mysql, " Group by tb1.CompID, tb2.ItemID) tbs  ");
+            mysql = String.Concat(mysql, " on tbs.CompID = tbi.CompID AND tbs.ItemID = tbi.ItemID  ");
+
+            mysql = String.Concat(mysql, " order by tbi.ItemID desc ");
+            SqlCommand comm = new SqlCommand(mysql, conn);
+            comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
+            comm.Parameters.Add("@Class", SqlDbType.Int).Value = orderClass;
+            comm.Parameters.Add("@FromDate", SqlDbType.DateTime).Value = FromDate;
+            comm.Parameters.Add("@ToDate", SqlDbType.DateTime).Value = ToDate;
+            comm.Parameters.Add("@FromItemID", SqlDbType.NVarChar, 20).Value = ((string.IsNullOrEmpty(StatFilter.FromItemID) ? DBNull.Value : (object)StatFilter.FromItemID));
+            comm.Parameters.Add("@ToItemID", SqlDbType.NVarChar, 20).Value = ((string.IsNullOrEmpty(StatFilter.ToItemID) ? DBNull.Value : (object)StatFilter.ToItemID));
+            comm.Parameters.Add("@AdrID", SqlDbType.Int).Value = ((AdrID == 0) ? DBNull.Value : (object)AdrID);
+            conn.Open();
+            SqlDataReader myr = comm.ExecuteReader();
+            while (myr.Read())
+            {
+                       
+                item.ItemID = myr["ItemID"].ToString();
+                item.ItemDesc = myr["Description"].ToString();
+               
+                //valdec = (decimal)myr["Amount"];
+                item.OrderAmount = (decimal)myr["Amount"];
+                //valdec = (decimal)((myr["Qty"] == DBNull.Value) ? 0 : (decimal)myr["OrderQty"]);
+                item.Qty = (decimal)myr["Qty"];
+                
+                item.Unit = myr["Unit"].ToString();
+             
+              
+                items.Add(item);
+                item = new SalesStatSum();
+            }
+            conn.Close();
+            return retstr;
+        }
+
+
+
+
         public string Sales_Categories_load(ref IList<SalesCategorie> items)
         {
             string retstr = "err";

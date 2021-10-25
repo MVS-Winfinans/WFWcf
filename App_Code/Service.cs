@@ -2149,6 +2149,40 @@ public class Service : IService
         }
         return items.ToArray();
     }
+
+
+    public SalesStatSum[] AddressSalesStats(ref DBUser DBUser, ref SalesStatFilter StatFilter, ref string errstr, SalesOrderTypes OrderType)
+    {
+        IList<SalesStatSum> items = new List<SalesStatSum>();
+        int orderClass = 200;
+        try
+        {
+            if (OrderType == SalesOrderTypes.Quotations) orderClass = 100;
+            if (OrderType == SalesOrderTypes.Invoice) orderClass = 400;
+            if (OrderType == SalesOrderTypes.RecurringOrder) orderClass = 300;
+            if (OrderType == SalesOrderTypes.InvoiceClosed) orderClass = 900;
+            if (OrderType == SalesOrderTypes.InvoiceAndOrders) orderClass = 0;
+            var wfconn = new wfws.ConnectLocal(DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
+            if (DBUser.CompID > 0)
+            {
+                wfws.web wfweb = new wfws.web(ref DBUser);
+                //errstr = wfweb.SalesOrder_LineItems_get(ref  OrderSales wfOrderSales, ref IList<OrderLine> items, int orderClass)
+                errstr = wfweb.SalesAddressStatsItems_get(ref StatFilter, ref items, orderClass);
+            }
+        }
+        catch (Exception e)
+        {
+            errstr = e.Message;
+            throw new FaultException(string.Concat("wf_wcf: ", e.Message), new FaultCode("wfwcfFault"));
+        }
+        return items.ToArray();
+
+    }
+
+
+
+
     public int SalesGetCategoryByName(ref DBUser DBUser, string category)
     {
         int CategoryID = 0;

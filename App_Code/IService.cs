@@ -64,9 +64,13 @@ public interface IService
     [OperationContract] AddressDocument[] AddressDocumentsGet(ref DBUser DBUser, int AddressID);
 
 
-
     [OperationContract] byte[] AddressGetArchivedDocument(ref DBUser DBUser, int AddressID, int DocID, ref string ContentType, ref string Description);
     [OperationContract] string AddressBlur(ref DBUser DBUser, int AddressID);
+
+
+    [OperationContract] SalesStatSum[] AddressSalesStats(ref DBUser DBUser, ref SalesStatFilter StatFilter, ref string retstr, SalesOrderTypes OrderType);
+
+
     // Activities
     [OperationContract] Activity[] AddressActivitiesLoad_passthrough(ref DBUser DBUser, int UserTop,string UserWhere,string UserOrder);
     [OperationContract] Activity[] AddressActivitiesLoad(ref DBUser DBUser, ref Address wfAddress);
@@ -130,6 +134,7 @@ public interface IService
     [OperationContract] string SalesOrderCalendarUnBlock(ref DBUser DBUser, ref OrderSales wfOrderSales, DateTime BlockDate);
     [OperationContract] OrderSalesItem[] SalesOrderListLoad(ref DBUser DBUser, ref OrderSales wfOrderSales, ref string retstr, SalesOrderTypes OrderType);
     [OperationContract] SalesStatLine[] SalesStatsLoadItems(ref DBUser DBUser, ref OrderSales wfOrderSales, ref string retstr, SalesOrderTypes OrderType);
+
     [OperationContract] int SalesGetCategoryByName(ref DBUser DBUser,string category);
     [OperationContract] int SalesGetSellerByName(ref DBUser DBUser, string seller);
     [OperationContract] SalesCategorie[] SalesCategoriesLoad(ref DBUser DBUser);
@@ -900,7 +905,17 @@ public class AddressDocument
     [EnumMember] Proforma = 9
 }
 
-[DataContract] public class SalesStatLine
+[DataContract] public class SalesStatFilter
+{
+    [DataMember] public int AddressID;
+    [DataMember] public DateTime FromDate;
+    [DataMember] public DateTime ToDate;
+    [DataMember] public string FromItemID;
+    [DataMember] public string ToItemID;
+}
+
+
+    [DataContract] public class SalesStatLine
 {
     [DataMember] public int SaleID;
     [DataMember] public int Liid;
@@ -935,6 +950,15 @@ public class AddressDocument
     [DataMember] public string GroupFi;
 }
 
+[DataContract] public class SalesStatSum
+{
+    [DataMember] public string ItemID;
+    [DataMember] public string Unit;
+    [DataMember] public string ItemDesc;
+    [DataMember] public Decimal Qty;
+    [DataMember] public Decimal OrderAmount;
+
+}
 
 // purchase
 
