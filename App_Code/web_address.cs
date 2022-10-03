@@ -1191,7 +1191,7 @@ namespace wfws
                     comm.Parameters.Add("@AdrID", SqlDbType.Int).Value = AdrID;
                     comm.Parameters.Add("@ActivityID", SqlDbType.Int).Value = 0;
                     comm.Parameters.Add("@ActivityType", SqlDbType.Int).Value = ActType;
-                    comm.Parameters.Add("@Desc", SqlDbType.NVarChar, 50).Value = (string.IsNullOrEmpty(Act.Description) ? DBNull.Value : (object)Act.Description);
+                    comm.Parameters.Add("@Desc", SqlDbType.NVarChar,-1).Value = (string.IsNullOrEmpty(Act.Description) ? DBNull.Value : (object)Act.Description);
                     comm.Parameters.Add("@DueDate", SqlDbType.DateTime).Value = (DateTime)Act.DueDate;
                     conn.Open();
                     activityID = (Int32)comm.ExecuteScalar();
@@ -1364,7 +1364,7 @@ namespace wfws
                 comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
                 comm.Parameters.Add("@AddressID", SqlDbType.Int).Value = AdrID;
                 comm.Parameters.Add("@ActivityID", SqlDbType.Int).Value = ActivityID;
-                comm.Parameters.Add("@Description", SqlDbType.NVarChar, -1).Value = Description;
+                comm.Parameters.Add("@Description", SqlDbType.NVarChar, -1).Value = string.IsNullOrEmpty(Description) ? DBNull.Value : (object)Description;
                 comm.Parameters.Add("@UserID", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(wfActivity.UserID) ? DBNull.Value : (object)wfActivity.UserID);
                 comm.Parameters.Add("@StateID", SqlDbType.Int).Value = wfActivity.StateID;
                 comm.Parameters.Add("@ActivityType", SqlDbType.Int).Value = wfActivity.ActivityType;

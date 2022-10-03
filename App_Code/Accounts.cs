@@ -5,6 +5,9 @@ using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 using System.ServiceModel;
+using System.Threading;
+using System.Activities.Expressions;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 /// <summary>
 /// Summary description for Accounts
 /// </summary>
@@ -641,6 +644,9 @@ namespace wfws
 
         public decimal Dimension_Total(int DimNo, string DimID, string Account)
         {
+
+            SemaphoreWait("book_CalcTotals");
+
             decimal DimensionTotal = 0;
             string mysql_1 = "select  isnull(max(yearID), 0) from fi_Journals where CompID = @CompID";
             string mysql_2 = "select isnull(sum(Amount),0) from fi_Years_totals_dim where CompID = @CompID AND YearID = @YearID AND Account = @Account ";
@@ -668,7 +674,35 @@ namespace wfws
         }
 
 
-            public bool IsValidAccountingCost(string TestAccountingCost)
+
+        public int SemaphoreWait(string myKey)
+        {
+            int cCount = 0;
+            int lCount = 0;
+            string mySql = "select count(*) from ac_companies_semaphore where CompID = 1000 AND spKey = 'book_CalcTotals' AND spTime1 >= spTime2 AND DateDiff(MI,spTime1,GetDate()) < 1";
+            SqlConnection Conn = new SqlConnection(ConnectionString);
+            SqlCommand Comm = new SqlCommand(mySql, Conn);
+            Comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
+            Comm.Parameters.Add("@spKey", SqlDbType.Int).Value = compID;
+            Conn.Open();
+            cCount = (int)Comm.ExecuteScalar();
+            while (cCount > 0) {
+                Thread.Sleep(500);
+                cCount = (int)Comm.ExecuteScalar();
+                lCount += 1;
+                if (lCount > 5) cCount = 0;
+            }
+            Conn.Close();
+            return cCount;
+        }
+
+
+
+
+
+
+
+        public bool IsValidAccountingCost(string TestAccountingCost)
         {
             bool Answer = true;
             if (!string.IsNullOrEmpty(TestAccountingCost))

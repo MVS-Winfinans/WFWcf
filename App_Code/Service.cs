@@ -1493,6 +1493,7 @@ public class Service : IService
                     if (SaleID == 0) wfweb.Order_add(ref WfOrder, ref SaleID, orderClass);
                     if (SaleID > 0)
                     {
+                        if (!string.IsNullOrEmpty(defOrder.Currency)) WfOrder.Currency = defOrder.Currency;
                         wfweb.Order_Update(SaleID, ref WfOrder, orderClass, DBUser.BlindUpdate);
                         errstr = wfweb.order_address_associate(ref WfOrder);
                         errstr = wfweb.order_load(SaleID, ref WfOrder);
@@ -1739,6 +1740,37 @@ public class Service : IService
         }
         return errstr;
     }
+
+    public string SalesOrderEmpty(ref DBUser DBUser, ref OrderSales WfOrder)
+    {
+        string errstr = "OK";
+        try
+        {
+            var wfconn = new wfws.ConnectLocal(DBUser);
+            wfconn.ConnectionGetByGuid_02(ref DBUser);
+            if (DBUser.CompID > 0)
+            {
+                wfws.web wfweb = new wfws.web(ref DBUser);
+                if (wfweb.order_is_Open(WfOrder.SaleID))
+                {
+                    wfweb.order_empty(WfOrder.SaleID);
+                }
+                else
+                {
+                    errstr = "Order is closed";
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            errstr = e.Message;
+            throw new FaultException(String.Concat("wf_wcf: ", e.Message), new FaultCode("wfwcfFault"));
+        }
+        return errstr;
+    }
+
+
+
 
     public string SalesOrderRecalc(ref DBUser DBUser, ref OrderSales WfOrder)
     {

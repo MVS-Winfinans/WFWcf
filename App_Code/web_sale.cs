@@ -673,12 +673,20 @@ namespace wfws
             }
         }
 
- 
-
-
-
-
-
+        public void order_empty(int SaleID)
+        {
+            if (SaleID > 0)
+            {
+                SqlConnection conn = new SqlConnection(conn_str);
+                SqlCommand comm = new SqlCommand("dbo.wf_tr_sale_EmptyInvoice", conn);
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
+                comm.Parameters.Add("@SaleID", SqlDbType.Int).Value = SaleID;
+                conn.Open();
+                int oClass = comm.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
 
         public void order_save_ubl(int SaleID, string xmldoc)
         {
@@ -1210,7 +1218,7 @@ namespace wfws
             mysql = String.Concat(mysql, " select tbi.ItemID, tbi.Description,tbi.Unit, tbs.Qty,tbs.Amount from tr_inventory tbi inner join   ");
             mysql = String.Concat(mysql, " (SELECT tb1.CompID,tb2.ItemID, sum(tb1.CreInvFactor * isnull(tb2.OrderQty,0)) as Qty ,  sum(tb1.CreInvFactor * isnull(tb2.OrderAmount,0)) as Amount  ");
             mysql = String.Concat(mysql, " FROM tr_sale tb1 inner join tr_sale_lineitems tb2 on tb2.CompID = tb1.CompID AND tb2.SaleID = tb1.SaleID  WHERE tb1.CompID = @CompID  ");
-
+            mysql = String.Concat(mysql, " AND tb1.InvDate >= @FromDate AND tb1.InvDate <= @ToDate");
             if (orderClass > 0) mysql = String.Concat(mysql, " AND tb1.Class = @Class ");
             if (orderClass == 0) mysql = String.Concat(mysql, " AND tb1.Class in (200,400,900) ");
             if (!string.IsNullOrEmpty(StatFilter.FromItemID)) mysql = String.Concat(mysql, " AND ItemID >= @FromItemID ");

@@ -114,6 +114,9 @@ public interface IService
     [OperationContract] string SalesOrderSave(ref DBUser DBUser, ref OrderSales WfOrder);
     [OperationContract] string SalesOrderDelete(ref DBUser DBUser, ref OrderSales WfOrder);
     [OperationContract] string SalesOrderRecalc(ref DBUser DBUser, ref OrderSales wfOrder);
+    [OperationContract] string SalesOrderEmpty(ref DBUser DBUser, ref OrderSales wfOrder);
+
+
 
     [OperationContract] string SalesOrderLookup(ref DBUser DBUser, ref OrderSales wfOrder, SalesOrderTypes OrderType);
     [OperationContract] int SalesOrderGetSaleIDFromGuid(ref DBUser DBUser,Guid GuidInvoice);

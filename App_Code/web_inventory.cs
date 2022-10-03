@@ -328,15 +328,23 @@ namespace wfws
             string itemid = item.ItemID;
             string[] Selections = item.Selections;
             SqlConnection conn = new SqlConnection(conn_str);
+
+            string mysql0 = "delete from tr_inventory_selections_items where CompID = @CompID AND ItemID = @ItemID";
+
             string mysql1 = " if not exists(select * from tr_inventory_selections where CompID = @CompID AND SelectionID = @SelectionID) ";
             mysql1 = string.Concat(mysql1, " insert tr_inventory_selections(CompID, SelectionID, Selection, UseAsParent) values(@CompID, @SelectionID, 'Added by API', 1) ");
+            
             string mysql2 = " if not exists (select * from tr_inventory_selections_items where CompID = @CompID AND ItemID = @ItemID AND SelectionID = @SelectionID) ";
             mysql2 = string.Concat(mysql2, " insert tr_inventory_selections_items (CompID,ItemID,SelectionID) values (@CompID,@ItemID,@SelectionID) ");
-            SqlCommand comm = new SqlCommand(mysql1, conn);
+            SqlCommand comm = new SqlCommand(mysql0, conn);
             comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
             comm.Parameters.Add("@ItemID", SqlDbType.NVarChar, 20).Value = itemid;
             comm.Parameters.Add("@SelectionID", SqlDbType.NVarChar, 20).Value = DBNull.Value;
             conn.Open();
+            comm.CommandText = mysql0;
+            comm.ExecuteNonQuery();
+
+
             foreach (string Selection in Selections) {
                 if (!string.IsNullOrEmpty(Selection))
                     {
