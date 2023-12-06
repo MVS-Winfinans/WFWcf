@@ -829,10 +829,10 @@ namespace wfws
             try
             {
                 SqlConnection conn = new SqlConnection(conn_str);
-                string mysql = " Select addressID as AddressID, isnull(IDShipTO,0) as shipTo from ";
-                mysql = string.Concat(mysql, "  (select top 10 CompID, Addressid FROM ad_Addresses ");
-                mysql = string.Concat(mysql, " where compID = @CompID AND AddressID > @AddressID AND timeChanged > @timeChanged  AND timeChanged is not null AND addrType < 3 order by addressID ) as tb1 ");
-                mysql = string.Concat(mysql, " left join  ad_Addresses_ShipBill tb2 on tb2.CompID = tb1.CompID AND tb2.IDBillTo = tb1.AddressID order by addressID  ");
+                string mysql = " Select addressID as AddressID, isnull(ShipTo,0) as shipTo from ";
+                mysql = string.Concat(mysql, " (select top 10 CompID, Addressid FROM ad_Addresses ");
+                mysql = string.Concat(mysql, " where compID = @CompID AND AddressID > @AddressID AND timeChanged > @timeChanged  AND timeChanged is not null AND addrType < 3 order by addressID ) as tb1  ");
+                mysql = string.Concat(mysql, " left join  ad_Addresses_BillBuyerShip tb2 on tb2.CompID = tb1.CompID AND tb2.BillTo = tb1.AddressID order by addressID ");
                 SqlCommand comm = new SqlCommand(mysql, conn);
                 comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
                 comm.Parameters.Add("@AddressID", SqlDbType.Int).Value = AddressID;
@@ -856,10 +856,14 @@ namespace wfws
         public int Address_update_timeChange(ref DateTime TimeChanged)
         {
             SqlConnection conn = new SqlConnection(conn_str);
-            string mysql = "UPdate tbo set tbo.TimeChanged = tbi.TimeChanged FROM ad_addresses tbo inner join ";
-            mysql = string.Concat(mysql, " (SELECT tb1.CompID, tb1.IDBillTo, tb2.TimeChanged FROM  ad_Addresses_ShipBill tb1 inner join ad_addresses tb2 on tb2.CompID = tb1.CompID AND tb2.addressID = tb1.IDShipTo");
+            //string mysql = "UPdate tbo set tbo.TimeChanged = tbi.TimeChanged FROM ad_addresses tbo inner join ";
+            //mysql = string.Concat(mysql, " (SELECT tb1.CompID, tb1.IDBillTo, tb2.TimeChanged FROM  ad_Addresses_ShipBill tb1 inner join ad_addresses tb2 on tb2.CompID = tb1.CompID AND tb2.addressID = tb1.IDShipTo");
+            //mysql = string.Concat(mysql, " Where tb2.CompID = @CompID AND tb2.timeChanged > @timeChanged) as tbi ");
+            //mysql = string.Concat(mysql, " on tbo.CompID = tbi.CompID AND tbo.addressID = tbi.IDBIllTo AND tbo.TimeChanged < tbi.TimeChanged ");
+            string mysql = "UPdate tbo set tbo.TimeChanged = tbi.TimeChanged FROM ad_addresses tbo inner join  ";
+            mysql = string.Concat(mysql, " (SELECT tb1.CompID, tb1.BillTo, tb2.TimeChanged FROM  ad_Addresses_BillBuyerShip tb1 inner join ad_addresses tb2 on tb2.CompID = tb1.CompID AND tb2.addressID = tb1.ShipTo");
             mysql = string.Concat(mysql, " Where tb2.CompID = @CompID AND tb2.timeChanged > @timeChanged) as tbi ");
-            mysql = string.Concat(mysql, " on tbo.CompID = tbi.CompID AND tbo.addressID = tbi.IDBIllTo AND tbo.TimeChanged < tbi.TimeChanged ");
+            mysql = string.Concat(mysql, " on tbo.CompID = tbi.CompID AND tbo.addressID = tbi.BIllTo AND tbo.TimeChanged < tbi.TimeChanged ");
             SqlCommand comm = new SqlCommand(mysql, conn);
             comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
             comm.Parameters.Add("@TimeChanged", SqlDbType.DateTime).Value = TimeChanged;
@@ -977,7 +981,8 @@ namespace wfws
         {
             SqlConnection conn = new SqlConnection(conn_str);
             AddressesShipBillItem item = new AddressesShipBillItem();
-            string mysql = "SELECT IDShipTo,isnull(UseAsDefault,0) as UseAsDefault from ad_Addresses_ShipBill  Where CompID = @CompID AND  IDBillTo =  @AdrID ";
+            // string mysql = "SELECT IDShipTo,isnull(UseAsDefault,0) as UseAsDefault from ad_Addresses_ShipBill  Where CompID = @CompID AND  IDBillTo =  @AdrID ";
+            string mysql = "select isnull(max(ShipTo),0) as IDShipTo,isnull(DefaultBIllTo,0) as UseAsDefault from ad_Addresses_BillBuyerShip where CompID = @CompID AND BillTo = @AdrID ";
             SqlCommand comm = new SqlCommand(mysql, conn);
             comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
             comm.Parameters.Add("@AdrID", SqlDbType.Int).Value = AdrID;
@@ -999,7 +1004,8 @@ namespace wfws
         {
             SqlConnection conn = new SqlConnection(conn_str);
             AddressesShipBillItem item = new AddressesShipBillItem();
-            string mysql = "SELECT IDBillTo,isnull(UseAsDefault,0) as UseAsDefault from ad_Addresses_ShipBill  Where CompID = @CompID AND  IDShipTo =  @AdrID ";
+            //string mysql = "SELECT IDBillTo,isnull(UseAsDefault,0) as UseAsDefault from ad_Addresses_ShipBill  Where CompID = @CompID AND  IDShipTo =  @AdrID ";
+            string mysql = "select isnull(max(BillTo),0) as IDBillTo,isnull(DefaultBIllTo,0) as UseAsDefault from ad_Addresses_BillBuyerShip where CompID = @CompID AND ShipTo = @AdrID ";
             SqlCommand comm = new SqlCommand(mysql, conn);
             comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
             comm.Parameters.Add("@AdrID", SqlDbType.Int).Value = AdrID;
@@ -1023,8 +1029,10 @@ namespace wfws
         {
             SqlConnection conn = new SqlConnection(conn_str);
             AddressesShipBillItem item = new AddressesShipBillItem();
-            string mysql = "if not exists (Select * from ad_Addresses_ShipBill Where CompID = @CompID AND IDShipTo = @ShipTo AND  IDBillTo = @BillTo) ";
-            mysql = string.Concat(mysql, " Insert ad_Addresses_ShipBill (CompID,IDShipTo,IDBillTo, UseAsDefault) values (@CompID,@ShipTo,@BillTo,@UseAsDefault) ");
+            // string mysql = "if not exists (Select * from ad_Addresses_ShipBill Where CompID = @CompID AND IDShipTo = @ShipTo AND  IDBillTo = @BillTo) ";
+            // mysql = string.Concat(mysql, " Insert ad_Addresses_ShipBill (CompID,IDShipTo,IDBillTo, UseAsDefault) values (@CompID,@ShipTo,@BillTo,@UseAsDefault) ");
+            string mysql = "if not exists (Select * from ad_Addresses_BillBuyerShip Where CompID = @CompID AND ShipTo = @ShipTo AND Buyer = @BillTo AND BillTo = @BillTo) ";
+            mysql = string.Concat(mysql, " Insert ad_Addresses_BillBuyerShip (CompID,ShipTo,Buyer,BillTo, DefaultBIllTo,TimeChanged) values (@CompID,@ShipTo,@BillTo,@BillTo,@UseAsDefault,GetDate()) ");
             SqlCommand comm = new SqlCommand(mysql, conn);
             comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
             comm.Parameters.Add("@ShipTo", SqlDbType.Int).Value = ShipBillItem.AddressID;
@@ -1039,7 +1047,8 @@ namespace wfws
         {
             SqlConnection conn = new SqlConnection(conn_str);
             AddressesShipBillItem item = new AddressesShipBillItem();
-            string mysql = "delete from ad_Addresses_ShipBill Where CompID = @CompID AND IDShipTo = @ShipTo AND  IDBillTo = @BillTo ";
+            //string mysql = "delete from ad_Addresses_ShipBill Where CompID = @CompID AND IDShipTo = @ShipTo AND  IDBillTo = @BillTo ";
+            string mysql = "delete from ad_Addresses_BillBuyerShip Where CompID = @CompID AND ShipTo = @ShipTo AND  BillTo = @BillTo ";
             SqlCommand comm = new SqlCommand(mysql, conn);
             comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
             comm.Parameters.Add("@ShipTo", SqlDbType.Int).Value = ShipBillItem.AddressID;
@@ -1055,8 +1064,10 @@ namespace wfws
         {
             SqlConnection conn = new SqlConnection(conn_str);
             AddressesShipBillItem item = new AddressesShipBillItem();
-            string mysql = "if not exists (Select * from ad_Addresses_ShipBill Where CompID = @CompID AND IDShipTo = @ShipTo AND  IDBillTo = @BillTo) ";
-            mysql = string.Concat(mysql, " Insert ad_Addresses_ShipBill (CompID,IDShipTo,IDBillTo, UseAsDefault) values (@CompID,@ShipTo,@BillTo,@UseAsDefault) ");
+            //string mysql = "if not exists (Select * from ad_Addresses_ShipBill Where CompID = @CompID AND IDShipTo = @ShipTo AND  IDBillTo = @BillTo) ";
+            //mysql = string.Concat(mysql, " Insert ad_Addresses_ShipBill (CompID,IDShipTo,IDBillTo, UseAsDefault) values (@CompID,@ShipTo,@BillTo,@UseAsDefault) ");
+            string mysql = "if not exists (Select * from ad_Addresses_BillBuyerShip Where CompID = @CompID AND ShipTo = @ShipTo AND buyer = @BillTo AND  BillTo = @BillTo) ";
+            mysql = string.Concat(mysql, "Insert ad_Addresses_BillBuyerShip (CompID,ShipTo,Buyer,BillTo, DefaultBIllTo,TimeChanged) values (@CompID,@ShipTo,@BillTo,@BillTo,@UseAsDefault,GetDate()) ");
             SqlCommand comm = new SqlCommand(mysql, conn);
             comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
             comm.Parameters.Add("@ShipTo", SqlDbType.Int).Value = AdrID;
@@ -1071,7 +1082,9 @@ namespace wfws
         {
             SqlConnection conn = new SqlConnection(conn_str);
             AddressesShipBillItem item = new AddressesShipBillItem();
-            string mysql = "delete from ad_Addresses_ShipBill Where CompID = @CompID AND IDShipTo = @ShipTo AND  IDBillTo = @BillTo ";
+            //string mysql = "delete from ad_Addresses_ShipBill Where CompID = @CompID AND IDShipTo = @ShipTo AND  IDBillTo = @BillTo ";
+            string mysql = "delete from ad_Addresses_BillBuyerShip Where CompID = @CompID AND ShipTo = @ShipTo AND  BillTo = @BillTo ";
+
             SqlCommand comm = new SqlCommand(mysql, conn);
             comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
             comm.Parameters.Add("@ShipTo", SqlDbType.Int).Value = AdrID;
@@ -1375,6 +1388,11 @@ namespace wfws
                 conn.Open();
                 comm.ExecuteNonQuery();
                 conn.Close();
+                errStr = "OK";
+            }
+            else
+            {
+                errStr = "Err: AddressID or ActivityId = 0 ";
             }
             return errStr;
         }
@@ -1395,6 +1413,7 @@ namespace wfws
                 conn.Open();
                 comm.ExecuteNonQuery();
                 conn.Close();
+                errStr = "OK";
             }
             return errStr;
         }

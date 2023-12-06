@@ -876,6 +876,11 @@ public class Service : IService
                 wfws.web wfweb = new wfws.web(ref DBUser);
                 retstr = wfweb.Address_Activity_Load(ref wfActivity);
             }
+            else
+            {
+                retstr = " DBUser error: CompID = 0 ";
+            }
+
         }
         catch (NullReferenceException ex)
         {
@@ -895,6 +900,10 @@ public class Service : IService
             {
                 wfws.web wfweb = new wfws.web(ref DBUser);
                 retstr = wfweb.Address_Activity_Update(ref wfActivity);
+            } 
+             else 
+            { 
+                retstr = " DBUser error: CompID = 0 ";  
             }
         }
         catch (NullReferenceException ex)
@@ -916,6 +925,11 @@ public class Service : IService
                 wfws.web wfweb = new wfws.web(ref DBUser);
                 retstr = wfweb.Address_Activity_Delete(ref wfActivity);
             }
+            else
+            {
+                retstr = " DBUser error: CompID = 0 ";
+            }
+
         }
         catch (NullReferenceException ex)
         {

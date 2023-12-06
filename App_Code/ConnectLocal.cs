@@ -41,7 +41,7 @@ namespace wfws
                     SqlCommand myCommand = new SqlCommand("ws_apl_GetConnectString_1", wfConnection);
                     myCommand.CommandType = CommandType.StoredProcedure;
                     myCommand.Parameters.Add("@ApiGuid", SqlDbType.UniqueIdentifier).Value = DBUser.DBKey;
-                    myCommand.Parameters.Add("@ConnStr", SqlDbType.NVarChar, 200).Direction = ParameterDirection.Output;
+                    myCommand.Parameters.Add("@ConnStr", SqlDbType.NVarChar, 1024).Direction = ParameterDirection.Output;
                     myCommand.Parameters.Add("@dbID", SqlDbType.UniqueIdentifier).Direction = ParameterDirection.Output;
                     myCommand.Parameters.Add("@ShopID", SqlDbType.NVarChar, 20).Direction = ParameterDirection.Output;
                     myCommand.Parameters.Add("@PublicConnection", SqlDbType.Bit).Direction = ParameterDirection.Output;
