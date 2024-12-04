@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="fa0aacc4-4975-45d7-8cf3-1252ca065685" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="00bfa16a-4a14-44ec-a5fe-dcb8ec971a53" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,13 +19,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://report01.winfinans.dk/WFReports.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="https://report.winfinans.net/WFReports.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="WFReports.disco" MetadataType="Disco" ID="7e19e1e1-db4b-4095-a64c-3e3619a7a584" SourceId="1" SourceUrl="http://report01.winfinans.dk/WFReports.svc?disco" />
-    <MetadataFile FileName="WFReports.xsd" MetadataType="Schema" ID="8737acb2-8c87-46a3-b47b-d973b2cb3c18" SourceId="1" SourceUrl="http://report01.winfinans.dk/WFReports.svc?xsd=xsd0" />
-    <MetadataFile FileName="WFReports.wsdl" MetadataType="Wsdl" ID="ea74d5a9-7708-4470-875b-0a691639f747" SourceId="1" SourceUrl="http://report01.winfinans.dk/WFReports.svc?wsdl" />
-    <MetadataFile FileName="WFReports1.xsd" MetadataType="Schema" ID="7fc90b77-a9cd-40c3-80b2-0e7ce4c6d443" SourceId="1" SourceUrl="http://report01.winfinans.dk/WFReports.svc?xsd=xsd1" />
+    <MetadataFile FileName="WFReports.wsdl" MetadataType="Wsdl" ID="23e5a2c9-3b01-440a-9376-e306b1d71019" SourceId="1" SourceUrl="https://report.winfinans.net/WFReports.svc?wsdl" />
+    <MetadataFile FileName="WFReports.disco" MetadataType="Disco" ID="cf3eced5-2708-4b77-9710-526dfb66c376" SourceId="1" SourceUrl="https://report.winfinans.net/WFReports.svc?disco" />
+    <MetadataFile FileName="WFReports.xsd" MetadataType="Schema" ID="338eb4ce-4f5c-492c-baf2-cb1447b9ec57" SourceId="1" SourceUrl="https://report.winfinans.net/WFReports.svc?xsd=xsd0" />
+    <MetadataFile FileName="WFReports1.xsd" MetadataType="Schema" ID="19937ef8-57da-453f-a080-c59b0faa22fe" SourceId="1" SourceUrl="https://report.winfinans.net/WFReports.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

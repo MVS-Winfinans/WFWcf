@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://report01.winfinans.dk/WFReports.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="https://report.winfinans.net/WFReports.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:element name="HelloWorld">
     <xs:complexType>
       <xs:sequence />
@@ -10,6 +10,18 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="HelloWorldResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegLicense">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegLicenseResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RegLicenseResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -47,10 +59,28 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="AccBalanceCost">
+  <xs:element name="AccStatementOne">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q3:guid" />
+        <xs:element minOccurs="0" name="CompID" type="xs:int" />
+        <xs:element minOccurs="0" name="Account" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="RepID" type="xs:int" />
+        <xs:element minOccurs="0" name="ListID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AccStatementOneResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AccStatementOneResult" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AccBalanceCost">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q4:guid" />
         <xs:element minOccurs="0" name="CompID" type="xs:int" />
         <xs:element minOccurs="0" name="RepType" type="xs:int" />
         <xs:element minOccurs="0" name="RepID" type="xs:int" />
@@ -68,7 +98,7 @@
   <xs:element name="AddList">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q4:guid" />
+        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q5:guid" />
         <xs:element minOccurs="0" name="CompID" type="xs:int" />
         <xs:element minOccurs="0" name="RepType" type="xs:int" />
         <xs:element minOccurs="0" name="RepID" type="xs:int" />
@@ -86,7 +116,7 @@
   <xs:element name="AddBalance">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q5:guid" />
+        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q6:guid" />
         <xs:element minOccurs="0" name="CompID" type="xs:int" />
         <xs:element minOccurs="0" name="RepType" type="xs:int" />
         <xs:element minOccurs="0" name="RepID" type="xs:int" />
@@ -104,7 +134,7 @@
   <xs:element name="AddStatement">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q6:guid" />
+        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q7:guid" />
         <xs:element minOccurs="0" name="CompID" type="xs:int" />
         <xs:element minOccurs="0" name="RepType" type="xs:int" />
         <xs:element minOccurs="0" name="RepID" type="xs:int" />
@@ -122,7 +152,7 @@
   <xs:element name="AddStatementOne">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q7:guid" />
+        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q8:guid" />
         <xs:element minOccurs="0" name="CompID" type="xs:int" />
         <xs:element minOccurs="0" name="AddressID" type="xs:int" />
         <xs:element minOccurs="0" name="wfUser" nillable="true" type="xs:string" />
@@ -141,7 +171,7 @@
   <xs:element name="AddStatementMaillist">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q8:guid" />
+        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q9:guid" />
         <xs:element minOccurs="0" name="CompID" type="xs:int" />
         <xs:element minOccurs="0" name="RepType" type="xs:int" />
         <xs:element minOccurs="0" name="RepID" type="xs:int" />
@@ -157,10 +187,62 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="AddStatementOneKeylist">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q10:guid" />
+        <xs:element minOccurs="0" name="CompID" type="xs:int" />
+        <xs:element minOccurs="0" name="AddressID" type="xs:int" />
+        <xs:element minOccurs="0" name="ListID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddStatementOneKeylistResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddStatementOneKeylistResult" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddReminder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q11:guid" />
+        <xs:element minOccurs="0" name="CompID" type="xs:int" />
+        <xs:element minOccurs="0" name="RepType" type="xs:int" />
+        <xs:element minOccurs="0" name="RepID" type="xs:int" />
+        <xs:element minOccurs="0" name="ListID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddReminderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddReminderResult" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddReminderOne">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q12:guid" />
+        <xs:element minOccurs="0" name="CompID" type="xs:int" />
+        <xs:element minOccurs="0" name="AddressID" type="xs:int" />
+        <xs:element minOccurs="0" name="ListID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddReminderOneResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddReminderOneResult" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="AddSalesOne">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q9:guid" />
+        <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q13:guid" />
         <xs:element minOccurs="0" name="CompID" type="xs:int" />
         <xs:element minOccurs="0" name="RepType" type="xs:int" />
         <xs:element minOccurs="0" name="RepID" type="xs:int" />
@@ -179,7 +261,7 @@
   <xs:element name="AddSalesMaillist">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q10:guid" />
+        <xs:element xmlns:q14="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q14:guid" />
         <xs:element minOccurs="0" name="CompID" type="xs:int" />
         <xs:element minOccurs="0" name="RepType" type="xs:int" />
         <xs:element minOccurs="0" name="RepID" type="xs:int" />
@@ -198,7 +280,7 @@
   <xs:element name="SaOrder">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q11:guid" />
+        <xs:element xmlns:q15="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q15:guid" />
         <xs:element minOccurs="0" name="CompID" type="xs:int" />
         <xs:element minOccurs="0" name="SaleID" type="xs:int" />
         <xs:element minOccurs="0" name="RepID" type="xs:int" />
@@ -215,7 +297,7 @@
   <xs:element name="SaOrder3in1">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q12:guid" />
+        <xs:element xmlns:q16="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q16:guid" />
         <xs:element minOccurs="0" name="CompID" type="xs:int" />
         <xs:element minOccurs="0" name="SaleID" type="xs:int" />
         <xs:element minOccurs="0" name="RepID1" type="xs:int" />
@@ -234,7 +316,7 @@
   <xs:element name="PuOrder">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q13:guid" />
+        <xs:element xmlns:q17="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q17:guid" />
         <xs:element minOccurs="0" name="CompID" type="xs:int" />
         <xs:element minOccurs="0" name="PurcID" type="xs:int" />
         <xs:element minOccurs="0" name="RepID" type="xs:int" />
@@ -251,7 +333,7 @@
   <xs:element name="InvLists">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q14:guid" />
+        <xs:element xmlns:q18="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q18:guid" />
         <xs:element minOccurs="0" name="CompID" type="xs:int" />
         <xs:element minOccurs="0" name="RepType" type="xs:int" />
         <xs:element minOccurs="0" name="RepID" type="xs:int" />
@@ -264,6 +346,42 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="InvListsResult" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddSalesStats">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q19:guid" />
+        <xs:element minOccurs="0" name="CompID" type="xs:int" />
+        <xs:element minOccurs="0" name="RepType" type="xs:int" />
+        <xs:element minOccurs="0" name="RepID" type="xs:int" />
+        <xs:element minOccurs="0" name="AddressID" type="xs:int" />
+        <xs:element minOccurs="0" name="wfUser" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddSalesStatsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddSalesStatsResult" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PrAssembly">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="dbID" type="q20:guid" />
+        <xs:element minOccurs="0" name="CompID" type="xs:int" />
+        <xs:element minOccurs="0" name="ProdID" type="xs:int" />
+        <xs:element minOccurs="0" name="RepID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PrAssemblyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PrAssemblyResult" nillable="true" type="xs:base64Binary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -2603,7 +2603,7 @@ public class Service : IService
                 if (SaleID > 0)
                 {
                     DBUser.ConnectionString = connstr;
-                    var MyRepSvc = new wf_rep.WFReportsClient();
+                    var MyRepSvc = new wf_rep.WFReportsClient("BasicHttpsBinding_IWFReports");
                     pdfdoc = MyRepSvc.SaOrder(DBUser.DBKey, DBUser.CompID, SaleID, (int)ReportID);
                   
                     DBUser.Message = errstr;
@@ -2639,7 +2639,7 @@ public class Service : IService
                 if (SaleID > 0)
                 {
                     var mysale = new wfws.pdfSale(ref DBUser);  //Dette objekt anvendes kun til at finde info omkring mailing
-                    var MyRepSvc = new wf_rep.WFReportsClient();  //Dette objekt anvendes kun til at danne faktura
+                    var MyRepSvc = new wf_rep.WFReportsClient("BasicHttpsBinding_IWFReports");  //Dette objekt anvendes kun til at danne faktura
                     var mycomp = new wfws.Company(ref DBUser);
                     var companyinf = new CompanyInf();
                     mycomp.Company_Load(ref DBUser, ref companyinf);
