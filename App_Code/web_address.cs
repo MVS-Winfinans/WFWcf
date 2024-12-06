@@ -982,7 +982,7 @@ namespace wfws
             SqlConnection conn = new SqlConnection(conn_str);
             AddressesShipBillItem item = new AddressesShipBillItem();
             // string mysql = "SELECT IDShipTo,isnull(UseAsDefault,0) as UseAsDefault from ad_Addresses_ShipBill  Where CompID = @CompID AND  IDBillTo =  @AdrID ";
-            string mysql = "select isnull(max(ShipTo),0) as IDShipTo,isnull(DefaultBIllTo,0) as UseAsDefault from ad_Addresses_BillBuyerShip where CompID = @CompID AND BillTo = @AdrID ";
+            string mysql = " select isnull(max(ShipTo),0) as IDShipTo,convert(bit,max(CONVERT(int, ISNULL(DefaultBIllTo,0)))) as UseAsDefault from ad_Addresses_BillBuyerShip where CompID = @CompID AND BillTo = @AdrID  ";
             SqlCommand comm = new SqlCommand(mysql, conn);
             comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
             comm.Parameters.Add("@AdrID", SqlDbType.Int).Value = AdrID;
@@ -1005,7 +1005,7 @@ namespace wfws
             SqlConnection conn = new SqlConnection(conn_str);
             AddressesShipBillItem item = new AddressesShipBillItem();
             //string mysql = "SELECT IDBillTo,isnull(UseAsDefault,0) as UseAsDefault from ad_Addresses_ShipBill  Where CompID = @CompID AND  IDShipTo =  @AdrID ";
-            string mysql = "select isnull(max(BillTo),0) as IDBillTo,isnull(DefaultBIllTo,0) as UseAsDefault from ad_Addresses_BillBuyerShip where CompID = @CompID AND ShipTo = @AdrID ";
+            string mysql = "select isnull(max(BillTo),0) as IDBillTo,convert(bit,max(CONVERT(int, ISNULL(DefaultBIllTo,0)))) as UseAsDefault from ad_Addresses_BillBuyerShip where CompID = @CompID AND ShipTo = @AdrID ";
             SqlCommand comm = new SqlCommand(mysql, conn);
             comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
             comm.Parameters.Add("@AdrID", SqlDbType.Int).Value = AdrID;
