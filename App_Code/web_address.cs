@@ -982,7 +982,7 @@ namespace wfws
             SqlConnection conn = new SqlConnection(conn_str);
             AddressesShipBillItem item = new AddressesShipBillItem();
             // string mysql = "SELECT IDShipTo,isnull(UseAsDefault,0) as UseAsDefault from ad_Addresses_ShipBill  Where CompID = @CompID AND  IDBillTo =  @AdrID ";
-            string mysql = " select isnull(max(ShipTo),0) as IDShipTo,convert(bit,max(CONVERT(int, ISNULL(DefaultBIllTo,0)))) as UseAsDefault from ad_Addresses_BillBuyerShip where CompID = @CompID AND BillTo = @AdrID  ";
+            string mysql = " select ShipTo as IDShipTo, COUNT(NULLIF(DefaultBIllTo,0)) AS UseAsDefault  from ad_Addresses_BillBuyerShip where CompID = @CompID and BillTo = @AdrID group by ShipTo  ";
             SqlCommand comm = new SqlCommand(mysql, conn);
             comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
             comm.Parameters.Add("@AdrID", SqlDbType.Int).Value = AdrID;
@@ -990,8 +990,11 @@ namespace wfws
             SqlDataReader myr = comm.ExecuteReader();
             while (myr.Read())
             {
+                int vali = (Int32)myr["UseAsDefault"];
+                bool valb = true;
+                if (vali == 0) valb = false;
                 item.AddressID = (Int32)myr["IDShipTo"];
-                item.UseAsDefault = (Boolean)myr["UseAsDefault"];
+                item.UseAsDefault = valb;
                 item.ShipBillType = 1;
                 items.Add(item);
                 item = new AddressesShipBillItem();
@@ -1005,7 +1008,7 @@ namespace wfws
             SqlConnection conn = new SqlConnection(conn_str);
             AddressesShipBillItem item = new AddressesShipBillItem();
             //string mysql = "SELECT IDBillTo,isnull(UseAsDefault,0) as UseAsDefault from ad_Addresses_ShipBill  Where CompID = @CompID AND  IDShipTo =  @AdrID ";
-            string mysql = "select isnull(max(BillTo),0) as IDBillTo,convert(bit,max(CONVERT(int, ISNULL(DefaultBIllTo,0)))) as UseAsDefault from ad_Addresses_BillBuyerShip where CompID = @CompID AND ShipTo = @AdrID ";
+            string mysql = "select BillTo as IDBillTo,COUNT(NULLIF(DefaultBIllTo,0)) AS UseAsDefault from ad_Addresses_BillBuyerShip where CompID = @CompID AND ShipTo = @AdrID group by BillTo ";
             SqlCommand comm = new SqlCommand(mysql, conn);
             comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
             comm.Parameters.Add("@AdrID", SqlDbType.Int).Value = AdrID;
@@ -1013,8 +1016,11 @@ namespace wfws
             SqlDataReader myr = comm.ExecuteReader();
             while (myr.Read())
             {
+                int vali = (Int32)myr["UseAsDefault"];
+                bool valb = true;
+                if (vali == 0) valb = false;
                 item.AddressID = (Int32)myr["IDBillTo"];
-                item.UseAsDefault = (Boolean)myr["UseAsDefault"];
+                item.UseAsDefault = valb;
                 item.ShipBillType = 2;
                 items.Add(item);
                 item = new AddressesShipBillItem();
