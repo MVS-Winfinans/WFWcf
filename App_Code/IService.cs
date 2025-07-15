@@ -263,6 +263,11 @@ public interface IService
 
     //Barcode
     [OperationContract] string BarcodeLookup(ref DBUser DBUser, string Barcode);
+
+    // Danløn
+
+    [OperationContract] int Danloen(string AccountKey,string Voushers);
+
 }
 
 

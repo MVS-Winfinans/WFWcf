@@ -4459,4 +4459,33 @@ public class Service : IService
         }
         return RetVal;
     }
+
+    public int Danloen(string AccountKey,string vouchers)
+    {
+
+        string constr;
+
+        int CompID;
+
+        var wfutil = new utils();
+
+        CompID = wfutil.connectstring_split(ref AccountKey);
+
+        constr = AccountKey;
+
+        danloenvoucher MyVoucher = new danloenvoucher(constr, CompID);
+
+        int retVal;
+
+        retVal = MyVoucher.vouchers_in(vouchers);
+                
+        return retVal;
+
+        // return "Received wage voucher for account key " + AccountKey;
+
+
+        return 0;
+    }
+
+
 }
