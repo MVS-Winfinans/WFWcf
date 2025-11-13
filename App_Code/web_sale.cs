@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
+using System.Runtime.Remoting.Contexts;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Security.Cryptography;
 /// <summary>
 /// Implementing part of web-class related to sale
 /// </summary>
@@ -494,7 +497,7 @@ namespace wfws
                 {
                     Order_AddDim(MyORder.Dim1, MyORder.Dim2, MyORder.Dim3, MyORder.Dim4);
                 }
-                string mysql = "Update tr_sale_LineItems set AddInformation = @AddInf,Unit = isnull(@Unit, unit), Batch = @Batch, Dim1 = @Dim1, Dim2 = @Dim2, Dim3 = @Dim3, Dim4 = @Dim4, LineAmount = @LineAmount, LineVat = @LineVat, LineVatBase = @LineVatBase, AllowanceCharge = @AllowanceCharge, VatIncl = @VatIncl, VAT_perc = @VatPerc, UNSPSC=isnull(@UNSPSC,unspsc), AccountingCost=@AccountingCost, LinePrice=@LinePrice,  ";
+                string mysql = "Update tr_sale_LineItems set AddInformation = @AddInf,Unit = isnull(@Unit, unit), Batch = @Batch,Style = @Style, Dim1 = @Dim1, Dim2 = @Dim2, Dim3 = @Dim3, Dim4 = @Dim4, LineAmount = @LineAmount, LineVat = @LineVat, LineVatBase = @LineVatBase, AllowanceCharge = @AllowanceCharge, VatIncl = @VatIncl, VAT_perc = @VatPerc, UNSPSC=isnull(@UNSPSC,unspsc), AccountingCost=@AccountingCost, LinePrice=@LinePrice,  ";
                 mysql = string.Concat(mysql, " weight = @weight, volume = @Volume, SuggestedRetail = @SuggestedRetail, Selection = @P_Selection, Substitutable = @Substitutable ");
                 mysql = String.Concat(mysql, " WHERE CompID = @CompID AND SaleID = @SaleID AND LiID = @LiID ");
                 SqlCommand comm = new SqlCommand(mysql, conn);
@@ -503,6 +506,7 @@ namespace wfws
                 comm.Parameters.Add("@LiID", SqlDbType.Int).Value = MyORder.Liid;
                 comm.Parameters.Add("@Unit", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(MyORder.Unit) ? DBNull.Value : (object)MyORder.Unit);
                 comm.Parameters.Add("@Batch", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(MyORder.Batch) ? DBNull.Value : (object)MyORder.Batch);
+                comm.Parameters.Add("@Style", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(MyORder.Style) ? DBNull.Value : (object)MyORder.Style);
                 comm.Parameters.Add("@AddInf", SqlDbType.NVarChar, 255).Value = (string.IsNullOrEmpty(MyORder.AddInformation) ? DBNull.Value : (object)MyORder.AddInformation);
                 comm.Parameters.Add("@Dim1", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(MyORder.Dim1) ? DBNull.Value : (object)MyORder.Dim1);
                 comm.Parameters.Add("@Dim2", SqlDbType.NVarChar, 20).Value = (string.IsNullOrEmpty(MyORder.Dim2) ? DBNull.Value : (object)MyORder.Dim2);
@@ -638,6 +642,9 @@ namespace wfws
         {
             if (SaleID > 0)
             {
+
+               
+
                 string mysql = "DELETE From tr_Sale_lot Where CompID = @CompID And SaleID = @SaleID";
                 SqlConnection conn = new SqlConnection(conn_str);
                 SqlCommand comm = new SqlCommand(mysql, conn);
@@ -653,7 +660,15 @@ namespace wfws
                 comm.ExecuteNonQuery();
                 comm.CommandText = "DELETE FROM tr_sale Where CompID = @CompID And SaleID = @SaleID And Class = 200";
                 comm.ExecuteNonQuery();
+                //comm.CommandText = "insert ac_companies_log (CompID, EnterDate,UserID,Description) values (@CompID,GetDate(),'wfwcf','Order delete ') ";
+                //comm.ExecuteNonQuery();
+
+
                 conn.Close();
+                string LogText = string.Concat("Order deleted: ", SaleID);
+                var wfutil = new utils();
+                wfutil.CompanyLog(conn_str, compID, LogText);
+
             }
        }
 

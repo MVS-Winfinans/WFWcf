@@ -5,6 +5,9 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Security.Cryptography;
+using System.Activities.Expressions;
+using System.Drawing;
 
 /// <summary>
 /// Summary description for utils
@@ -104,6 +107,27 @@ public class utils
         }
         return CompID;
     }
+
+    public int CompanyLog(string connKey, int CompID, string LogText)
+    {
+        string mysql = "insert ac_companies_log (CompID, EnterDate,UserID,Description) values (@CompID,GetDate(),@UserName,@Desc) ";
+        using (SqlConnection wfConnection = new SqlConnection(connKey))
+        {
+            using (SqlCommand mycom = new SqlCommand(mysql, wfConnection))
+            {
+                mycom.Parameters.Add("@CompID", SqlDbType.Int).Value = CompID;
+                mycom.Parameters.Add("@UserName", SqlDbType.NVarChar, 20).Value = "WfWcf";
+                mycom.Parameters.Add("@Desc", SqlDbType.NVarChar, 200).Value = LogText;
+                wfConnection.Open();
+                mycom.ExecuteNonQuery();
+            }
+        }
+        return 0;
+    }
+
+
+
+
 
 
 }
