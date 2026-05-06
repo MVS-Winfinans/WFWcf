@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Web;
 /// <summary>
 /// Implementing part of web-class related to addresses
 /// </summary>
@@ -1221,12 +1222,45 @@ namespace wfws
                     comm.CommandText = mysql;
                     comm.ExecuteNonQuery();
                     conn.Close();
+                    AddActivityUser(AdrID, activityID, ActType);
                     retstr = "OK";
                 }
             }
             catch (Exception e) { retstr = e.Message; }
             return retstr;
         }
+
+
+        public string AddActivityUser(int AdrID, int activityID, int? ActivityType)
+        {
+            string retstr = "OK";
+            try
+            {
+                if (AdrID > 0)
+                {
+                    SqlConnection conn = new SqlConnection(conn_str);
+                    SqlCommand comm = new SqlCommand("ws_activity_add_user", conn);
+                    comm.CommandType = CommandType.StoredProcedure;
+                    comm.Parameters.Add("@CompID", SqlDbType.Int).Value = compID;
+                    comm.Parameters.Add("@AddressID", SqlDbType.Int).Value = AdrID;
+                    comm.Parameters.Add("@ActivityID", SqlDbType.Int).Value = activityID;
+                    comm.Parameters.Add("@ActivityType", SqlDbType.Int).Value = ActivityType;
+                    conn.Open();
+                    comm.ExecuteNonQuery();
+                    conn.Close();
+                    retstr = "OK";
+                }
+            }
+            catch (Exception e)
+            {
+                retstr = e.Message;
+            }
+            return retstr;
+        }
+
+
+
+
         public string Activities_Items_get(int AdrID, ref IList<Activity> items)
         {
             SqlConnection conn = new SqlConnection(conn_str);
